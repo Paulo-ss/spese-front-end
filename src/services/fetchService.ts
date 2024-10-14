@@ -9,6 +9,7 @@ interface IFetchOptions {
   config: {
     options?: RequestInit;
     isRefreshingToken?: boolean;
+    ignoreBaseUrl?: boolean;
   };
 }
 
@@ -34,7 +35,10 @@ export const fetchResource = async <T>({
     },
   };
 
-  let response = await fetch(url, requestOptions);
+  let response = await fetch(
+    `${config.ignoreBaseUrl ? "" : process.env.NEXT_PUBLIC_API_BASE_URL}${url}`,
+    requestOptions
+  );
 
   if (response.status === 403 && !config?.isRefreshingToken) {
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/refresh-token`, {

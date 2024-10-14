@@ -1,9 +1,12 @@
 services:
   spese-front:
-    build: .
-    command: npm run dev
+    build: 
+      context: .
     restart: always
+    command: npm run dev
     env_file:
       - .env.local
-    ports:
-      - 3000:3000
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
+    network_mode: "host"

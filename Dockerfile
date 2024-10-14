@@ -1,7 +1,9 @@
 FROM node:lts-slim
 
-WORKDIR /home/spese-front-end
+WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install
+
+COPY . .

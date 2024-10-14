@@ -1,11 +1,12 @@
 export interface IUser {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
   confirmed: boolean;
-  createdAt: string;
-  updatedAt: string;
+  expiresIn: number;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface IAuthResult {
