@@ -148,26 +148,22 @@ const SignInForm = () => {
         />
 
         <span className="flex mt-8">
-          <p className="text-sm text-black dark:text-zinc-50 italic">
-            não tem conta?
-          </p>
+          <p className="text-black dark:text-zinc-50 italic">não tem conta?</p>
 
           <Link href="/auth/sign-up">
-            <p className="text-sm underline italic text-blue-400 ml-1">
+            <p className="underline italic text-blue-400 ml-1">
               registre-se agora
             </p>
           </Link>
         </span>
 
         <span className="flex mt-2">
-          <p className="text-sm text-black dark:text-zinc-50 italic">
+          <p className="text-black dark:text-zinc-50 italic">
             esqueceu sua senha?
           </p>
 
           <Link href="/auth/reset-password">
-            <p className="text-sm underline italic text-blue-400 ml-1">
-              clique aqui
-            </p>
+            <p className="underline italic text-blue-400 ml-1">clique aqui</p>
           </Link>
         </span>
       </Fade>

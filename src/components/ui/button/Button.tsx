@@ -10,6 +10,8 @@ interface IProps {
   variant?: "outlined";
   disabled?: boolean;
   isLoading?: boolean;
+  small?: boolean;
+  fullWidth?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -23,6 +25,8 @@ const Button: FC<IProps> = ({
   variant,
   disabled,
   isLoading,
+  small,
+  fullWidth,
 }) => {
   const colorsScheme = {
     primary: {
@@ -53,7 +57,11 @@ const Button: FC<IProps> = ({
 
   return (
     <button
-      className={`py-3 px-4 w-full sm:max-w-max rounded-md flex justify-between items-center outline-none ${
+      className={`py-3 px-4 ${
+        small && "text-sm py-2 px-2"
+      } w-full sm:max-w-max ${
+        fullWidth && "sm:max-w-full"
+      } rounded-md flex justify-between items-center outline-none ${
         variant === "outlined"
           ? `${colorsScheme[color].border} border`
           : "bg-gray-100"

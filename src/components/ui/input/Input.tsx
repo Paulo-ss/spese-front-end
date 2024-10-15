@@ -39,10 +39,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
 
   return (
     <div className="flex flex-col mb-4">
-      <label
-        className="mb-2 text-sm text-black dark:text-zinc-50"
-        htmlFor={name}
-      >
+      <label className="mb-2 text-black dark:text-zinc-50" htmlFor={name}>
         {label}
       </label>
 

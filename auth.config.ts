@@ -4,7 +4,7 @@ export const authConfig = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        return { ...token, user };
+        return { ...token, ...user };
       }
 
       return { ...token };

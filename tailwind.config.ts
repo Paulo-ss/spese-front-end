@@ -12,6 +12,19 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "#A9D6BB",
+          light: "#E5F5E6",
+          dark: "#3F836C",
+          bg: "#F5FAF8",
+          mint: "#C9E9CB",
+        },
+        secondary: {
+          DEFAULT: "#CAB1E1",
+          light: "#D8C7E8",
+          dark: "#582E93",
+          bg: "#EDE5F3",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -19,14 +32,6 @@ const config: Config = {
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

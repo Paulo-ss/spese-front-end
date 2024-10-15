@@ -1,11 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import { getCurrentTheme } from "@/app/actions/cookies/getCurrentTheme";
-import { Montserrat } from "next/font/google";
+import { Afacad } from "next/font/google";
 
 import "./globals.css";
 
-const montserrat = Montserrat({
-  weight: ["300", "400", "700"],
+const afacad = Afacad({
+  weight: ["400", "700"],
   style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <html lang="pt" className="h-full">
-      <body className={`h-full ${theme} ${montserrat.className}`}>
+      <body className={`h-full ${theme} ${afacad.className}`}>
         {children}
 
         <Toaster />

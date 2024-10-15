@@ -14,7 +14,7 @@ const refreshAccessToken = async (token: JWT) => {
     const loggedUser = token as unknown as IUser;
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/authorization-server/oauth2/token`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/authorization/refresh-token`,
       {
         method: "POST",
         body: JSON.stringify({ refreshToken: loggedUser.refreshToken }),
@@ -47,7 +47,7 @@ const refreshAccessToken = async (token: JWT) => {
 
 const signOut = async (request: NextRequest, errorMessage: string) => {
   const response = NextResponse.redirect(
-    new URL(`/auth/sign-in?error=${errorMessage}`)
+    new URL(`/auth/sign-in?error=${errorMessage}`, request.url)
   );
 
   request.cookies.getAll().forEach((cookie) => {

@@ -29,7 +29,7 @@ export const fetchResource = async <T>({
   const requestOptions: RequestInit = {
     ...config?.options,
     headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
+      Authorization: `Bearer ${session?.user.accessToken}`,
       "Content-Type": "application/json",
       ...config?.options?.headers,
     },
