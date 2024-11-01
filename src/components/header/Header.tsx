@@ -16,7 +16,7 @@ const Header: FC<IProps> = ({ session }) => {
   const { toggleSidebar, isSidebarMobile } = useContext(SidebarContext);
 
   return (
-    <div className="min-h-[80px] dark:bg-zinc-900 flex justify-between items-center px-4 sm:px-6 py-4">
+    <div className="min-h-[80px] dark:bg-zinc-800 flex justify-between items-center px-4 sm:px-6 py-4">
       <ul>
         {isSidebarMobile && (
           <HeaderItem onClick={() => toggleSidebar()}>
@@ -26,7 +26,7 @@ const Header: FC<IProps> = ({ session }) => {
       </ul>
 
       <ul className="relative justify-self-end flex gap-3 items-center">
-        <Notifications />
+        <Notifications session={session} />
 
         <Profile session={session} />
       </ul>

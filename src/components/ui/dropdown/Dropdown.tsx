@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import Backdrop from "../backdrop/Backdrop";
+import { Transition, TransitionChild } from "@headlessui/react";
 
 interface IProps {
   anchorEl: HTMLElement | null;
@@ -24,14 +25,18 @@ const Dropdown: FC<IProps> = ({
   }
 
   return (
-    <Backdrop isOpened={isOpened} handleClose={closeDropdown}>
-      <div
-        className={`bg-white dark:bg-zinc-800 flex flex-col items-center absolute top-16 right-4 w-fit max-w-80 max-h-[400px] p-4 rounded-md shadow-md transition-all overflow-auto`}
-        style={{ right: `${distanceFromRight}px` }}
-      >
-        {children}
-      </div>
-    </Backdrop>
+    <Transition show={isOpened} as="div">
+      <Backdrop isOpened={isOpened} handleClose={closeDropdown}>
+        <TransitionChild>
+          <div
+            className="bg-white dark:bg-zinc-900 flex flex-col items-center absolute top-16 right-4 w-fit max-w-80 max-h-[400px] p-4 rounded-md shadow-md overflow-auto transition ease-in-out data-[closed]:opacity-0 data-[closed]:translate-x-8"
+            style={{ right: `${distanceFromRight}px` }}
+          >
+            {children}
+          </div>
+        </TransitionChild>
+      </Backdrop>
+    </Transition>
   );
 };
 

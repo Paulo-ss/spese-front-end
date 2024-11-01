@@ -8,7 +8,7 @@ interface IProps {
 const HeaderItem: FC<IProps> = ({ onClick, children }) => {
   return (
     <li
-      className="relative flex justify-center items-center cursor-pointer p-2 rounded-full hover:bg-primary dark:hover:bg-primary-dark transition-colors"
+      className="relative flex justify-center items-center cursor-pointer p-2.5 rounded-full hover:bg-primary-light dark:hover:bg-zinc-950 transition-colors"
       onClick={onClick}
     >
       {children}

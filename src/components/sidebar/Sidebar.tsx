@@ -97,7 +97,13 @@ const Sidebar: FC<IProps> = ({ currentTheme }) => {
       <div className="grow-0 flex justify-between items-center">
         <div
           className="max-w-44 mb-4 p-6 sm:p-4 cursor-pointer"
-          onClick={() => router.push("/")}
+          onClick={() => {
+            router.push("/");
+
+            if (isSidebarMobile) {
+              toggleSidebar();
+            }
+          }}
         >
           <Image
             src="/images/logos/spese-logo-full.png"

@@ -1,7 +1,8 @@
+import { SidebarContext } from "@/contexts/SidebarContext";
 import { IMenuItem } from "@/interfaces/menu-items.interface";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC } from "react";
+import { FC, useContext } from "react";
 
 interface IProps {
   item: IMenuItem;
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 const MenuItem: FC<IProps> = ({ item }) => {
+  const { isSidebarMobile, toggleSidebar } = useContext(SidebarContext);
   const pathname = usePathname();
   const isCurrentPath = pathname === item.path;
 
@@ -34,7 +36,13 @@ const MenuItem: FC<IProps> = ({ item }) => {
   }
 
   return (
-    <li>
+    <li
+      onClick={() => {
+        if (isSidebarMobile) {
+          toggleSidebar();
+        }
+      }}
+    >
       <Link
         href={item.path!}
         className={`flex items-center w-full p-3 mb-1 hover:bg-primary dark:hover:bg-primary-dark rounded-md transition-colors ${

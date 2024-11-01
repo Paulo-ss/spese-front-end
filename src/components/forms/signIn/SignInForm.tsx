@@ -12,7 +12,7 @@ import { IconLogin } from "@tabler/icons-react";
 import signIn from "@/app/actions/auth/signIn";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { externalOAuth2SignIn } from "@/app/actions/auth/externalOAuth2SignIn";
 import { Fade } from "react-awesome-reveal";
 
@@ -28,26 +28,30 @@ const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: ISignIn) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    const result = await signIn(data);
+      const result = await signIn(data);
 
-    if (result?.errorMessage) {
-      toast({
-        title: "Erro ao logar",
-        description: result.errorMessage,
-        variant: "destructive",
-      });
+      if (result?.errorMessage) {
+        toast({
+          title: "Erro ao logar",
+          description: result.errorMessage,
+          variant: "destructive",
+        });
+
+        setIsLoading(false);
+        return;
+      }
 
       setIsLoading(false);
-      return;
+      router.push("/");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
-    router.push("/");
   };
 
-  const handleExternalOAuth2SignIn = async () => {
+  const handleExternalOAuth2SignIn = useCallback(async () => {
     const result = await externalOAuth2SignIn(params.get("code")!);
 
     if (result?.errorMessage) {
@@ -56,7 +60,7 @@ const SignInForm = () => {
     }
 
     router.push("/");
-  };
+  }, [params]);
 
   useEffect(() => {
     if (params.has("code")) {

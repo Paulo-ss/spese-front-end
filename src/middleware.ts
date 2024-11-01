@@ -1,7 +1,7 @@
 import { JWT, encode, getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { IAuthResult, IUser } from "./interfaces/user-data.interface";
-import { IAPIError } from "./interfaces/api-error.interface";
+import { fetchResource } from "./services/fetchService";
 
 const SECRET = process.env.NEXTAUTH_SECRET!;
 const SESSION_SECURE = process.env.AUTH_URL?.startsWith("https://");
@@ -13,16 +13,17 @@ const refreshAccessToken = async (token: JWT) => {
   try {
     const loggedUser = token as unknown as IUser;
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/authorization/refresh-token`,
-      {
-        method: "POST",
-        body: JSON.stringify({ refreshToken: loggedUser.refreshToken }),
-      }
-    );
+    const { data, error } = await fetchResource<IAuthResult>({
+      url: "/authorization/refresh-token",
+      config: {
+        options: {
+          method: "POST",
+          body: JSON.stringify({ refreshToken: loggedUser.refreshToken }),
+        },
+      },
+    });
 
-    if (!response.ok) {
-      const error = (await response.json()) as IAPIError;
+    if (error) {
       const errorMessage = Array.isArray(error.errorMessage)
         ? error.errorMessage[0]
         : error.errorMessage;
@@ -30,13 +31,11 @@ const refreshAccessToken = async (token: JWT) => {
       throw new Error(errorMessage);
     }
 
-    const data = (await response.json()) as IAuthResult;
-
     return {
       ...token,
-      accessToken: data.accessToken,
+      accessToken: data!.accessToken,
       expiresIn: 600 * 1000 + Date.now(),
-      refreshToken: data.refreshToken,
+      refreshToken: data!.refreshToken,
     };
   } catch (error: any) {
     console.error("Error refreshing access token", error);
@@ -132,5 +131,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/api/refresh-token", "/auth/:path*"],
+  matcher: ["/", "/api/refresh-token", "/auth/:path*", "/expenses"],
 };

@@ -3,51 +3,51 @@ import Loader from "../loader/Loader";
 
 interface IProps {
   type: "submit" | "button";
-  text: string;
   color: "primary" | "secondary" | "error" | "info";
-  leading?: ReactNode;
-  trailing?: ReactNode;
+  icon: ReactNode;
   variant?: "outlined";
   disabled?: boolean;
   isLoading?: boolean;
-  small?: boolean;
-  fullWidth?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: FC<IProps> = ({
+const IconButton: FC<IProps> = ({
   type,
-  onClick,
-  text,
-  leading,
-  trailing,
   color,
-  variant,
+  icon,
   disabled,
   isLoading,
-  small,
-  fullWidth,
+  onClick,
+  variant,
 }) => {
   const colorsScheme = {
     primary: {
+      bg: "bg-emerald-200",
+      darkBg: "bg-emerald-800",
       hoverBg: "hover:bg-emerald-400",
       border: "border-emerald-400",
       focusBg: "focus:bg-emerald-400",
       darkHover: "dark:hover:bg-emerald-950",
     },
     secondary: {
+      bg: "bg-violet-200",
+      darkBg: "bg-violet-800",
       hoverBg: "hover:bg-violet-400",
       border: "border-violet-400",
       focusBg: "focus:bg-violet-400",
       darkHover: "dark:hover:bg-violet-950",
     },
     error: {
+      bg: "bg-red-200",
+      darkBg: "bg-red-800",
       hoverBg: "hover:bg-red-400",
       border: "border-red-400",
       focusBg: "focusBg:bg-red-400",
       darkHover: "dark:hover:bg-red-950",
     },
     info: {
+      bg: "bg-sky-200",
+      darkBg: "bg-sky-800",
       hoverBg: "hover:bg-sky-400",
       border: "border-sky-400",
       focusBg: "focusBg:bg-sky-400",
@@ -57,12 +57,10 @@ const Button: FC<IProps> = ({
 
   return (
     <button
-      className={`py-3 px-4 ${small && "text-sm py-2 px-2"} w-full ${
-        fullWidth ? "sm:max-w-full" : "sm:max-w-max"
-      } rounded-md flex justify-between items-center outline-none ${
+      className={`p-2 rounded-full w-fit flex justify-center items-center outline-none ${
         variant === "outlined"
           ? `${colorsScheme[color].border} border`
-          : "bg-gray-100"
+          : colorsScheme[color].bg
       } ${colorsScheme[color].hoverBg} ${
         colorsScheme[color].focusBg
       } transition-colors dark:text-zinc-50 ${
@@ -78,16 +76,10 @@ const Button: FC<IProps> = ({
       {isLoading ? (
         <Loader width="w-6" height="h-6" />
       ) : (
-        <Fragment>
-          {leading && <span className="mr-2">{leading}</span>}
-
-          <Fragment>{text}</Fragment>
-
-          {trailing && <span className="ml-2">{trailing}</span>}
-        </Fragment>
+        <Fragment>{icon}</Fragment>
       )}
     </button>
   );
 };
 
-export default Button;
+export default IconButton;

@@ -16,7 +16,7 @@ export default async function RootLayout({
       <SidebarProvider>
         <Sidebar currentTheme={currentTheme} />
 
-        <div className="flex grow flex-col z-10 h-ful bg-primary-bg dark:bg-zinc-900 dark:text-zinc-50">
+        <div className="flex grow flex-col z-10 h-ful bg-primary-bg dark:bg-zinc-800 dark:text-zinc-50">
           <Header session={session} />
 
           <div className="max-w-full">
