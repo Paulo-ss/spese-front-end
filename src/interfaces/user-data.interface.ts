@@ -4,6 +4,7 @@ export interface IUser {
   username: string;
   email: string;
   confirmed: boolean;
+  accountSetup: boolean;
   expiresIn: number;
   accessToken: string;
   refreshToken: string;

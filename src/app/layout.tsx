@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { getCurrentTheme } from "@/app/actions/cookies/getCurrentTheme";
 import { Afacad } from "next/font/google";
+import "@/lib/translation/i18n";
 
 import "./globals.css";
 

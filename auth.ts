@@ -93,6 +93,7 @@ export const {
         const user: IUser = {
           id: data!.user.id,
           confirmed: data!.user.confirmed,
+          accountSetup: data!.user.accountSetup,
           email: data!.user.email,
           name: data!.user.name,
           username: data!.user.username,

@@ -127,6 +127,18 @@ export async function middleware(request: NextRequest) {
         );
       }
     }
+
+    const loggedUser = token as unknown as IUser;
+    if (
+      request.nextUrl.pathname === "/account-setup" &&
+      loggedUser.accountSetup
+    ) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (!loggedUser.accountSetup) {
+      return NextResponse.redirect(new URL("/account-setup", request.url));
+    }
   }
 }
 
