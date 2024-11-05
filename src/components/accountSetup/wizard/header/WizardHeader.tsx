@@ -7,7 +7,7 @@ const WizardHeader = () => {
 
   return (
     <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
-      <h3 className="text-3xl font-bold">finaliza sua conta</h3>
+      <h3 className="text-3xl font-bold">finalize sua conta</h3>
 
       {!isFirstStep && !isLastStep && (
         <Button

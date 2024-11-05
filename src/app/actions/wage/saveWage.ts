@@ -2,8 +2,10 @@
 
 import { IWage } from "@/interfaces/wage.interface";
 import { fetchResource } from "@/services/fetchService";
+import { auth, updateSession } from "../../../../auth";
 
 export default async function saveWage(wage: string) {
+  const session = await auth();
   const fixedWage = Number(wage).toFixed(2);
 
   const { data, error } = await fetchResource<IWage>({
@@ -14,6 +16,11 @@ export default async function saveWage(wage: string) {
         body: JSON.stringify({ wage: Number(fixedWage) }),
       },
     },
+  });
+
+  const updatedSession = await updateSession({
+    ...session,
+    user: { ...session?.user, accountSetup: true },
   });
 
   return { data, error };

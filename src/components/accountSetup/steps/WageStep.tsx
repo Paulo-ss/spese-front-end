@@ -1,7 +1,6 @@
 import saveWage from "@/app/actions/wage/saveWage";
 import Input from "@/components/ui/input/Input";
 import { IWage } from "@/interfaces/wage.interface";
-import { useSession } from "next-auth/react";
 import { FC, MutableRefObject, useEffect } from "react";
 import { Slide } from "react-awesome-reveal";
 import { Controller, useForm } from "react-hook-form";
@@ -12,7 +11,6 @@ interface IProps {
 }
 
 const WageStep: FC<IProps> = ({ previousStepRef }) => {
-  const { data: session, update } = useSession();
   const { activeStep, handleStep } = useWizard();
   const {
     control,
@@ -43,7 +41,6 @@ const WageStep: FC<IProps> = ({ previousStepRef }) => {
         }
 
         resolve(data!);
-        update({ ...session?.user, accountSetup: true });
       } catch (error: any) {
         reject({
           message: error.message ?? "erro ao salvar o salário",

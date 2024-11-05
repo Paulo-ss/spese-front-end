@@ -9,6 +9,7 @@ export const {
   handlers: { GET, POST },
   signIn,
   signOut,
+  unstable_update: updateSession,
 } = NextAuth({
   ...authConfig,
   providers: [

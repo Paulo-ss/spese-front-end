@@ -2,7 +2,14 @@ import { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session) {
+        return {
+          ...token,
+          ...session.user,
+        };
+      }
+
       if (user) {
         return { ...token, ...user };
       }

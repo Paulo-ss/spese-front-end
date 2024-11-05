@@ -136,12 +136,21 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (!loggedUser.accountSetup) {
+    if (
+      request.nextUrl.pathname !== "/account-setup" &&
+      !loggedUser.accountSetup
+    ) {
       return NextResponse.redirect(new URL("/account-setup", request.url));
     }
   }
 }
 
 export const config = {
-  matcher: ["/", "/api/refresh-token", "/auth/:path*", "/expenses"],
+  matcher: [
+    "/",
+    "/api/refresh-token",
+    "/auth/:path*",
+    "/expenses",
+    "/account-setup",
+  ],
 };

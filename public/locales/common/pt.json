@@ -1,0 +1,42 @@
+{
+  "utils": {
+    "hi": "olá",
+    "my": "minha",
+    "profile": "perfil",
+    "with": "com",
+    "or": "ou",
+    "email": "e-mail",
+    "now": "agora",
+    "goBack": "voltar",
+    "send": "enviar",
+    "and": "e",
+    "skip": "pular",
+    "home": "home",
+    "signIn": "entrar",
+    "error": "erro",
+    "requiredField": "campo obrigatório"
+  },
+  "menuItems": {
+    "main": "principais",
+    "expenses": "despezas",
+    "incomes": {
+      "DEFAULT": "rendas",
+      "wage": "salário",
+      "others": "outros"
+    },
+    "bankAccounts": "contas bancárias",
+    "creditCards": "cartões de crédito",
+    "your categories": "suas categorias",
+    "analytics": "analítico",
+    "reports": {
+      "DEFAULT": "relatórios",
+      "graphics": "gráficos",
+      "export": "exportar"
+    }
+  },
+  "theme": {
+    "dark": "escuro",
+    "light": "claro"
+  },
+  "slogan": "sua vida financeira na palma da sua mão"
+}

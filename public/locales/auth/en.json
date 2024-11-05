@@ -1,0 +1,28 @@
+{
+  "logout": "logout",
+  "signin": "sign-in",
+  "username": "username",
+  "password": "password",
+  "notRegistered": "not registered",
+  "createAccount": "create an account",
+  "forgotPassword": "forgot your password",
+  "clickHere": "click here",
+  "yourName": "your name",
+  "confirmYour": "confirm your",
+  "register": "register",
+  "recoverPassword": "recover your password",
+  "informAccountEmailToBeRecovered": "inform the e-mail of the account to be recovered",
+  "setNewPassword": "set new password",
+  "createYourNewAccessPassword": "create your new access password",
+  "checkYourEmail": "check your email",
+  "weHaveSentALinkTo": "we've sent a link to",
+  "andYouHave30MinutesToUpdateYourPassword": "you have 30 minutes to update your password",
+  "andYouHave1HourToConfirm": "you have 1 hour to confirm your account",
+  "ifYouDontSeeTheEmail": "if you don't see the e-mail",
+  "checkSpamFolder": "check the spam folder",
+  "activateYourAccont": "activate your account",
+  "validationMessages": {
+    "typeAValidUsername": "type a valid username",
+    "typeAValidEmail": "type a valid e-mail"
+  }
+}

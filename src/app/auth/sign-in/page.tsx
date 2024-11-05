@@ -3,10 +3,7 @@ import PageContainer from "@/components/pageContainer/PageContainer";
 
 const SignInPage = () => {
   return (
-    <PageContainer
-      title="entrar - spese"
-      description="Página de login do spese"
-    >
+    <PageContainer title="utils.signIn" description="Página de login do spese">
       <SignInForm />
     </PageContainer>
   );

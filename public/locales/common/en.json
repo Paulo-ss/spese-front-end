@@ -1,0 +1,42 @@
+{
+  "utils": {
+    "hi": "hi",
+    "my": "my",
+    "profile": "profile",
+    "with": "with",
+    "or": "or",
+    "email": "e-mail",
+    "now": "now",
+    "goBack": "go back",
+    "send": "send",
+    "and": "and",
+    "skip": "skip",
+    "home": "home",
+    "signIn": "sign-in",
+    "error": "error",
+    "requiredField": "required field"
+  },
+  "menuItems": {
+    "main": "main menu",
+    "expenses": "expenses",
+    "incomes": {
+      "DEFAULT": "incomes",
+      "wage": "wage",
+      "others": "others"
+    },
+    "bankAccounts": "bank accounts",
+    "creditCards": "credit cards",
+    "your categories": "your categories",
+    "analytics": "analytics",
+    "reports": {
+      "DEFAULT": "reports",
+      "graphics": "graphs",
+      "export": "export"
+    }
+  },
+  "theme": {
+    "dark": "dark",
+    "light": "light"
+  },
+  "slogan": "your financial life at the back of your hand"
+}

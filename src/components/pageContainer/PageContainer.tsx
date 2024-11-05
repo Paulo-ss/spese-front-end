@@ -1,4 +1,7 @@
+"use client";
+
 import { Fragment } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   description?: string;
@@ -6,14 +9,18 @@ type Props = {
   title?: string;
 };
 
-const PageContainer = ({ title, description, children }: Props) => (
-  <Fragment>
-    <title>{title}</title>
+const PageContainer = ({ title, description, children }: Props) => {
+  const { t } = useTranslation("common");
 
-    <meta name="description" content={description} />
+  return (
+    <Fragment>
+      <title>{`${t(title!, { ns: "common" })} - spese`}</title>
 
-    {children}
-  </Fragment>
-);
+      <meta name="description" content={description} />
+
+      {children}
+    </Fragment>
+  );
+};
 
 export default PageContainer;

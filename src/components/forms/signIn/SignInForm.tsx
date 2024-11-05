@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { externalOAuth2SignIn } from "@/app/actions/auth/externalOAuth2SignIn";
 import { Fade } from "react-awesome-reveal";
+import { useTranslation } from "react-i18next";
 
 const SignInForm = () => {
   const {
@@ -26,6 +27,7 @@ const SignInForm = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation(["common", "auth"]);
 
   const onSubmit = async (data: ISignIn) => {
     try {
@@ -35,7 +37,7 @@ const SignInForm = () => {
 
       if (result?.errorMessage) {
         toast({
-          title: "Erro ao logar",
+          title: t("utils.error"),
           description: result.errorMessage,
           variant: "destructive",
         });
@@ -55,7 +57,7 @@ const SignInForm = () => {
     const result = await externalOAuth2SignIn(params.get("code")!);
 
     if (result?.errorMessage) {
-      toast({ title: "Erro ao logar", description: result.errorMessage });
+      toast({ title: t("utils.error"), description: result.errorMessage });
       return;
     }
 
@@ -68,7 +70,7 @@ const SignInForm = () => {
     }
 
     if (params.has("error")) {
-      toast({ title: "erro", description: params.get("error") });
+      toast({ title: t("utils.error"), description: params.get("error") });
     }
   }, [params, handleExternalOAuth2SignIn]);
 
@@ -79,7 +81,7 @@ const SignInForm = () => {
     >
       <Fade direction="up" duration={300} cascade>
         <h2 className="text-2xl font-bold mb-3 dark:text-emerald-50">
-          entrar com
+          {t("signin", { ns: "auth" })} {t("utils.with")}
         </h2>
 
         <Link
@@ -96,30 +98,36 @@ const SignInForm = () => {
           </button>
         </Link>
 
-        <Divider text="ou" />
+        <Divider text={t("utils.or")} />
 
         <Controller
           control={control}
           name="emailOrUsername"
           rules={{
-            required: { value: true, message: "campo obrigatório" },
+            required: { value: true, message: t("utils.requiredField") },
             validate: (value) => {
               if (!value.includes(".")) {
-                return "digite um nome de usuário válido";
+                return t("validationMessages.typeAValidUsername", {
+                  ns: "auth",
+                });
               }
 
               if (
                 value.includes("@") &&
                 !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)
               ) {
-                return "digite um e-mail válido";
+                return t("validationMessages.typeAValidEmail", {
+                  ns: "auth",
+                });
               }
             },
           }}
           render={({ field }) => (
             <Input
               type="text"
-              label="e-mail ou usuário"
+              label={`${t("utils.email")} ${t("utils.or")} ${t("username", {
+                ns: "auth",
+              })}`}
               {...field}
               error={!!errors.emailOrUsername?.message}
               helperText={errors.emailOrUsername?.message}
@@ -130,11 +138,13 @@ const SignInForm = () => {
         <Controller
           control={control}
           name="password"
-          rules={{ required: { value: true, message: "campo obrigatório" } }}
+          rules={{
+            required: { value: true, message: t("utils.requiredField") },
+          }}
           render={({ field }) => (
             <Input
               type="password"
-              label="senha"
+              label={t("password", { ns: "auth" })}
               {...field}
               error={!!errors.password?.message}
               helperText={errors.password?.message}
@@ -144,7 +154,7 @@ const SignInForm = () => {
 
         <Button
           type="submit"
-          text="entrar"
+          text={t("utils.signIn")}
           color="primary"
           trailing={<IconLogin />}
           disabled={isLoading}
@@ -152,22 +162,26 @@ const SignInForm = () => {
         />
 
         <span className="flex mt-8">
-          <p className="text-black dark:text-zinc-50 italic">não tem conta?</p>
+          <p className="text-black dark:text-zinc-50 italic">
+            {t("notRegistered", { ns: "auth" })}?
+          </p>
 
           <Link href="/auth/sign-up">
             <p className="underline italic text-blue-400 ml-1">
-              registre-se agora
+              {t("createAccount", { ns: "auth" })}
             </p>
           </Link>
         </span>
 
         <span className="flex mt-2">
           <p className="text-black dark:text-zinc-50 italic">
-            esqueceu sua senha?
+            {t("forgotPassword", { ns: "auth" })}?
           </p>
 
           <Link href="/auth/reset-password">
-            <p className="underline italic text-blue-400 ml-1">clique aqui</p>
+            <p className="underline italic text-blue-400 ml-1">
+              {t("clickHere", { ns: "auth" })}
+            </p>
           </Link>
         </span>
       </Fade>
