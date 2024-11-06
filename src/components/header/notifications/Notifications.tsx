@@ -26,6 +26,7 @@ import { Session } from "next-auth";
 import { ISSENotification } from "@/interfaces/sse-notification.interface";
 import markNotificationAsRead from "@/app/actions/notifications/markNotificationAsRead";
 import { toast } from "@/hooks/use-toast";
+import { useTranslations } from "next-intl";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
@@ -35,6 +36,8 @@ interface IProps {
 }
 
 const Notifications: FC<IProps> = ({ session }) => {
+  const t = useTranslations();
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -207,7 +210,7 @@ const Notifications: FC<IProps> = ({ session }) => {
                     <IconClipboardOff width={40} height={40} />
 
                     <p className="text-sm text-center mt-2 text-zinc-600 dark:text-zinc-50">
-                      Tudo limpo, sem nenhuma notificação por aqui
+                      {t("allClear")}
                     </p>
                   </div>
                 ) : (

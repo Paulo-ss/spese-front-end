@@ -3,7 +3,8 @@ import { getCurrentTheme } from "@/app/actions/cookies/getCurrentTheme";
 import { Afacad } from "next/font/google";
 
 import "./globals.css";
-import TranslationProvider from "@/components/translation/TranslationProvider";
+import { getLocale, getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 
 const afacad = Afacad({
   weight: ["400", "700"],
@@ -18,15 +19,17 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const theme = await getCurrentTheme();
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
-    <html lang="pt" className="h-full">
+    <html lang={locale} className="h-full">
       <body className={`h-full ${theme} ${afacad.className}`}>
-        <TranslationProvider>
+        <NextIntlClientProvider messages={messages}>
           {children}
 
           <Toaster />
-        </TranslationProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

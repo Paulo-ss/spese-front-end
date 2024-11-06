@@ -7,6 +7,7 @@ import Divider from "@/components/ui/divider/Divider";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
 import signOut from "@/app/actions/auth/signOut";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   session: Session | null;
@@ -15,7 +16,9 @@ interface IProps {
 const Profile: FC<IProps> = ({ session }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+  const t = useTranslations();
 
   const openDropdown = async (e: MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -39,7 +42,9 @@ const Profile: FC<IProps> = ({ session }) => {
         closeDropdown={closeDropdown}
       >
         <div className="flex flex-col items-center">
-          <h3>Olá, {session?.user.name}</h3>
+          <h3>
+            {t("utils.hi")}, {session?.user.name}
+          </h3>
 
           <Divider />
 
@@ -49,7 +54,7 @@ const Profile: FC<IProps> = ({ session }) => {
               variant="outlined"
               color="primary"
               onClick={() => router.push("/profile/me")}
-              text="meu perfil"
+              text={`${t("utils.my")} ${t("utils.profile")}`}
               trailing={<IconUser />}
               small
               fullWidth
@@ -65,7 +70,7 @@ const Profile: FC<IProps> = ({ session }) => {
 
                 setIsLoading(false);
               }}
-              text="sair"
+              text={t("utils.signOut")}
               trailing={<IconLogout />}
               isLoading={isLoading}
               disabled={isLoading}

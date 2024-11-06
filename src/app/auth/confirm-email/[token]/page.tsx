@@ -19,7 +19,7 @@ const ConfirmEmailPage = async ({
 
   return (
     <PageContainer
-      title="confirmar conta - spese"
+      title="confirmAccount"
       description="Página para confirmação do e-mail da conta do usuário"
     >
       <ConfirmEmail error={error?.errorMessage} />

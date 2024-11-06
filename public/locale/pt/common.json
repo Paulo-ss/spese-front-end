@@ -14,7 +14,8 @@
     "home": "home",
     "signIn": "entrar",
     "error": "erro",
-    "requiredField": "campo obrigatório"
+    "requiredField": "campo obrigatório",
+    "signOut": "sair"
   },
   "menuItems": {
     "main": "principais",
@@ -26,7 +27,7 @@
     },
     "bankAccounts": "contas bancárias",
     "creditCards": "cartões de crédito",
-    "your categories": "suas categorias",
+    "yourCategories": "suas categorias",
     "analytics": "analítico",
     "reports": {
       "DEFAULT": "relatórios",

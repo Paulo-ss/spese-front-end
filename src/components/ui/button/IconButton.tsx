@@ -57,7 +57,7 @@ const IconButton: FC<IProps> = ({
 
   return (
     <button
-      className={`p-2 rounded-full w-fit flex justify-center items-center outline-none ${
+      className={`p-2 rounded-md w-fit flex justify-center items-center outline-none ${
         variant === "outlined"
           ? `${colorsScheme[color].border} border`
           : colorsScheme[color].bg

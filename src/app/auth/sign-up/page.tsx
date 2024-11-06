@@ -4,7 +4,7 @@ import PageContainer from "@/components/pageContainer/PageContainer";
 const SignUpPage = () => {
   return (
     <PageContainer
-      title="cadastre-se - spese"
+      title="register"
       description="Página para criar uma conta Spese"
     >
       <SignUpForm />

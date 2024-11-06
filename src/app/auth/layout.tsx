@@ -1,4 +1,3 @@
-import Slogan from "@/components/auth/slogan/Slogan";
 import Image from "next/image";
 import { Fragment, ReactNode } from "react";
 
@@ -22,7 +21,9 @@ export default async function RootLayout({
       <div className="grid grid-cols-1 sm:grid-cols-2 w-full h-full">
         <div className="p-6 dark:bg-zinc-900">{children}</div>
 
-        <Slogan />
+        <div className="flex text-center bg-emerald-50 dark:bg-emerald-800 dark:text-white flex-col justify-center items-center h-full p-6">
+          <h2 className="text-4xl font-bold mb-2">spese</h2>
+        </div>
       </div>
     </Fragment>
   );

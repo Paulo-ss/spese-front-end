@@ -1,6 +1,7 @@
 import saveWage from "@/app/actions/wage/saveWage";
 import Input from "@/components/ui/input/Input";
 import { IWage } from "@/interfaces/wage.interface";
+import { useTranslations } from "next-intl";
 import { FC, MutableRefObject, useEffect } from "react";
 import { Slide } from "react-awesome-reveal";
 import { Controller, useForm } from "react-hook-form";
@@ -18,6 +19,7 @@ const WageStep: FC<IProps> = ({ previousStepRef }) => {
     getValues,
     setError,
   } = useForm<{ wage: string }>();
+  const t = useTranslations();
 
   const handleNextPage = async () => {
     return new Promise<IWage>(async (resolve, reject) => {
@@ -25,9 +27,9 @@ const WageStep: FC<IProps> = ({ previousStepRef }) => {
         const wage = getValues("wage");
         if (isNaN(Number(wage.replace(",", "."))) || wage.length === 0) {
           setError("wage", {
-            message: "digite um salário válido (Ex: 11,99)",
+            message: t("wageValidations.typeAValidWage"),
           });
-          reject({ message: "digite um salário válido (apenas números)" });
+          reject({ message: t("wageValidations.typeAValidWage") });
         }
 
         const { data, error } = await saveWage(wage.replace(",", "."));
@@ -43,7 +45,7 @@ const WageStep: FC<IProps> = ({ previousStepRef }) => {
         resolve(data!);
       } catch (error: any) {
         reject({
-          message: error.message ?? "erro ao salvar o salário",
+          message: error.message ?? t("errorWhileSavingWage"),
         });
       }
     });
@@ -71,7 +73,7 @@ const WageStep: FC<IProps> = ({ previousStepRef }) => {
           render={({ field }) => (
             <Input
               type="text"
-              label="defina o seu salário"
+              label={t("typeYourWage")}
               {...field}
               error={!!errors.wage?.message}
               helperText={errors.wage?.message}

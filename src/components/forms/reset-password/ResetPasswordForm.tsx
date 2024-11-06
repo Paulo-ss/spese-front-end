@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { IResetPassword } from "@/interfaces/reset-password.interface";
 import askForResetPasswordToken from "@/app/actions/auth/askForResetPasswordToken";
+import { useTranslations } from "next-intl";
 
 const ResetPasswordForm = () => {
   const {
@@ -27,6 +28,8 @@ const ResetPasswordForm = () => {
   } = useForm<IResetPassword>();
   const { toast } = useToast();
   const router = useRouter();
+  const t = useTranslations();
+
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
@@ -37,7 +40,7 @@ const ResetPasswordForm = () => {
 
     if (error?.errorMessage) {
       toast({
-        title: "erro",
+        title: t("error"),
         description: error.errorMessage,
         variant: "destructive",
       });
@@ -47,7 +50,7 @@ const ResetPasswordForm = () => {
     }
 
     toast({
-      title: "e-mail enviado.",
+      title: t("emailSent"),
       description: responseData?.message,
       action: <IconCheckbox className="w-6 h-6" color="#86EFAC" />,
     });
@@ -63,22 +66,21 @@ const ResetPasswordForm = () => {
           <IconMailCheck className="w-20 h-20" color="#86EFAC" />
 
           <h3 className="text-lg font-bold text-center dark:text-zinc-50">
-            verifique o seu e-mail
+            {t("checkYourEmail")}
           </h3>
 
-          <p className="text-sm text-gray-700 dark:text-zinc-50 text-center mt-5 w-96">
-            enviamos um link para <b>{getValues("email")}</b>e você tem 30
-            minutos para realizar a alteração da sua senha
+          <p className="text-base text-gray-700 dark:text-zinc-50 text-center mt-5 w-96">
+            {t("weHaveSentALinkTo")} <b>{getValues("email")}</b>,{" "}
+            {t("andYouHave30MinutesToUpdateYourPassword")}
           </p>
 
-          <p className="text-sm text-gray-700 dark:text-zinc-50 text-center mt-5 mb-5 w-96">
-            se o e-mail não aparecer em sua caixa de entrada,{" "}
-            <b>confira sua pasta de spam</b>
+          <p className="text-base text-gray-700 dark:text-zinc-50 text-center mt-5 mb-5 w-96">
+            {t("ifYouDontSeeTheEmail")}, <b>{t("checkSpamFolder")}</b>
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button
-              text="fazer login"
+              text={t("signin")}
               type="button"
               color="primary"
               variant="outlined"
@@ -90,7 +92,7 @@ const ResetPasswordForm = () => {
             />
 
             <Button
-              text="reenviar email"
+              text={t("resendEmail")}
               type="button"
               color="info"
               trailing={<IconRefresh />}
@@ -111,21 +113,21 @@ const ResetPasswordForm = () => {
     >
       <Fade direction="up" duration={300} cascade>
         <h2 className="text-2xl font-bold dark:text-zinc-50">
-          recuperar senha
+          {t("recoverPassword")}
         </h2>
 
         <p className="text-sm text-gray-700 mt-2 mb-5 dark:text-zinc-50">
-          informe o e-mail da conta a ser recuperada
+          {t("informAccountEmailToBeRecovered")}
         </p>
 
         <Controller
           control={control}
           name="email"
           rules={{
-            required: { value: true, message: "campo obrigatório" },
+            required: { value: true, message: t("utils.requiredField") },
             pattern: {
               value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-              message: "digite um e-mail válido",
+              message: t("validationMessages.typeAValidEmail"),
             },
           }}
           render={({ field }) => (
@@ -142,7 +144,7 @@ const ResetPasswordForm = () => {
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button
             type="button"
-            text="voltar"
+            text={t("utils.goBack")}
             variant="outlined"
             color="error"
             leading={<IconChevronLeft />}
@@ -153,7 +155,7 @@ const ResetPasswordForm = () => {
 
           <Button
             type="submit"
-            text="enviar"
+            text={t("utils.send")}
             color="primary"
             trailing={<IconSend />}
             disabled={isLoading}

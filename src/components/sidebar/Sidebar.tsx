@@ -24,47 +24,59 @@ import { MenuCollapse } from "./MenuCollapse/MenuCollapse";
 
 export const menuItems: IMenuItem[] = [
   {
-    title: "principais",
+    title: "menuItems.main",
     subHeader: true,
   },
   {
-    title: "despesas",
+    title: "menuItems.expenses",
     icon: <IconCoins />,
     path: "/expenses",
   },
   {
-    title: "rendas",
+    title: "menuItems.incomes.DEFAULT",
     icon: <IconCash />,
     children: [
-      { title: "salario", path: "/wage", icon: <IconPoint /> },
-      { title: "extras", path: "/incomes", icon: <IconPoint /> },
+      { title: "menuItems.incomes.wage", path: "/wage", icon: <IconPoint /> },
+      {
+        title: "menuItems.incomes.others",
+        path: "/incomes",
+        icon: <IconPoint />,
+      },
     ],
   },
   {
-    title: "seus bancos",
+    title: "menuItems.bankAccounts",
     icon: <IconBuildingBank />,
     path: "/bank-accounts",
   },
   {
-    title: "cartões de crédito",
+    title: "menuItems.creditCards",
     icon: <IconCreditCard />,
     path: "/credit-cards",
   },
   {
-    title: "suas categorias",
+    title: "menuItems.yourCategories",
     icon: <IconCategory />,
     path: "/categories",
   },
   {
-    title: "analítico",
+    title: "menuItems.analytics",
     subHeader: true,
   },
   {
-    title: "relatórios",
+    title: "menuItems.reports.DEFAULT",
     icon: <IconReport />,
     children: [
-      { title: "gráficos", path: "/graphs", icon: <IconPoint /> },
-      { title: "baixar", path: "/report/download", icon: <IconPoint /> },
+      {
+        title: "menuItems.reports.graphics",
+        path: "/graphs",
+        icon: <IconPoint />,
+      },
+      {
+        title: "menuItems.reports.export",
+        path: "/report/download",
+        icon: <IconPoint />,
+      },
     ],
   },
 ];
@@ -80,7 +92,7 @@ const Sidebar: FC<IProps> = ({ currentTheme }) => {
 
   const bottomMenuItems: IMenuItem[] = [
     {
-      title: currentTheme === Theme.DARK ? "escuro" : "claro",
+      title: currentTheme === Theme.DARK ? "theme.dark" : "theme.light",
       icon: currentTheme === Theme.DARK ? <IconMoonStars /> : <IconSunFilled />,
       onClick: () => {
         setCurrentTheme(currentTheme === Theme.DARK ? Theme.LIGHT : Theme.DARK);

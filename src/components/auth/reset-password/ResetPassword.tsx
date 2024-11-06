@@ -10,6 +10,7 @@ import { FC, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { INewPassword } from "@/interfaces/reset-password.interface";
 import resetPassword from "@/app/actions/auth/resetPassword";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   resetToken: string;
@@ -24,6 +25,8 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
   } = useForm<INewPassword>();
   const { toast } = useToast();
   const router = useRouter();
+  const t = useTranslations();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: INewPassword) => {
@@ -36,7 +39,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
 
     if (error?.errorMessage) {
       toast({
-        title: "erro",
+        title: t("error"),
         description: error.errorMessage,
         variant: "destructive",
       });
@@ -47,7 +50,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
 
     toast({
       title: responseData?.message,
-      description: "faça o seu login",
+      description: t("youCanNowSignIn"),
       action: <IconCheckbox className="w-6 h-6" color="#86EFAC" />,
     });
 
@@ -62,28 +65,27 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
     >
       <Fade direction="up" duration={300} cascade>
         <h2 className="text-2xl font-bold dark:text-zinc-50">
-          redefinir senha
+          {t("setNewPassword")}
         </h2>
 
         <p className="text-sm text-gray-700 mt-2 mb-5 dark:text-zinc-50">
-          crie a sua nova senha de acesso
+          {t("createYourNewAccessPassword")}
         </p>
 
         <Controller
           control={control}
           name="password"
           rules={{
-            required: { value: true, message: "campo obrigatório" },
+            required: { value: true, message: t("utils.requiredField") },
             pattern: {
               value: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g,
-              message:
-                "a senha precisa ter um número, letra maiúscula e um caracter especial",
+              message: t("validationMessages.password"),
             },
           }}
           render={({ field }) => (
             <Input
               type="password"
-              label="senha"
+              label={t("password")}
               {...field}
               error={!!errors.password?.message}
               helperText={errors.password?.message}
@@ -95,17 +97,17 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
           control={control}
           name="passwordConfirmation"
           rules={{
-            required: { value: true, message: "campo obrigatório" },
+            required: { value: true, message: t("utils.requiredField") },
             validate: (value) => {
               if (value !== getValues("password")) {
-                return "as senhas não são iguais";
+                return t("validationMessages.passwordConfirmation");
               }
             },
           }}
           render={({ field }) => (
             <Input
               type="password"
-              label="confirme sua senha"
+              label={t("passwordConfirmation")}
               {...field}
               error={!!errors.passwordConfirmation?.message}
               helperText={errors.passwordConfirmation?.message}
@@ -116,7 +118,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button
             type="button"
-            text="voltar"
+            text={t("utils.goBack")}
             variant="outlined"
             color="error"
             leading={<IconChevronLeft />}
@@ -127,7 +129,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
 
           <Button
             type="submit"
-            text="enviar"
+            text={t("utils.send")}
             color="primary"
             trailing={<IconSend />}
             disabled={isLoading}

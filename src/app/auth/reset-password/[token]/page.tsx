@@ -15,7 +15,7 @@ const ResetPasswordTokenPage = async ({
 
   return (
     <PageContainer
-      title="confirmar conta - spese"
+      title="setNewPassword"
       description="Página para confirmação do e-mail da conta do usuário"
     >
       <ResetPassword resetToken={token} />

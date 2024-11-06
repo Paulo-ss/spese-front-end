@@ -5,7 +5,7 @@ import React from "react";
 const ResetPasswordPage = () => {
   return (
     <PageContainer
-      title="recuperar senha - spese"
+      title="recoverPassword"
       description="Página para recuperação de senha do usuário"
     >
       <ResetPasswordForm />

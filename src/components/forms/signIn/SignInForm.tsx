@@ -15,7 +15,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { externalOAuth2SignIn } from "@/app/actions/auth/externalOAuth2SignIn";
 import { Fade } from "react-awesome-reveal";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
+import { setLanguage } from "@/app/actions/cookies/setLanguage";
 
 const SignInForm = () => {
   const {
@@ -27,7 +28,7 @@ const SignInForm = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation(["common", "auth"]);
+  const t = useTranslations();
 
   const onSubmit = async (data: ISignIn) => {
     try {
@@ -81,7 +82,7 @@ const SignInForm = () => {
     >
       <Fade direction="up" duration={300} cascade>
         <h2 className="text-2xl font-bold mb-3 dark:text-emerald-50">
-          {t("signin", { ns: "auth" })} {t("utils.with")}
+          {t("signin")} {t("utils.with")}
         </h2>
 
         <Link
@@ -107,9 +108,7 @@ const SignInForm = () => {
             required: { value: true, message: t("utils.requiredField") },
             validate: (value) => {
               if (!value.includes(".")) {
-                return t("validationMessages.typeAValidUsername", {
-                  ns: "auth",
-                });
+                return t("validationMessages.typeAValidUsername");
               }
 
               if (

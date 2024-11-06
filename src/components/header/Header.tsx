@@ -7,6 +7,7 @@ import { FC, useContext } from "react";
 import HeaderItem from "./headerItem/HeaderItem";
 import Notifications from "./notifications/Notifications";
 import Profile from "./profile/Profile";
+import Languages from "./languages/Languages";
 
 interface IProps {
   session: Session | null;
@@ -27,6 +28,8 @@ const Header: FC<IProps> = ({ session }) => {
 
       <ul className="relative justify-self-end flex gap-3 items-center">
         <Notifications session={session} />
+
+        <Languages />
 
         <Profile session={session} />
       </ul>

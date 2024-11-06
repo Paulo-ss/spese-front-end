@@ -1,0 +1,8 @@
+{
+  "finishYourAccount": "finish your account",
+  "typeYourWage": "type your wage",
+  "wageValidations": {
+    "typeAValidWage": "type a valid number (Ex: 11,99)"
+  },
+  "errorWhileSavingWage": "error whilte saving wage"
+}

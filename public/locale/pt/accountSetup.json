@@ -1,0 +1,8 @@
+{
+  "finishYourAccount": "finalize sua conta",
+  "typeYourWage": "digite o seu salário",
+  "wageValidations": {
+    "typeAValidWage": "digite apenas números (Ex: 11,99)"
+  },
+  "errorWhileSavingWage": "error ao salvar o salário"
+}

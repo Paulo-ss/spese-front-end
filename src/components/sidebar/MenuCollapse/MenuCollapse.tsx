@@ -2,6 +2,7 @@ import { IMenuItem } from "@/interfaces/menu-items.interface";
 import { FC, Fragment, useState } from "react";
 import MenuItem from "../MenuItem/MenuItem";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   item: IMenuItem;
@@ -9,6 +10,7 @@ interface IProps {
 
 export const MenuCollapse: FC<IProps> = ({ item }) => {
   const [isOpened, setIsOpened] = useState(false);
+  const t = useTranslations();
 
   return (
     <Fragment>
@@ -20,7 +22,7 @@ export const MenuCollapse: FC<IProps> = ({ item }) => {
       >
         {item.icon && <span className="mr-2 grow-0">{item.icon}</span>}
 
-        <p className="text-sm grow">{item.title}</p>
+        <p className="text-sm grow">{t(item.title)}</p>
 
         <span className="mr-2 grow-0">
           {isOpened ? <IconChevronUp /> : <IconChevronDown />}

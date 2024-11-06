@@ -14,7 +14,8 @@
     "home": "home",
     "signIn": "sign-in",
     "error": "error",
-    "requiredField": "required field"
+    "requiredField": "required field",
+    "signOut": "sign out"
   },
   "menuItems": {
     "main": "main menu",
@@ -26,7 +27,7 @@
     },
     "bankAccounts": "bank accounts",
     "creditCards": "credit cards",
-    "your categories": "your categories",
+    "yourCategories": "your categories",
     "analytics": "analytics",
     "reports": {
       "DEFAULT": "reports",
