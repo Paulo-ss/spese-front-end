@@ -1,0 +1,7 @@
+{
+  "bankAccount": {
+    "registerYourBankAccount": "cadastre suas contas bancárias",
+    "typeTheCurrentBalance": "digite o saldo atual",
+    "selectTheBank": "selecione o banco"
+  }
+}

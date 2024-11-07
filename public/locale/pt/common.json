@@ -15,7 +15,8 @@
     "signIn": "entrar",
     "error": "erro",
     "requiredField": "campo obrigatório",
-    "signOut": "sair"
+    "signOut": "sair",
+    "somethingWentWrong": "algo deu errado"
   },
   "menuItems": {
     "main": "principais",

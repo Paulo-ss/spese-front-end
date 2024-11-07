@@ -10,6 +10,9 @@ export default getRequestConfig(async () => {
   const notifications = await import(
     `../../public/locale/${locale}/notifications.json`
   );
+  const bankAccount = await import(
+    `../../public/locale/${locale}/bankAccount.json`
+  );
   const accountSetup = await import(
     `../../public/locale/${locale}/accountSetup.json`
   );
@@ -22,6 +25,7 @@ export default getRequestConfig(async () => {
       ...common,
       ...accountSetup,
       ...notifications,
+      ...bankAccount,
     },
   };
 });

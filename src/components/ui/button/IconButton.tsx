@@ -9,6 +9,7 @@ interface IProps {
   disabled?: boolean;
   isLoading?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  fullWidth?: boolean;
 }
 
 const IconButton: FC<IProps> = ({
@@ -19,6 +20,7 @@ const IconButton: FC<IProps> = ({
   isLoading,
   onClick,
   variant,
+  fullWidth,
 }) => {
   const colorsScheme = {
     primary: {
@@ -57,7 +59,9 @@ const IconButton: FC<IProps> = ({
 
   return (
     <button
-      className={`p-2 rounded-md w-fit flex justify-center items-center outline-none ${
+      className={`p-2 rounded-md ${
+        fullWidth ? "w-full" : "w-fit"
+      } flex justify-center items-center outline-none ${
         variant === "outlined"
           ? `${colorsScheme[color].border} border`
           : colorsScheme[color].bg

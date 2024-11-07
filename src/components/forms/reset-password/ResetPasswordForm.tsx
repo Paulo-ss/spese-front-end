@@ -122,6 +122,7 @@ const ResetPasswordForm = () => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="email"
           rules={{
             required: { value: true, message: t("utils.requiredField") },

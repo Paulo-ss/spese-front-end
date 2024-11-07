@@ -74,6 +74,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="password"
           rules={{
             required: { value: true, message: t("utils.requiredField") },
@@ -95,6 +96,7 @@ const ResetPassword: FC<IProps> = ({ resetToken }) => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="passwordConfirmation"
           rules={{
             required: { value: true, message: t("utils.requiredField") },

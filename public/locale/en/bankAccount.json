@@ -1,0 +1,7 @@
+{
+  "bankAccount": {
+    "registerYourBankAccount": "register your bank accounts",
+    "typeTheCurrentBalance": "type the current balance",
+    "selectTheBank": "select a bank"
+  }
+}

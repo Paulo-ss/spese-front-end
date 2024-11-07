@@ -105,6 +105,7 @@ const SignUpForm = () => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="name"
           rules={{
             required: { value: true, message: t("utils.requiredField") },
@@ -122,6 +123,7 @@ const SignUpForm = () => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="email"
           rules={{
             required: { value: true, message: t("utils.requiredField") },
@@ -143,6 +145,7 @@ const SignUpForm = () => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="password"
           rules={{
             required: { value: true, message: t("utils.requiredField") },
@@ -164,6 +167,7 @@ const SignUpForm = () => {
 
         <Controller
           control={control}
+          defaultValue=""
           name="passwordConfirmation"
           rules={{
             required: { value: true, message: t("utils.requiredField") },

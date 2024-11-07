@@ -15,7 +15,8 @@
     "signIn": "sign-in",
     "error": "error",
     "requiredField": "required field",
-    "signOut": "sign out"
+    "signOut": "sign out",
+    "somethingWentWrong": "something went wrong"
   },
   "menuItems": {
     "main": "main menu",

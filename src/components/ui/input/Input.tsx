@@ -5,6 +5,7 @@ interface IProps {
   type: HTMLInputTypeAttribute;
   name: string;
   label: string;
+  value?: any;
   onChange?: ChangeHandler | ((...event: any[]) => void);
   onBlur?: ChangeHandler | Noop;
   ref?: RefCallBack;
@@ -24,6 +25,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
     name,
     label,
     error,
+    value,
     helperText,
     onBlur,
     onChange,
@@ -38,7 +40,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
   } = props;
 
   return (
-    <div className="flex flex-col mb-4">
+    <div className="flex flex-col">
       <label className="mb-2 text-black dark:text-zinc-50" htmlFor={name}>
         {label}
       </label>
@@ -49,6 +51,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
         } transition-colors duration-300 dark:bg-zinc-900 dark:border dark:text-white`}
         type={type}
         id={name}
+        value={value}
         onBlur={onBlur}
         onChange={onChange}
         name={name}

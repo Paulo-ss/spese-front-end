@@ -1,17 +1,17 @@
 import IconButton from "@/components/ui/button/IconButton";
-import { IconChevronRight, IconCircleCheck } from "@tabler/icons-react";
+import { IconCheck, IconChevronRight } from "@tabler/icons-react";
 import { useWizard } from "react-use-wizard";
 
 const WizardFooter = () => {
   const { nextStep, isLastStep, isLoading } = useWizard();
 
   return (
-    <div className="mt-2 flex gap-2 justify-end">
+    <div className="mt-2 pb-6 flex gap-2 justify-end">
       {isLastStep ? (
         <IconButton
           type="button"
           onClick={() => nextStep()}
-          icon={<IconCircleCheck width={30} height={30} />}
+          icon={<IconCheck width={30} height={30} />}
           color="primary"
           disabled={isLoading}
           isLoading={isLoading}

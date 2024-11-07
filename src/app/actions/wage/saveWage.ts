@@ -18,10 +18,10 @@ export default async function saveWage(wage: string) {
     },
   });
 
-  const updatedSession = await updateSession({
-    ...session,
-    user: { ...session?.user, accountSetup: true },
-  });
+  // await updateSession({
+  //   ...session,
+  //   user: { ...session?.user, accountSetup: true },
+  // });
 
   return { data, error };
 }
