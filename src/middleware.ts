@@ -37,10 +37,14 @@ const refreshAccessToken = async (token: JWT) => {
       expiresIn: 600 * 1000 + Date.now(),
       refreshToken: data!.refreshToken,
     };
-  } catch (error: any) {
-    console.error("Error refreshing access token", error);
+  } catch (error) {
+    if (error && error instanceof Error) {
+      console.error("Error refreshing access token", error);
 
-    return { ...token, error: error.message };
+      return { ...token, error: error.message };
+    }
+
+    return { ...token, error: "Error refreshing access token" };
   }
 };
 

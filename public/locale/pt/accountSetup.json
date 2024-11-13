@@ -4,5 +4,6 @@
   "wageValidations": {
     "typeAValidWage": "digite apenas números (Ex: 11,99)"
   },
-  "errorWhileSavingWage": "error ao salvar o salário"
+  "errorWhileSavingWage": "error ao salvar o salário",
+  "yourAccountIsNowComplete": "sua conta foi completada com sucesso"
 }

@@ -4,5 +4,6 @@
   "wageValidations": {
     "typeAValidWage": "type a valid number (Ex: 11,99)"
   },
-  "errorWhileSavingWage": "error whilte saving wage"
+  "errorWhileSavingWage": "error whilte saving wage",
+  "yourAccountIsNowComplete": "your account was successfully completed"
 }

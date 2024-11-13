@@ -1,0 +1,9 @@
+{
+  "creditCard": {
+    "registerYourCards": "register your credit cards",
+    "typeTheLimit": "type the limit of your card",
+    "dueDay": "due day",
+    "closingDay": "closing day",
+    "nickname": "inform a nickname for your card"
+  }
+}

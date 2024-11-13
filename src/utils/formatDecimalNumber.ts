@@ -13,9 +13,10 @@ export const formatDecimalNumber = ({
 }: IArgs) => {
   const noCommaValue = Number(String(value).replace(",", "."));
   const fixedValue = noCommaValue.toFixed(toFixed);
+  const finalValue = isNaN(Number(fixedValue)) ? 0 : Number(fixedValue);
 
   if (setFieldValue) {
-    setFieldValue(Number(fixedValue));
+    setFieldValue(Number(finalValue));
   }
 
   if (returnValue) {

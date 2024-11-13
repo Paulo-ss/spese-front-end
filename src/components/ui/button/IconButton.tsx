@@ -44,7 +44,7 @@ const IconButton: FC<IProps> = ({
       darkBg: "bg-red-800",
       hoverBg: "hover:bg-red-400",
       border: "border-red-400",
-      focusBg: "focusBg:bg-red-400",
+      focusBg: "focus:bg-red-400",
       darkHover: "dark:hover:bg-red-950",
     },
     info: {
@@ -52,7 +52,7 @@ const IconButton: FC<IProps> = ({
       darkBg: "bg-sky-800",
       hoverBg: "hover:bg-sky-400",
       border: "border-sky-400",
-      focusBg: "focusBg:bg-sky-400",
+      focusBg: "focus:bg-sky-400",
       darkHover: "dark:hover:bg-sky-950",
     },
   };
@@ -68,7 +68,7 @@ const IconButton: FC<IProps> = ({
       } ${colorsScheme[color].hoverBg} ${
         colorsScheme[color].focusBg
       } transition-colors dark:text-zinc-50 ${
-        variant ? "dark:bg-none" : "dark:bg-zinc-950"
+        variant ? "dark:bg-none" : `dark:${colorsScheme[color].darkBg}`
       } ${colorsScheme[color].darkHover} ${
         disabled &&
         "cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 disabled:dark:bg-zinc-700 disabled:dark:text-zinc-500 disabled:hover:bg-none"

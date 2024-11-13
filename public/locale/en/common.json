@@ -13,10 +13,12 @@
     "skip": "skip",
     "home": "home",
     "signIn": "sign-in",
+    "success": "success",
     "error": "error",
     "requiredField": "required field",
     "signOut": "sign out",
-    "somethingWentWrong": "something went wrong"
+    "somethingWentWrong": "something went wrong",
+    "daysOfTheMonth": "days of the month"
   },
   "menuItems": {
     "main": "main menu",
@@ -40,5 +42,8 @@
     "dark": "dark",
     "light": "light"
   },
-  "slogan": "your financial life at the back of your hand"
+  "slogan": "your financial life at the back of your hand",
+  "commonValidations": {
+    "mustBeGreaterThanZero": "must be greater than zero"
+  }
 }

@@ -103,92 +103,101 @@ const SignUpForm = () => {
           {t("register")}
         </h2>
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="name"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-          }}
-          render={({ field }) => (
-            <Input
-              type="type"
-              label={t("yourName")}
-              {...field}
-              error={!!errors.name?.message}
-              helperText={errors.name?.message}
-            />
-          )}
-        />
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="name"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+            }}
+            render={({ field }) => (
+              <Input
+                type="type"
+                label={t("yourName")}
+                {...field}
+                error={!!errors.name?.message}
+                helperText={errors.name?.message}
+              />
+            )}
+          />
+        </div>
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="email"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-            pattern: {
-              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-              message: t("validationMessages.typeAValidEmail"),
-            },
-          }}
-          render={({ field }) => (
-            <Input
-              type="text"
-              label="e-mail"
-              {...field}
-              error={!!errors.email?.message}
-              helperText={errors.email?.message}
-            />
-          )}
-        />
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="email"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                message: t("validationMessages.typeAValidEmail"),
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="text"
+                label="e-mail"
+                {...field}
+                error={!!errors.email?.message}
+                helperText={errors.email?.message}
+              />
+            )}
+          />
+        </div>
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="password"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-            pattern: {
-              value: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g,
-              message: t("validationMessages.password"),
-            },
-          }}
-          render={({ field }) => (
-            <Input
-              type="password"
-              label={t("password")}
-              {...field}
-              error={!!errors.password?.message}
-              helperText={errors.password?.message}
-            />
-          )}
-        />
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="password"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+              pattern: {
+                value:
+                  /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g,
+                message: t("validationMessages.password"),
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="password"
+                label={t("password")}
+                {...field}
+                error={!!errors.password?.message}
+                helperText={errors.password?.message}
+              />
+            )}
+          />
+        </div>
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="passwordConfirmation"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-            validate: (value) => {
-              if (value !== getValues("password")) {
-                return t("validationMessages.passwordConfirmation");
-              }
-            },
-          }}
-          render={({ field }) => (
-            <Input
-              type="password"
-              label={t("passwordConfirmation")}
-              {...field}
-              error={!!errors.passwordConfirmation?.message}
-              helperText={errors.passwordConfirmation?.message}
-            />
-          )}
-        />
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="passwordConfirmation"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+              validate: (value) => {
+                if (value !== getValues("password")) {
+                  return t("validationMessages.passwordConfirmation");
+                }
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="password"
+                label={t("passwordConfirmation")}
+                {...field}
+                error={!!errors.passwordConfirmation?.message}
+                helperText={errors.passwordConfirmation?.message}
+              />
+            )}
+          />
+        </div>
 
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex flex-col gap-4 sm:flex-row mt-4">
           <Button
             type="button"
             text={t("utils.goBack")}

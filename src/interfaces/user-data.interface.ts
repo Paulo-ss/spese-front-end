@@ -10,6 +10,18 @@ export interface IUser {
   refreshToken: string;
 }
 
+export interface IUpdateUser {
+  id?: string;
+  name?: string;
+  username?: string;
+  email?: string;
+  confirmed?: boolean;
+  accountSetup?: boolean;
+  expiresIn?: number;
+  accessToken?: string;
+  refreshToken?: string;
+}
+
 export interface IAuthResult {
   user: IUser;
   accessToken: string;

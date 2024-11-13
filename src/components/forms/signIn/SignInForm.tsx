@@ -16,7 +16,6 @@ import { useCallback, useEffect, useState } from "react";
 import { externalOAuth2SignIn } from "@/app/actions/auth/externalOAuth2SignIn";
 import { Fade } from "react-awesome-reveal";
 import { useTranslations } from "next-intl";
-import { setLanguage } from "@/app/actions/cookies/setLanguage";
 
 const SignInForm = () => {
   const {
@@ -63,7 +62,7 @@ const SignInForm = () => {
     }
 
     router.push("/");
-  }, [params]);
+  }, [params, router, t, toast]);
 
   useEffect(() => {
     if (params.has("code")) {
@@ -73,7 +72,7 @@ const SignInForm = () => {
     if (params.has("error")) {
       toast({ title: t("utils.error"), description: params.get("error") });
     }
-  }, [params, handleExternalOAuth2SignIn]);
+  }, [params, handleExternalOAuth2SignIn, toast, t]);
 
   return (
     <form
@@ -101,66 +100,72 @@ const SignInForm = () => {
 
         <Divider text={t("utils.or")} />
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="emailOrUsername"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-            validate: (value) => {
-              if (!value.includes(".")) {
-                return t("validationMessages.typeAValidUsername");
-              }
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="emailOrUsername"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+              validate: (value) => {
+                if (!value.includes(".")) {
+                  return t("validationMessages.typeAValidUsername");
+                }
 
-              if (
-                value.includes("@") &&
-                !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)
-              ) {
-                return t("validationMessages.typeAValidEmail", {
+                if (
+                  value.includes("@") &&
+                  !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)
+                ) {
+                  return t("validationMessages.typeAValidEmail", {
+                    ns: "auth",
+                  });
+                }
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="text"
+                label={`${t("utils.email")} ${t("utils.or")} ${t("username", {
                   ns: "auth",
-                });
-              }
-            },
-          }}
-          render={({ field }) => (
-            <Input
-              type="text"
-              label={`${t("utils.email")} ${t("utils.or")} ${t("username", {
-                ns: "auth",
-              })}`}
-              {...field}
-              error={!!errors.emailOrUsername?.message}
-              helperText={errors.emailOrUsername?.message}
-            />
-          )}
-        />
+                })}`}
+                {...field}
+                error={!!errors.emailOrUsername?.message}
+                helperText={errors.emailOrUsername?.message}
+              />
+            )}
+          />
+        </div>
 
-        <Controller
-          control={control}
-          defaultValue=""
-          name="password"
-          rules={{
-            required: { value: true, message: t("utils.requiredField") },
-          }}
-          render={({ field }) => (
-            <Input
-              type="password"
-              label={t("password", { ns: "auth" })}
-              {...field}
-              error={!!errors.password?.message}
-              helperText={errors.password?.message}
-            />
-          )}
-        />
+        <div className="mt-2">
+          <Controller
+            control={control}
+            defaultValue=""
+            name="password"
+            rules={{
+              required: { value: true, message: t("utils.requiredField") },
+            }}
+            render={({ field }) => (
+              <Input
+                type="password"
+                label={t("password", { ns: "auth" })}
+                {...field}
+                error={!!errors.password?.message}
+                helperText={errors.password?.message}
+              />
+            )}
+          />
+        </div>
 
-        <Button
-          type="submit"
-          text={t("utils.signIn")}
-          color="primary"
-          trailing={<IconLogin />}
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
+        <div className="mt-4">
+          <Button
+            type="submit"
+            text={t("utils.signIn")}
+            color="primary"
+            trailing={<IconLogin />}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
+        </div>
 
         <span className="flex mt-8">
           <p className="text-black dark:text-zinc-50 italic">

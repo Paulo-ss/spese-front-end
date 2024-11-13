@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLInputTypeAttribute, forwardRef } from "react";
 import { ChangeHandler, Noop, RefCallBack } from "react-hook-form";
 
@@ -20,6 +21,7 @@ interface IProps {
   helperText?: string;
 }
 
+// eslint-disable-next-line react/display-name
 const Input = forwardRef<any, IProps>((props, ref) => {
   const {
     name,
@@ -46,8 +48,10 @@ const Input = forwardRef<any, IProps>((props, ref) => {
       </label>
 
       <input
-        className={`py-3 px-2 border-gray-100 text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 dark:border-zinc-50 ${
-          error && "border-red-500 dark:border-red-500"
+        className={`py-3 px-2  text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 ${
+          error
+            ? "border-red-500 dark:border-red-500"
+            : "border-gray-100 dark:border-zinc-500"
         } transition-colors duration-300 dark:bg-zinc-900 dark:border dark:text-white`}
         type={type}
         id={name}

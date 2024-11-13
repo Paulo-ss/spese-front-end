@@ -35,10 +35,12 @@ export const fetchResource = async <T>({
     },
   };
 
-  let response = await fetch(
+  const response = await fetch(
     `${config.ignoreBaseUrl ? "" : process.env.NEXT_PUBLIC_API_BASE_URL}${url}`,
     requestOptions
   );
+
+  console.log({ response });
 
   if (response.status === 403 && !config?.isRefreshingToken) {
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/refresh-token`, {
