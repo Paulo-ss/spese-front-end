@@ -4,6 +4,8 @@
     "typeTheLimit": "informe o limite do cartão",
     "dueDay": "dia de vencimento",
     "closingDay": "dia de fechamento",
-    "nickname": "informe um nome para o cartão"
+    "nickname": "informe um nome para o cartão",
+    "yourCreditCards": "seus cartões de crédito",
+    "closes": "fecha"
   }
 }

@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 
 type Props = {
-  description?: string;
   children: JSX.Element | JSX.Element[];
+  description?: string;
   title?: string;
 };
 

@@ -1,0 +1,8 @@
+{
+  "analytics": {
+    "budget": "budget",
+    "expensesTotal": "expenses",
+    "paidTotal": "paid",
+    "monthBalance": "month balance"
+  }
+}

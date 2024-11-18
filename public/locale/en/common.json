@@ -45,5 +45,6 @@
   "slogan": "your financial life at the back of your hand",
   "commonValidations": {
     "mustBeGreaterThanZero": "must be greater than zero"
-  }
+  },
+  "summaryOf": "summary of"
 }

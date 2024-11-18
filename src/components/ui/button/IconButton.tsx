@@ -61,10 +61,10 @@ const IconButton: FC<IProps> = ({
     <button
       className={`p-2 rounded-md ${
         fullWidth ? "w-full" : "w-fit"
-      } flex justify-center items-center outline-none ${
+      } flex justify-center items-center outline-none border ${
         variant === "outlined"
-          ? `${colorsScheme[color].border} border`
-          : colorsScheme[color].bg
+          ? `${colorsScheme[color].border} `
+          : `${colorsScheme[color].bg} border-transparent`
       } ${colorsScheme[color].hoverBg} ${
         colorsScheme[color].focusBg
       } transition-colors dark:text-zinc-50 ${

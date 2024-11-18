@@ -48,7 +48,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
       </label>
 
       <input
-        className={`py-3 px-2  text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 ${
+        className={`py-3 px-2 text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 ${
           error
             ? "border-red-500 dark:border-red-500"
             : "border-gray-100 dark:border-zinc-500"

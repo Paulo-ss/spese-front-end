@@ -12,7 +12,7 @@ export default async function RootLayout({
   const currentTheme = await getCurrentTheme();
 
   return (
-    <main className="flex min-h-screen w-full dark:bg-zinc-900">
+    <main className="flex h-screen w-full dark:bg-zinc-900">
       <SidebarProvider>
         <Sidebar currentTheme={currentTheme} />
 

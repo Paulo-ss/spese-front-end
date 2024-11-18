@@ -45,5 +45,6 @@
   "slogan": "sua vida financeira na palma da sua mão",
   "commonValidations": {
     "mustBeGreaterThanZero": "deve ser maior do que zero"
-  }
+  },
+  "summaryOf": "resumo de"
 }

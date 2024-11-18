@@ -1,0 +1,8 @@
+{
+  "analytics": {
+    "budget": "receitas",
+    "expensesTotal": "despesas",
+    "paidTotal": "pagas",
+    "monthBalance": "saldo do mês"
+  }
+}

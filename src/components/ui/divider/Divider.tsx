@@ -17,7 +17,9 @@ const Divider: FC<IProps> = ({ text }) => {
     );
   }
 
-  return <span className="w-full h-[1px] bg-gray-100 dark:bg-white my-4" />;
+  return (
+    <span className="w-full flex h-[1px] bg-gray-100 dark:bg-white my-4" />
+  );
 };
 
 export default Divider;
