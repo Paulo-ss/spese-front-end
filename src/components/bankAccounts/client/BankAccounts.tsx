@@ -14,7 +14,7 @@ import {
 import { useTranslations } from "next-intl";
 import { FC, Fragment } from "react";
 import BankAccountItem from "./BankAccountItem";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface IProps {
   bankAccounts?: IBankAccount[];
@@ -25,6 +25,7 @@ interface IProps {
 const BankAccounts: FC<IProps> = ({ bankAccounts, error, locale }) => {
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Card
@@ -39,13 +40,15 @@ const BankAccounts: FC<IProps> = ({ bankAccounts, error, locale }) => {
             onClick={() => router.push("/bank-accounts/create")}
           />
 
-          <IconButton
-            type="button"
-            color="secondary"
-            variant="outlined"
-            icon={<IconChevronRight />}
-            onClick={() => router.push("/bank-accounts")}
-          />
+          {!pathname.includes("bank") && (
+            <IconButton
+              type="button"
+              color="secondary"
+              variant="outlined"
+              icon={<IconChevronRight />}
+              onClick={() => router.push("/bank-accounts")}
+            />
+          )}
         </div>
       }
     >

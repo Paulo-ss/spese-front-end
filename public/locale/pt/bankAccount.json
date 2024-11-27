@@ -1,6 +1,7 @@
 {
   "bankAccount": {
     "registerYourBankAccount": "cadastre suas contas bancárias",
+    "editBankAccount": "editar conta bancária",
     "typeTheCurrentBalance": "digite o saldo atual",
     "selectTheBank": "selecione o banco",
     "yourBankAccounts": "suas contas bancárias",

@@ -1,6 +1,6 @@
 "use client";
 
-import { ICategory } from "@/interfaces/category.interface";
+import { IIncome } from "@/interfaces/income.interface";
 import { FC, useState } from "react";
 import IconButton from "../ui/button/IconButton";
 import { IconCheckbox, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
@@ -18,25 +18,28 @@ import {
 import Button from "../ui/button/Button";
 import { useTranslations } from "next-intl";
 import { useToast } from "@/hooks/use-toast";
-import deleteCategory from "@/app/actions/categories/deleteCategory";
+import deleteIncome from "@/app/actions/incomes/deleteIncome";
 import { theme } from "@/lib/theme/theme";
 
 interface IProps {
-  category: ICategory;
+  income: IIncome;
+  locale: string;
+  fetchIncomes: () => Promise<void>;
 }
 
-const CategoryItem: FC<IProps> = ({ category }) => {
+const IncomeItem: FC<IProps> = ({ locale, income, fetchIncomes }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpened, setIsDialogOpened] = useState(false);
 
-  const { toast } = useToast();
   const router = useRouter();
   const t = useTranslations();
+  const { toast } = useToast();
 
   const onDelete = async () => {
     try {
       setIsLoading(true);
 
-      const { error } = await deleteCategory(category.id);
+      const { error } = await deleteIncome(income.id);
 
       if (error) {
         toast({
@@ -50,6 +53,8 @@ const CategoryItem: FC<IProps> = ({ category }) => {
         return;
       }
 
+      setIsDialogOpened(false);
+      fetchIncomes();
       toast({
         title: t("utils.success"),
         description: t("category.categoryDeleted"),
@@ -73,14 +78,23 @@ const CategoryItem: FC<IProps> = ({ category }) => {
     <div className="col-span-1 p-2 flex items-center gap-3">
       <div className="flex items-center">
         <div
-          className={`flex justify-center items-center p-2 w-12 h-12 rounded-full border border-yellow-400 dark:border-yellow-800 bg-yellow-100 dark:bg-yellow-300 text-yellow-400 dark:text-yellow-800`}
+          className={`flex justify-center items-center p-2 w-12 h-12 rounded-full border border-emerald-400 dark:border-emerald-800 bg-emerald-100 dark:bg-emerald-300 text-emerald-400 dark:text-emerald-800`}
         >
-          {category.name.charAt(0).toUpperCase()}
+          {income.name.charAt(0).toUpperCase()}
         </div>
       </div>
 
-      <div className="grow flex items-end gap-2">
-        <p className="text-base font-bold">{category.name}</p>
+      <div className="grow flex flex-col">
+        <p className="text-base font-bold">{income.name}</p>
+
+        <p className="text-base md:text-2xl font-bold">
+          {Number(income.value).toLocaleString(locale, {
+            style: "currency",
+            currency: locale === "pt" ? "BRL" : "USD",
+          })}
+        </p>
+
+        <p className="text-sm flex text-right">{income.incomeMonth}</p>
       </div>
 
       <div className="flex items-center gap-2">
@@ -88,10 +102,13 @@ const CategoryItem: FC<IProps> = ({ category }) => {
           type="button"
           color="info"
           icon={<IconEdit />}
-          onClick={() => router.push(`/categories/${category.id}`)}
+          onClick={() => router.push(`/incomes/${income.id}`)}
         />
 
-        <Dialog>
+        <Dialog
+          open={isDialogOpened}
+          onOpenChange={(isOpened) => setIsDialogOpened(isOpened)}
+        >
           <DialogTrigger asChild>
             <IconButton type="button" color="error" icon={<IconTrash />} />
           </DialogTrigger>
@@ -99,7 +116,7 @@ const CategoryItem: FC<IProps> = ({ category }) => {
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>
-                {t("utils.confirmDelete", { name: t("category.DEFAULT") })}
+                {t("utils.confirmDelete", { name: t("incomes.DEFAULT") })}
               </DialogTitle>
 
               <DialogDescription>
@@ -134,4 +151,4 @@ const CategoryItem: FC<IProps> = ({ category }) => {
   );
 };
 
-export default CategoryItem;
+export default IncomeItem;

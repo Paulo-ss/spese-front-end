@@ -2,6 +2,7 @@
 
 import { ExpenseStatus } from "@/enums/expenses.enum";
 import { IExpense } from "@/interfaces/expenses.interface";
+import { IconChevronRight } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FC } from "react";
@@ -147,6 +148,8 @@ const ExpenseItem: FC<IProps> = ({ expense, locale }) => {
 
           <p className="text-sm flex text-right">{expense.expenseDate}</p>
         </div>
+
+        <IconChevronRight />
       </div>
     </Link>
   );

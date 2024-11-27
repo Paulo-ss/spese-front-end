@@ -20,7 +20,7 @@ import {
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, Fragment } from "react";
 
 interface IProps {
@@ -32,6 +32,7 @@ interface IProps {
 const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Card
@@ -46,13 +47,15 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
             onClick={() => router.push("/credit-cards/create")}
           />
 
-          <IconButton
-            type="button"
-            color="secondary"
-            variant="outlined"
-            icon={<IconChevronRight />}
-            onClick={() => router.push("/credit-cards")}
-          />
+          {!pathname.includes("credit-cards") && (
+            <IconButton
+              type="button"
+              color="secondary"
+              variant="outlined"
+              icon={<IconChevronRight />}
+              onClick={() => router.push("/credit-cards")}
+            />
+          )}
         </div>
       }
     >
@@ -215,6 +218,8 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
                           })}
                         </p>
                       </div>
+
+                      <IconChevronRight />
                     </div>
                   </Link>
                 );

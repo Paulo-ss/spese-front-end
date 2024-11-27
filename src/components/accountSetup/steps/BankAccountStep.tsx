@@ -48,13 +48,7 @@ const BankAccountStep = () => {
     try {
       setIsLoading(true);
 
-      console.log({ data });
-
-      const { data: successMessage, error } = await saveMultipleBankAccounts(
-        data.bankAccounts
-      );
-
-      console.log({ successMessage, error });
+      const { error } = await saveMultipleBankAccounts(data.bankAccounts);
 
       if (error) {
         toast({

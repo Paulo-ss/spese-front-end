@@ -1,6 +1,7 @@
 "use client";
 
 import { IBankAccount } from "@/interfaces/bank-account.interface";
+import { IconChevronRight } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,6 +44,8 @@ const BankAccountItem: FC<IProps> = ({ bankAccount, locale }) => {
             })}
           </p>
         </div>
+
+        <IconChevronRight />
       </div>
     </Link>
   );

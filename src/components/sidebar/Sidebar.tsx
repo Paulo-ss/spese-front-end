@@ -102,7 +102,7 @@ const Sidebar: FC<IProps> = ({ currentTheme }) => {
 
   return (
     <div
-      className={`flex flex-col justify-between fixed top-0 left-0 z-20 h-full w-full lg:w-[220px] px-4 pt-1 pb-4 bg-white dark:bg-zinc-950 dark:text-zinc-50 ${
+      className={`flex flex-col justify-between fixed top-0 left-0 z-20 h-full w-full lg:w-[220px] lg:z-0 px-4 pt-1 pb-4 bg-white dark:bg-zinc-950 dark:text-zinc-50 ${
         isSidebarMobile && "-translate-x-full"
       } ${isSidebarOpened && "translate-x-0"} transition-transform`}
     >

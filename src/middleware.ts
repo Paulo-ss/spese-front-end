@@ -158,5 +158,11 @@ export const config = {
     "/account-setup",
     "/categories",
     "/categories/:path*",
+    "/bank-accounts",
+    "/bank-accounts/:path*",
+    "/credit-cards",
+    "/credit-cards/:path*",
+    "/wage",
+    "/incomes",
   ],
 };

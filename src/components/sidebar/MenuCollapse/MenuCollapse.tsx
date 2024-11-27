@@ -1,8 +1,9 @@
 import { IMenuItem } from "@/interfaces/menu-items.interface";
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import MenuItem from "../MenuItem/MenuItem";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 interface IProps {
   item: IMenuItem;
@@ -10,7 +11,15 @@ interface IProps {
 
 export const MenuCollapse: FC<IProps> = ({ item }) => {
   const [isOpened, setIsOpened] = useState(false);
+
   const t = useTranslations();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (item.children?.map(({ path }) => path).includes(pathname)) {
+      setIsOpened(true);
+    }
+  }, [pathname, item.children]);
 
   return (
     <Fragment>

@@ -3,6 +3,7 @@
 import { fetchResource } from "@/services/fetchService";
 import { IBankAccountForm } from "@/interfaces/bank-account.interface";
 import { IGenericMessageResponse } from "@/interfaces/generic-message.interface";
+import { revalidateTag } from "next/cache";
 
 export default async function saveMultipleBankAccounts(
   bankAccounts: IBankAccountForm[]
@@ -16,6 +17,8 @@ export default async function saveMultipleBankAccounts(
       },
     },
   });
+
+  revalidateTag("bank-accounts");
 
   return { data, error };
 }

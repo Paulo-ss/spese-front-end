@@ -11,6 +11,7 @@ import { IAPIError } from "@/interfaces/api-error.interface";
 import { ICategory, ICategoryForm } from "@/interfaces/category.interface";
 import {
   IconChevronLeft,
+  IconEdit,
   IconPlus,
   IconSend2,
   IconTrash,
@@ -82,7 +83,7 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
   return (
     <Card
       title={category ? "category.editCategory" : "category.createCategory"}
-      icon={<IconPlus />}
+      icon={category ? <IconEdit /> : <IconPlus />}
       action={
         <div className="flex items-center gap-2">
           <IconButton
@@ -172,7 +173,7 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
             <div
               className={` ${
                 category ? "mt-6" : "mt-2"
-              } p-6 flex gap-2 justify-end border-t border-zinc-300 dark:border-zinc-600`}
+              } p-6 flex gap-2 justify-end border-t border-gray-100 dark:border-zinc-600`}
             >
               <IconButton
                 type="submit"
