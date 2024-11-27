@@ -20,6 +20,7 @@ export default async function MonthSummaryServer({ locale }: IProps) {
       options: {
         method: "POST",
         body: JSON.stringify({ month: currentMonth }),
+        next: { tags: ["month-summary"] },
       },
     },
   });

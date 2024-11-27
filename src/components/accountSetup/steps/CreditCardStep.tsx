@@ -245,12 +245,15 @@ const CreditCardStep = () => {
                 <div className="col-span-12 sm:col-span-6 md:col-span-4">
                   <Controller
                     control={control}
-                    name={`creditCards.${index}.dueDay`}
+                    name={`creditCards.${index}.closingDay`}
                     defaultValue={1}
                     render={({ field: { value, onChange, name } }) => (
                       <Fragment>
                         <div className="mb-2">
-                          <Label name={name} label={t("creditCard.dueDay")} />
+                          <Label
+                            name={name}
+                            label={t("creditCard.closingDay")}
+                          />
                         </div>
 
                         <Select
@@ -284,15 +287,12 @@ const CreditCardStep = () => {
                 <div className="col-span-12 sm:col-span-6 md:col-span-4">
                   <Controller
                     control={control}
-                    name={`creditCards.${index}.closingDay`}
+                    name={`creditCards.${index}.dueDay`}
                     defaultValue={1}
                     render={({ field: { value, onChange, name } }) => (
                       <Fragment>
                         <div className="mb-2">
-                          <Label
-                            name={name}
-                            label={t("creditCard.closingDay")}
-                          />
+                          <Label name={name} label={t("creditCard.dueDay")} />
                         </div>
 
                         <Select

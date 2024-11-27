@@ -2,6 +2,7 @@
 
 import { fetchResource } from "@/services/fetchService";
 import { IGenericMessageResponse } from "@/interfaces/generic-message.interface";
+import { revalidateTag } from "next/cache";
 
 export default async function saveMultipleCategories(
   categories: { name: string }[]
@@ -15,6 +16,8 @@ export default async function saveMultipleCategories(
       },
     },
   });
+
+  revalidateTag("your-categories");
 
   return { data, error };
 }

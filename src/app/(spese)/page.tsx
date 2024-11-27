@@ -6,6 +6,10 @@ import { Suspense } from "react";
 import MonthSummaryServer from "@/components/analytics/server/MonthSummaryServer";
 import MonthSummaryLoading from "@/components/analytics/loding/MonthSummaryLoading";
 import CreditCardsSummaryServer from "@/components/creditCards/summary/server/CreditCardsSummaryServer";
+import CardLoading from "@/components/ui/loading/CardLoading";
+import ListItemLoading from "@/components/ui/loading/ListItemLoading";
+import BankAccountsServer from "@/components/bankAccounts/server/BankAccountsServer";
+import ExpensesServer from "@/components/expenses/server/ExpensesServer";
 
 export default async function Home() {
   const locale = await getLanguage();
@@ -25,38 +29,38 @@ export default async function Home() {
           </div>
 
           <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<MonthSummaryLoading />}>
-              <MonthSummaryServer locale={locale} />
+            <Suspense
+              fallback={
+                <CardLoading>
+                  <ListItemLoading items={4} />
+                </CardLoading>
+              }
+            >
+              <ExpensesServer limit={5} />
             </Suspense>
           </div>
 
           <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<MonthSummaryLoading />}>
-              <MonthSummaryServer locale={locale} />
-            </Suspense>
-          </div>
-
-          <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<MonthSummaryLoading />}>
-              <MonthSummaryServer locale={locale} />
-            </Suspense>
-          </div>
-
-          <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<MonthSummaryLoading />}>
-              <MonthSummaryServer locale={locale} />
-            </Suspense>
-          </div>
-
-          <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<MonthSummaryLoading />}>
-              <MonthSummaryServer locale={locale} />
-            </Suspense>
-          </div>
-
-          <div className="col-span-1 md:col-span-2 flex">
-            <Suspense fallback={<div>carregando...</div>}>
+            <Suspense
+              fallback={
+                <CardLoading>
+                  <ListItemLoading items={4} />
+                </CardLoading>
+              }
+            >
               <CreditCardsSummaryServer locale={locale} />
+            </Suspense>
+          </div>
+
+          <div className="col-span-1 md:col-span-2 flex">
+            <Suspense
+              fallback={
+                <CardLoading>
+                  <ListItemLoading items={4} />
+                </CardLoading>
+              }
+            >
+              <BankAccountsServer />
             </Suspense>
           </div>
         </div>

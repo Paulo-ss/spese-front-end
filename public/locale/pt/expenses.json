@@ -1,0 +1,11 @@
+{
+  "expenses": {
+    "yourExpenses": "suas despesas",
+    "credit_card": "crédito",
+    "debit": "débito",
+    "PAID": "paga",
+    "PENDING": "pendente",
+    "installed": "parcelada",
+    "of": "de"
+  }
+}

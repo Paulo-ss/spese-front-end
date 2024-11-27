@@ -6,6 +6,9 @@
     "closingDay": "closing day",
     "nickname": "inform a nickname for your card",
     "yourCreditCards": "your credit cards",
-    "closes": "closes"
+    "closes": "closes",
+    "closedInvoice": "closed invoice",
+    "currentInvoice": "current invoice",
+    "nextMonths": "next months"
   }
 }

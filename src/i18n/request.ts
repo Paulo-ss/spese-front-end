@@ -8,6 +8,7 @@ export default getRequestConfig(async () => {
   const auth = await import(`../../public/locale/${locale}/auth.json`);
   const wage = await import(`../../public/locale/${locale}/wage.json`);
   const category = await import(`../../public/locale/${locale}/category.json`);
+  const expenses = await import(`../../public/locale/${locale}/expenses.json`);
   const analytics = await import(
     `../../public/locale/${locale}/analytics.json`
   );
@@ -36,6 +37,7 @@ export default getRequestConfig(async () => {
       ...creditCard,
       ...category,
       ...analytics,
+      ...expenses,
     },
   };
 });

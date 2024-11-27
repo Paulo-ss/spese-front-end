@@ -12,11 +12,11 @@ export default async function RootLayout({
   const currentTheme = await getCurrentTheme();
 
   return (
-    <main className="flex h-screen w-full dark:bg-zinc-900">
+    <main className="flex h-full w-full dark:bg-zinc-900">
       <SidebarProvider>
         <Sidebar currentTheme={currentTheme} />
 
-        <div className="flex grow flex-col z-10 h-ful bg-primary-bg dark:bg-zinc-800 dark:text-zinc-50">
+        <div className="flex flex-col z-10 h-full w-full lg:max-w-[calc(100%-220px)] lg:ml-[220px] bg-primary-bg dark:bg-zinc-800 dark:text-zinc-50 transition-all overflow-auto">
           <Header session={session} />
 
           <div className="max-w-full">

@@ -1,6 +1,11 @@
 {
   "category": {
+    "DEFAULT": "category",
     "createCustomCategories": "create your own custom expense categories",
-    "categoryName": "category name"
+    "categoryName": "category name",
+    "yourCategories": "your categories",
+    "createCategory": "create category",
+    "editCategory": "edit category",
+    "categoryDeleted": "deleted category"
   }
 }

@@ -18,11 +18,16 @@
     "requiredField": "campo obrigatório",
     "signOut": "sair",
     "somethingWentWrong": "algo deu errado",
-    "daysOfTheMonth": "dias do mês"
+    "daysOfTheMonth": "dias do mês",
+    "filter": "filtrar",
+    "delete": "deletar",
+    "confirmDelete": "deletar {name}?",
+    "thisActionCantBeUndone": "essa ação não pode ser desfeita",
+    "cancel": "cancelar"
   },
   "menuItems": {
     "main": "principais",
-    "expenses": "despezas",
+    "expenses": "despesas",
     "incomes": {
       "DEFAULT": "rendas",
       "wage": "salário",

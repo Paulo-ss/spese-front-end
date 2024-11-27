@@ -78,7 +78,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [date]);
 
   useEffect(() => {
     if (!isFirstRender.current) {

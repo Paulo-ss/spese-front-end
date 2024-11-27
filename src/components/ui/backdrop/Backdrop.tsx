@@ -16,7 +16,7 @@ const Backdrop: FC<IProps> = ({ isOpened, handleClose, children }) => {
   return (
     <div
       className={`${!isOpened && "hidden"} ${
-        isOpened ? "z-20" : "-z-10"
+        isOpened ? "z-50" : "-z-10"
       } fixed top-0 left-0 bg-transparent w-screen h-screen cursor-default `}
       onClick={onClick}
     >

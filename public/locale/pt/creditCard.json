@@ -6,6 +6,9 @@
     "closingDay": "dia de fechamento",
     "nickname": "informe um nome para o cartão",
     "yourCreditCards": "seus cartões de crédito",
-    "closes": "fecha"
+    "closes": "fecha",
+    "closedInvoice": "fatura fechada",
+    "currentInvoice": "fatura atual",
+    "nextMonths": "próximos meses"
   }
 }

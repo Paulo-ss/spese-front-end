@@ -18,7 +18,12 @@
     "requiredField": "required field",
     "signOut": "sign out",
     "somethingWentWrong": "something went wrong",
-    "daysOfTheMonth": "days of the month"
+    "daysOfTheMonth": "days of the month",
+    "filter": "filter",
+    "delete": "delete",
+    "confirmDelete": "delete this {name}?",
+    "thisActionCantBeUndone": "this action can't be undone",
+    "cancel": "cancel"
   },
   "menuItems": {
     "main": "main menu",

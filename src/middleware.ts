@@ -156,5 +156,7 @@ export const config = {
     "/auth/:path*",
     "/expenses",
     "/account-setup",
+    "/categories",
+    "/categories/:path*",
   ],
 };

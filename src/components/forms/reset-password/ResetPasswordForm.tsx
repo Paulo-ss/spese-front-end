@@ -142,7 +142,7 @@ const ResetPasswordForm = () => {
           )}
         />
 
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex flex-col gap-4 sm:flex-row mt-4">
           <Button
             type="button"
             text={t("utils.goBack")}
