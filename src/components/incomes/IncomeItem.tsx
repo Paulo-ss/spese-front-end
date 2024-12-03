@@ -4,7 +4,7 @@ import { IIncome } from "@/interfaces/income.interface";
 import { FC, useState } from "react";
 import IconButton from "../ui/button/IconButton";
 import { IconCheckbox, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import {
   Dialog,
   DialogClose,
@@ -85,7 +85,7 @@ const IncomeItem: FC<IProps> = ({ locale, income, fetchIncomes }) => {
       </div>
 
       <div className="grow flex flex-col">
-        <p className="text-base font-bold">{income.name}</p>
+        <p className="text-base">{income.name}</p>
 
         <p className="text-base md:text-2xl font-bold">
           {Number(income.value).toLocaleString(locale, {

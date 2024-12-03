@@ -3,7 +3,7 @@ import Loader from "../loader/Loader";
 
 interface IProps {
   type: "submit" | "button";
-  color: "primary" | "secondary" | "error" | "info";
+  color: "primary" | "secondary" | "error" | "info" | "neutral";
   icon: ReactNode;
   variant?: "outlined";
   disabled?: boolean;
@@ -54,6 +54,14 @@ const IconButton: FC<IProps> = ({
       border: "border-sky-400",
       focusBg: "focus:bg-sky-400",
       darkHover: "dark:hover:bg-sky-950",
+    },
+    neutral: {
+      bg: "bg-zinc-100",
+      darkBg: "dark:bg-zinc-800",
+      hoverBg: "hover:bg-zinc-200",
+      border: "border-zinc-400",
+      focusBg: "focus:bg-zinc-400",
+      darkHover: "dark:hover:bg-zinc-950",
     },
   };
 

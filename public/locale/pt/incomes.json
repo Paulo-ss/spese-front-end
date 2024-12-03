@@ -1,6 +1,10 @@
 {
   "incomes": {
     "DEFAULT": "renda extra",
-    "yourIncomes": "suas rendas extras"
+    "yourIncomes": "suas rendas extras",
+    "newIncome": "nova renda extra",
+    "editIncome": "editar renda extra",
+    "date": "data",
+    "successfullUpdate": "renda extra atualizada com sucesso"
   }
 }

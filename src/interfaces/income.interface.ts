@@ -6,3 +6,9 @@ export interface IIncome {
   incomeMonth: string;
   updatedAt: Date;
 }
+
+export interface IIncomeForm {
+  name: string;
+  value: number;
+  date: Date;
+}

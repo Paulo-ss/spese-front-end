@@ -9,6 +9,7 @@ import {
   IconCash,
   IconCategory,
   IconCoins,
+  IconContract,
   IconCreditCard,
   IconMoonStars,
   IconPoint,
@@ -17,8 +18,8 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { FC, useContext } from "react";
+import { useRouter } from "next-nprogress-bar";
+import { FC, useContext, useMemo } from "react";
 import MenuItem from "./MenuItem/MenuItem";
 import { MenuCollapse } from "./MenuCollapse/MenuCollapse";
 
@@ -53,6 +54,11 @@ export const menuItems: IMenuItem[] = [
     title: "menuItems.creditCards",
     icon: <IconCreditCard />,
     path: "/credit-cards",
+  },
+  {
+    title: "menuItems.subscriptions",
+    icon: <IconContract />,
+    path: "/subscriptions",
   },
   {
     title: "menuItems.yourCategories",
@@ -90,15 +96,21 @@ const Sidebar: FC<IProps> = ({ currentTheme }) => {
     useContext(SidebarContext);
   const router = useRouter();
 
-  const bottomMenuItems: IMenuItem[] = [
-    {
-      title: currentTheme === Theme.DARK ? "theme.dark" : "theme.light",
-      icon: currentTheme === Theme.DARK ? <IconMoonStars /> : <IconSunFilled />,
-      onClick: () => {
-        setCurrentTheme(currentTheme === Theme.DARK ? Theme.LIGHT : Theme.DARK);
+  const bottomMenuItems: IMenuItem[] = useMemo(
+    () => [
+      {
+        title: currentTheme === Theme.DARK ? "theme.dark" : "theme.light",
+        icon:
+          currentTheme === Theme.DARK ? <IconMoonStars /> : <IconSunFilled />,
+        onClick: () => {
+          setCurrentTheme(
+            currentTheme === Theme.DARK ? Theme.LIGHT : Theme.DARK
+          );
+        },
       },
-    },
-  ];
+    ],
+    [currentTheme]
+  );
 
   return (
     <div

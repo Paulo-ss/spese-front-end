@@ -12,7 +12,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { IResetPassword } from "@/interfaces/reset-password.interface";

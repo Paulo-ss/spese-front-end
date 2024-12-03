@@ -1,5 +1,6 @@
 {
   "creditCard": {
+    "DEFAULT": "credit card",
     "registerYourCards": "register your credit cards",
     "typeTheLimit": "type the limit of your card",
     "dueDay": "due day",

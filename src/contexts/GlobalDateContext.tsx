@@ -12,8 +12,8 @@ interface IContextProps {
 }
 
 const today = new Date();
-const tomorrow = new Date();
-tomorrow.setDate(today.getDate() + 1);
+const oneMonthAgo = new Date();
+oneMonthAgo.setMonth(today.getMonth() - 1);
 
 export const GlobalDateContext = createContext({} as IContextProps);
 
@@ -22,8 +22,8 @@ export const GlobalDateContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [date, setDate] = useState<Date>(today);
-  const [toDate, setToDate] = useState<Date>(tomorrow);
+  const [date, setDate] = useState<Date>(oneMonthAgo);
+  const [toDate, setToDate] = useState<Date>(today);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateDate = (date: Date) => {

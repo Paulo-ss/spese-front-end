@@ -16,7 +16,7 @@ import {
   IconPlus,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import {
   FC,
   Fragment,

@@ -20,10 +20,14 @@
     "somethingWentWrong": "something went wrong",
     "daysOfTheMonth": "days of the month",
     "filter": "filter",
+    "cleanFilters": "clean filters",
     "delete": "delete",
     "confirmDelete": "delete this {name}?",
     "thisActionCantBeUndone": "this action can't be undone",
-    "cancel": "cancel"
+    "cancel": "cancel",
+    "name": "name",
+    "price": "price",
+    "pickADate": "pick a date"
   },
   "menuItems": {
     "main": "main menu",
@@ -35,6 +39,7 @@
     },
     "bankAccounts": "bank accounts",
     "creditCards": "credit cards",
+    "subscriptions": "subscriptions",
     "yourCategories": "your categories",
     "analytics": "analytics",
     "reports": {
@@ -51,5 +56,9 @@
   "commonValidations": {
     "mustBeGreaterThanZero": "must be greater than zero"
   },
-  "summaryOf": "summary of"
+  "summaryOf": "summary of",
+  "profile": {
+    "myProfile": "my profile",
+    "yourInfo": "your info"
+  }
 }

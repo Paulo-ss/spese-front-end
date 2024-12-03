@@ -5,6 +5,7 @@ import { Afacad } from "next/font/google";
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import NProgressProvider from "@/components/nprogress/NProgressProvider";
 
 const afacad = Afacad({
   weight: ["400", "700"],
@@ -25,11 +26,13 @@ export default async function RootLayout({
   return (
     <html lang={locale} className="h-full">
       <body className={`h-full ${theme} ${afacad.className}`}>
-        <NextIntlClientProvider messages={messages}>
-          {children}
+        <NProgressProvider>
+          <NextIntlClientProvider messages={messages}>
+            {children}
 
-          <Toaster />
-        </NextIntlClientProvider>
+            <Toaster />
+          </NextIntlClientProvider>
+        </NProgressProvider>
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import Button from "@/components/ui/button/Button";
 import { IconCheckbox, IconChevronLeft, IconSend } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { FC, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { INewPassword } from "@/interfaces/reset-password.interface";

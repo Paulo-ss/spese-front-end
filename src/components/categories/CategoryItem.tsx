@@ -4,7 +4,7 @@ import { ICategory } from "@/interfaces/category.interface";
 import { FC, useState } from "react";
 import IconButton from "../ui/button/IconButton";
 import { IconCheckbox, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import {
   Dialog,
   DialogClose,

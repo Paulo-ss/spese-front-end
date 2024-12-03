@@ -164,5 +164,9 @@ export const config = {
     "/credit-cards/:path*",
     "/wage",
     "/incomes",
+    "/incomes/:path*",
+    "/subscriptions",
+    "/subscriptions/:path*",
+    "/profile/me",
   ],
 };

@@ -1,6 +1,7 @@
 import { Banks } from "@/enums/banks.enum";
 
 export interface ICreditCard {
+  id: number;
   nickname: string;
   bank: Banks;
   limit: number;

@@ -1,6 +1,10 @@
 {
   "incomes": {
     "DEFAULT": "extra income",
-    "yourIncomes": "your extra incomes"
+    "yourIncomes": "your extra incomes",
+    "newIncome": "new income",
+    "editIncome": "edit income",
+    "date": "date",
+    "successfullUpdate": "successfully updated income"
   }
 }

@@ -1,5 +1,6 @@
 {
   "creditCard": {
+    "DEFAULT": "cartão de crédito",
     "registerYourCards": "register your credit cards",
     "typeTheLimit": "informe o limite do cartão",
     "dueDay": "dia de vencimento",

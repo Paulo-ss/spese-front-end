@@ -1,6 +1,5 @@
 "use client";
 
-import editBankAccount from "@/app/actions/bankAccount/editBankAccount";
 import saveMultipleBankAccounts from "@/app/actions/bankAccount/saveMultipleBankAccounts";
 import IconButton from "@/components/ui/button/IconButton";
 import Card from "@/components/ui/card/Card";
@@ -32,10 +31,11 @@ import {
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { FC, Fragment, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import editBankAccount from "@/app/actions/bankAccount/editBankAccount";
 
 interface IProps {
   bankAccount?: IBankAccount;
@@ -80,6 +80,8 @@ const BankAccountForm: FC<IProps> = ({ bankAccount, error }) => {
             ? error.errorMessage[0]
             : error.errorMessage,
         });
+
+        return;
       }
 
       router.push("/bank-accounts");

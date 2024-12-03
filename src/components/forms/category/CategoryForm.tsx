@@ -17,7 +17,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { FC, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Controller, useFieldArray, useForm } from "react-hook-form";

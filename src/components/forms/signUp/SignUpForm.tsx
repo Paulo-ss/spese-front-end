@@ -11,7 +11,7 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { ISignUp } from "@/interfaces/sign-up.interface";
 import signUp from "@/app/actions/auth/signUp";
 import { useState } from "react";

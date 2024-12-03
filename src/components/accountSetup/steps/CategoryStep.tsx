@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ICategoryForm } from "@/interfaces/category.interface";
 import { IconCheck, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import { Controller, useFieldArray, useForm } from "react-hook-form";

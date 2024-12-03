@@ -1,0 +1,9 @@
+{
+  "subscriptions": {
+    "yourSubscriptions": "your subscriptions",
+    "subscriptionDeleted": "subscription deleted",
+    "selectACreditCard": "select a credit card",
+    "createSubscription": "create subscription",
+    "editSubscription": "edit subscription"
+  }
+}

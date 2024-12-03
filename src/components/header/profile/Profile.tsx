@@ -5,7 +5,7 @@ import { IconLogout, IconUser } from "@tabler/icons-react";
 import Dropdown from "@/components/ui/dropdown/Dropdown";
 import Divider from "@/components/ui/divider/Divider";
 import Button from "@/components/ui/button/Button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import signOut from "@/app/actions/auth/signOut";
 import { useTranslations } from "next-intl";
 
@@ -54,7 +54,7 @@ const Profile: FC<IProps> = ({ session }) => {
               variant="outlined"
               color="primary"
               onClick={() => router.push("/profile/me")}
-              text={`${t("utils.my")} ${t("utils.profile")}`}
+              text={t("profile.myProfile")}
               trailing={<IconUser />}
               small
               fullWidth

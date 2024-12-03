@@ -17,7 +17,7 @@ import {
 } from "react";
 import Card from "../ui/card/Card";
 import IconButton from "../ui/button/IconButton";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import ErrorDisplay from "../ui/errorDisplay/ErrorDisplay";
 import { useTranslations } from "next-intl";
 import IncomeItem from "./IncomeItem";
@@ -77,10 +77,17 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
 
       if (incomes) {
         for (const income of incomes) {
-          income.incomeMonth = new Date(income.incomeMonth).toLocaleDateString(
-            locale,
-            { weekday: "short", day: "2-digit", month: "short" }
-          );
+          const [year, month, day] = income.incomeMonth.split("-").map(Number);
+
+          income.incomeMonth = new Date(
+            year,
+            month - 1,
+            day
+          ).toLocaleDateString(locale, {
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+          });
         }
       }
 

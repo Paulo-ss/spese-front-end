@@ -14,7 +14,8 @@ import {
 import { useTranslations } from "next-intl";
 import { FC, Fragment } from "react";
 import BankAccountItem from "./BankAccountItem";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 interface IProps {
   bankAccounts?: IBankAccount[];

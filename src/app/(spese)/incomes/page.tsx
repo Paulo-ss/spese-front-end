@@ -9,19 +9,15 @@ import { fetchResource } from "@/services/fetchService";
 export default async function IncomesPage() {
   const locale = await getLanguage();
 
-  const [year, month] = new Date()
-    .toISOString()
-    .split("T")[0]
-    .split("-")
-    .map(Number);
-  const [fromYear, fromMonth, fromDay] = new Date(year, month - 1)
-    .toISOString()
-    .split("T")[0]
-    .split("-");
-  const [toYear, toMonth, toDay] = new Date(year, month, 0)
+  const today = new Date();
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(today.getMonth() - 1);
+
+  const [fromYear, fromMonth, fromDay] = oneMonthAgo
     .toISOString()
     .split("T")[0]
     .split("-");
+  const [toYear, toMonth, toDay] = today.toISOString().split("T")[0].split("-");
 
   const { data: incomes, error } = await fetchResource<IIncome[]>({
     url: "/income/filter",
@@ -39,7 +35,9 @@ export default async function IncomesPage() {
 
   if (incomes) {
     for (const income of incomes) {
-      income.incomeMonth = new Date(income.incomeMonth).toLocaleDateString(
+      const [year, month, day] = income.incomeMonth.split("-").map(Number);
+
+      income.incomeMonth = new Date(year, month - 1, day).toLocaleDateString(
         locale,
         { weekday: "short", day: "2-digit", month: "short" }
       );

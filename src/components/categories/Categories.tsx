@@ -6,7 +6,7 @@ import { IconCategory, IconClipboardOff, IconPlus } from "@tabler/icons-react";
 import { FC, Fragment } from "react";
 import Card from "../ui/card/Card";
 import IconButton from "../ui/button/IconButton";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import ErrorDisplay from "../ui/errorDisplay/ErrorDisplay";
 import { useTranslations } from "next-intl";
 import CategoryItem from "./CategoryItem";
