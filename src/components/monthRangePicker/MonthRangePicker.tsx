@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const MonthRangePicker: FC<IProps> = ({ locale }) => {
-  const { date, toDate, updateDate, updateToDate } =
+  const { fromDate, toDate, updateFromDate, updateToDate } =
     useContext(GlobalDateContext);
 
   const [isCalendarOpened, setIsCalendarOpened] = useState(false);
@@ -34,7 +34,7 @@ const MonthRangePicker: FC<IProps> = ({ locale }) => {
 
             <p>
               <b>
-                {date
+                {fromDate
                   .toLocaleDateString(locale, {
                     month: "short",
                     year: "numeric",
@@ -65,10 +65,10 @@ const MonthRangePicker: FC<IProps> = ({ locale }) => {
         <PopoverContent className="z-50">
           <Calendar
             mode="range"
-            defaultMonth={toDate ?? date}
-            selected={{ from: date, to: toDate }}
+            defaultMonth={toDate ?? fromDate}
+            selected={{ from: fromDate, to: toDate }}
             onSelect={(date) => {
-              updateDate(date && date.from ? date.from : today);
+              updateFromDate(date && date.from ? date.from : today);
               updateToDate(date && date.to ? date.to : tomorrow);
 
               if (date?.from && date.to) {

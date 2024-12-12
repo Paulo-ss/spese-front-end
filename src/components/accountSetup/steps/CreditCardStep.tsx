@@ -334,6 +334,7 @@ const CreditCardStep = () => {
             color="primary"
             onClick={() =>
               append({
+                id: 0,
                 bank: Banks.NUBANK,
                 limit: 0,
                 nickname: "",

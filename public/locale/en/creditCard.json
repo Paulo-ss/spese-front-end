@@ -2,14 +2,19 @@
   "creditCard": {
     "DEFAULT": "credit card",
     "registerYourCards": "register your credit cards",
+    "editCreditCard": "edit credit card",
+    "yourCreditCard": "your credit card",
     "typeTheLimit": "type the limit of your card",
     "dueDay": "due day",
+    "due": "due",
     "closingDay": "closing day",
     "nickname": "inform a nickname for your card",
     "yourCreditCards": "your credit cards",
     "closes": "closes",
     "closedInvoice": "closed invoice",
     "currentInvoice": "current invoice",
-    "nextMonths": "next months"
+    "nextMonths": "next months",
+    "bank": "bank",
+    "limit": "limit"
   }
 }

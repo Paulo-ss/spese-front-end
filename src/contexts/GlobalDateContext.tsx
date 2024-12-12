@@ -4,9 +4,11 @@ import { ReactNode, createContext, useState } from "react";
 
 interface IContextProps {
   date: Date;
+  fromDate: Date;
   toDate: Date;
   isLoading: boolean;
   updateDate: (date: Date) => void;
+  updateFromDate: (date: Date) => void;
   updateToDate: (date: Date) => void;
   updateIsLoading: (isLoading: boolean) => void;
 }
@@ -22,7 +24,8 @@ export const GlobalDateContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [date, setDate] = useState<Date>(oneMonthAgo);
+  const [date, setDate] = useState<Date>(today);
+  const [fromDate, setFromDate] = useState<Date>(oneMonthAgo);
   const [toDate, setToDate] = useState<Date>(today);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,6 +37,10 @@ export const GlobalDateContextProvider = ({
     setToDate(date);
   };
 
+  const updateFromDate = (date: Date) => {
+    setFromDate(date);
+  };
+
   const updateIsLoading = (isLoading: boolean) => {
     setIsLoading(isLoading);
   };
@@ -42,9 +49,11 @@ export const GlobalDateContextProvider = ({
     <GlobalDateContext.Provider
       value={{
         date,
+        fromDate,
         toDate,
         isLoading,
         updateDate,
+        updateFromDate,
         updateToDate,
         updateIsLoading,
       }}

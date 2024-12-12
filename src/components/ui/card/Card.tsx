@@ -9,9 +9,16 @@ interface IProps {
   children: ReactNode;
   icon?: ReactNode;
   action?: ReactNode;
+  translateTitle?: boolean;
 }
 
-const Card: FC<IProps> = ({ title, children, icon, action }) => {
+const Card: FC<IProps> = ({
+  title,
+  children,
+  icon,
+  action,
+  translateTitle = true,
+}) => {
   const t = useTranslations();
 
   return (
@@ -20,7 +27,9 @@ const Card: FC<IProps> = ({ title, children, icon, action }) => {
         <div className="flex items-center gap-2">
           {icon && <span>{icon}</span>}
 
-          <p className="text-lg font-bold">{t(title)}</p>
+          <p className="text-lg font-bold">
+            {translateTitle ? t(title) : title}
+          </p>
         </div>
 
         {action}

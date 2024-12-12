@@ -1,0 +1,7 @@
+export enum InvoiceStatus {
+  OPENED_CURRENT = "OPENED_CURRENT",
+  OPENED_FUTURE = "OPENED_FUTURE",
+  CLOSED = "CLOSED",
+  DELAYED = "DELAYED",
+  PAID = "PAID",
+}

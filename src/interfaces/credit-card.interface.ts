@@ -1,6 +1,19 @@
 import { Banks } from "@/enums/banks.enum";
+import { ISubscription } from "./subscription.interface";
+import { IInvoice } from "./invoice.interface";
 
 export interface ICreditCard {
+  id: number;
+  nickname: string;
+  bank: Banks;
+  limit: number;
+  closingDay: number;
+  dueDay: number;
+  invoices?: IInvoice[];
+  subscriptions?: ISubscription[];
+}
+
+export interface ICreditCardForm {
   id: number;
   nickname: string;
   bank: Banks;
@@ -10,7 +23,7 @@ export interface ICreditCard {
 }
 
 export interface ICreditCardsForm {
-  creditCards: ICreditCard[];
+  creditCards: ICreditCardForm[];
 }
 
 export interface ICreditCardSummary {

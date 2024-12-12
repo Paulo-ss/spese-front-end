@@ -3,12 +3,6 @@
 import IconButton from "@/components/ui/button/IconButton";
 import Card from "@/components/ui/card/Card";
 import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { ICreditCardSummary } from "@/interfaces/credit-card.interface";
 import {
@@ -23,6 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 import { FC, Fragment } from "react";
+import InvoiceBar from "../../invoices/InvoiceBar";
 
 interface IProps {
   creditCards?: ICreditCardSummary[];
@@ -75,14 +70,6 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
           ) : (
             <div className="flex flex-col gap-3">
               {creditCards!.map((creditCard) => {
-                const closedMonthWidth =
-                  (creditCard.closedTotal / creditCard.limit) * 100;
-                const currentMonthWidth =
-                  (creditCard.currentMonthInvoiceTotal / creditCard.limit) *
-                  100;
-                const nextMonthsWidth =
-                  (creditCard.otherMonthsTotal / creditCard.limit) * 100;
-
                 return (
                   <Link
                     key={creditCard.id}
@@ -119,92 +106,7 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
                           </p>
                         </div>
 
-                        <div className="relative rounded-3xl overflow-hidden h-4 w-full bg-zinc-100 dark:bg-zinc-800 mb-1">
-                          {creditCard.closedTotal > 0 && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger
-                                  className="absolute top-0 left-0 bg-red-500 h-4 mb-1"
-                                  style={{
-                                    width: `${closedMonthWidth}%`,
-                                  }}
-                                />
-
-                                <TooltipContent>
-                                  <p>
-                                    {t("creditCard.closedInvoice")}:
-                                    {creditCard.closedTotal.toLocaleString(
-                                      locale,
-                                      {
-                                        style: "currency",
-                                        currency:
-                                          locale === "pt" ? "BRL" : "USD",
-                                      }
-                                    )}
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-
-                          {creditCard.currentMonthInvoiceTotal > 0 && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger
-                                  className="absolute top-0 bg-sky-500 h-4 mb-1"
-                                  style={{
-                                    left: `${closedMonthWidth}%`,
-                                    width: `${currentMonthWidth}%`,
-                                  }}
-                                />
-
-                                <TooltipContent>
-                                  <p>
-                                    {t("creditCard.currentInvoice")}:
-                                    {creditCard.currentMonthInvoiceTotal.toLocaleString(
-                                      locale,
-                                      {
-                                        style: "currency",
-                                        currency:
-                                          locale === "pt" ? "BRL" : "USD",
-                                      }
-                                    )}
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-
-                          {creditCard.otherMonthsTotal > 0 && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger
-                                  className="absolute top-0 bg-amber-500 h-4 mb-1"
-                                  style={{
-                                    left: `${
-                                      closedMonthWidth + currentMonthWidth
-                                    }%`,
-                                    width: `${nextMonthsWidth}%`,
-                                  }}
-                                />
-
-                                <TooltipContent>
-                                  <p>
-                                    {t("creditCard.nextMonths")}:
-                                    {creditCard.otherMonthsTotal.toLocaleString(
-                                      locale,
-                                      {
-                                        style: "currency",
-                                        currency:
-                                          locale === "pt" ? "BRL" : "USD",
-                                      }
-                                    )}
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-                        </div>
+                        <InvoiceBar creditCard={creditCard} locale={locale} />
                       </div>
 
                       <div className="flex flex-col">
