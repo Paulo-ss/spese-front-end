@@ -91,6 +91,12 @@ const categories = {
     bgColor: "bg-emerald-50 dark:bg-emerald-200",
     textColor: "text-emerald-400 dark:border-emerald-800",
   },
+  ASSINATURA: {
+    acronym: "A",
+    borderColor: "border-purple-400 dark:border-purple-800",
+    bgColor: "bg-purple-50 dark:bg-purple-200",
+    textColor: "text-purple-400 dark:border-purple-800",
+  },
 };
 
 type CategoryKey = keyof typeof categories;

@@ -112,7 +112,7 @@ const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
                   key={invoice.id}
                   className={`${
                     invoicesColors[invoice.status]
-                  } flex justify-center items-center py-2 px-3 rounded-3xl transition-colors cursor-pointer grow min-w-fit scroll`}
+                  } flex justify-center items-center py-2 px-3 rounded-3xl transition-colors cursor-pointer grow min-w-fit max-w-40 scroll`}
                   onClick={() => {
                     if (!carousel) {
                       return;

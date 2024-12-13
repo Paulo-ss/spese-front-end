@@ -14,6 +14,7 @@ interface IProps {
   value: Date;
   onChange: SelectSingleEventHandler | undefined;
   locale: string;
+  label: string;
   error?: boolean;
   helperText?: string;
   disableFuture?: boolean;
@@ -21,6 +22,7 @@ interface IProps {
 
 const DatePicker: FC<IProps> = ({
   value,
+  label,
   onChange,
   error,
   helperText,
@@ -31,7 +33,7 @@ const DatePicker: FC<IProps> = ({
 
   return (
     <div className="flex flex-col">
-      <Label label={t("incomes.date")} name="date" />
+      <Label label={t(label)} name="date" />
 
       <Popover>
         <PopoverTrigger asChild>

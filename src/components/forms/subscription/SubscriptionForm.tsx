@@ -4,7 +4,6 @@ import IconButton from "@/components/ui/button/IconButton";
 import Card from "@/components/ui/card/Card";
 import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
 import Input from "@/components/ui/input/Input";
-
 import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
@@ -32,18 +31,23 @@ import Label from "@/components/ui/label/Label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/Select";
 import Image from "next/image";
 import saveSubscription from "@/app/actions/subscriptions/saveSubscription";
 import editSubscription from "@/app/actions/subscriptions/editSubscription";
+import { Banks } from "@/enums/banks.enum";
 
 interface IProps {
   subscription?: ISubscription;
   error?: IAPIError;
 }
+
+const daysOfTheMonth = Array.from({ length: 31 }, (_, i) => i + 1);
 
 const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
   const {
@@ -91,7 +95,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
 
       toast({
         title: t("utils.success"),
-        description: t("incomes.successfullUpdate"),
+        description: t("subscriptions.successfullUpdate"),
         action: (
           <IconCheckbox className="w-6 h-6" color={theme.colors.emerald[400]} />
         ),
@@ -137,7 +141,6 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
 
   useEffect(() => {
     if (subscription) {
-      console.log({ subscription });
       setValue("name", subscription.name);
       setValue(
         "price",
@@ -146,6 +149,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
         )
       );
       setValue("creditCardId", subscription.creditCard.id);
+      setValue("billingDay", Number(subscription.billingDay));
     }
   }, [subscription, setValue]);
 
@@ -178,7 +182,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
       ) : (
         <Fade duration={300} direction="up" triggerOnce cascade>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="col-span-1 w-full md:w-auto">
                 <Controller
                   control={control}
@@ -258,6 +262,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
                         onValueChange={onChange}
                         value={String(value)}
                         name={name}
+                        disabled={!!subscription}
                       >
                         <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
                           <SelectValue />
@@ -282,6 +287,50 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
                               </div>
                             </SelectItem>
                           ))}
+                        </SelectContent>
+                      </Select>
+                    </Fragment>
+                  )}
+                />
+              </div>
+
+              <div className="col-span-1 w-full md:w-auto">
+                <Controller
+                  control={control}
+                  name="billingDay"
+                  defaultValue={
+                    subscription ? Number(subscription.billingDay) : 1
+                  }
+                  render={({ field: { value, onChange, name } }) => (
+                    <Fragment>
+                      <div className="mb-2">
+                        <Label
+                          name={name}
+                          label={t("subscriptions.billingDay")}
+                        />
+                      </div>
+
+                      <Select
+                        onValueChange={onChange}
+                        defaultValue={String(value)}
+                        value={String(value)}
+                        name={name}
+                      >
+                        <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
+                          <SelectValue placeholder={Banks.NUBANK} />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>
+                              {t("utils.daysOfTheMonth")}
+                            </SelectLabel>
+                            {daysOfTheMonth.map((day) => (
+                              <SelectItem key={day} value={String(day)}>
+                                {day}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
                     </Fragment>

@@ -16,12 +16,18 @@ import SubscriptionsFilters from "./SubscriptionsFilters";
 import { fetchResource } from "@/services/fetchService";
 
 interface IProps {
+  locale: string;
   initialSubscriptions?: ISubscription[];
   error?: IAPIError;
-  locale: string;
+  displayFilters?: boolean;
 }
 
-const Subscriptions: FC<IProps> = ({ initialSubscriptions, error, locale }) => {
+const Subscriptions: FC<IProps> = ({
+  initialSubscriptions,
+  error,
+  locale,
+  displayFilters = true,
+}) => {
   const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
   const [errorMessage, setErrorMessage] = useState(
     error ? error.errorMessage : undefined
@@ -77,14 +83,18 @@ const Subscriptions: FC<IProps> = ({ initialSubscriptions, error, locale }) => {
       icon={<IconContract />}
       action={
         <div className="flex items-center gap-2">
-          <SubscriptionsFilters
-            isLoading={isLoading}
-            updateLoading={updateLoading}
-            updateErrorMessage={(errorMessage) => setErrorMessage(errorMessage)}
-            updateSubscriptions={(subscriptions) =>
-              setSubscriptions(subscriptions)
-            }
-          />
+          {displayFilters && (
+            <SubscriptionsFilters
+              isLoading={isLoading}
+              updateLoading={updateLoading}
+              updateErrorMessage={(errorMessage) =>
+                setErrorMessage(errorMessage)
+              }
+              updateSubscriptions={(subscriptions) =>
+                setSubscriptions(subscriptions)
+              }
+            />
+          )}
 
           <IconButton
             type="button"

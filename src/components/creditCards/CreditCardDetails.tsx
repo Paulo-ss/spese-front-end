@@ -17,6 +17,10 @@ import CreditCardForm from "../forms/creditCardForm/CreditCardForm";
 import Invoices from "./invoices/Invoices";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { createCreditCardSummary } from "@/utils/creditCards/createCreditCardSummary";
+import InvoiceBar from "./invoices/InvoiceBar";
+import Divider from "../ui/divider/Divider";
+import Subscriptions from "../subscriptions/Subscriptions";
 
 interface IProps {
   creditCard?: ICreditCard;
@@ -31,6 +35,16 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
   const t = useTranslations();
 
   const updateIsEditing = (isEditing: boolean) => setIsEditing(isEditing);
+
+  const creditCardSummary = creditCard
+    ? createCreditCardSummary(creditCard)
+    : undefined;
+  const availableLimit = creditCardSummary
+    ? creditCardSummary.limit -
+      creditCardSummary.closedTotal -
+      creditCardSummary.currentMonthInvoiceTotal -
+      creditCardSummary.otherMonthsTotal
+    : undefined;
 
   return (
     <Fragment>
@@ -77,53 +91,136 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                 updateIsEditing={updateIsEditing}
               />
             ) : (
-              <div className="flex flex-col md:flex-row gap-4 md:gap-8 p-4">
-                <div className="flex flex-col gap-3">
-                  <p className="text-base md:text-2xl font-bold">
-                    {t("creditCard.bank")}
-                  </p>
+              <div>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8 p-4">
+                  <div className="flex flex-col gap-3">
+                    <p className="text-base md:text-2xl font-bold">
+                      {t("creditCard.bank")}
+                    </p>
 
-                  <div className="flex flex-row items-center gap-2">
-                    <Image
-                      src={`/images/logos/${creditCard?.bank}.png`}
-                      width={512}
-                      height={512}
-                      alt={`${creditCard?.bank} logo`}
-                      className="w-6 h-6 rounded-full"
-                    />
+                    <div className="flex flex-row items-center gap-2">
+                      <Image
+                        src={`/images/logos/${creditCard?.bank}.png`}
+                        width={512}
+                        height={512}
+                        alt={`${creditCard?.bank} logo`}
+                        className="w-6 h-6 rounded-full"
+                      />
 
-                    <p>{creditCard?.bank}</p>
+                      <p>{creditCard?.bank}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    <p className="text-base md:text-2xl font-bold">
+                      {t("creditCard.limit")}
+                    </p>
+
+                    <p>
+                      {Number(creditCard?.limit).toLocaleString(locale, {
+                        style: "currency",
+                        currency: locale === "pt" ? "BRL" : "USD",
+                      })}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    <p className="text-base md:text-2xl font-bold">
+                      {t("creditCard.closingDay")}
+                    </p>
+
+                    <p>{creditCard?.closingDay}</p>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    <p className="text-base md:text-2xl font-bold">
+                      {t("creditCard.dueDay")}
+                    </p>
+
+                    <p>{creditCard?.dueDay}</p>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <p className="text-base md:text-2xl font-bold">
-                    {t("creditCard.limit")}
-                  </p>
+                <Divider />
 
-                  <p>
-                    {Number(creditCard?.limit).toLocaleString(locale, {
-                      style: "currency",
-                      currency: locale === "pt" ? "BRL" : "USD",
-                    })}
-                  </p>
-                </div>
+                {creditCard && (
+                  <div className="my-2 p-4">
+                    <p className="text-lg md:text-2xl font-bold mb-4">
+                      {t("creditCard.invoicesSummary")}
+                    </p>
 
-                <div className="flex flex-col gap-3">
-                  <p className="text-base md:text-2xl font-bold">
-                    {t("creditCard.closingDay")}
-                  </p>
+                    <InvoiceBar
+                      creditCard={creditCardSummary!}
+                      locale={locale}
+                    />
 
-                  <p>{creditCard?.closingDay}</p>
-                </div>
+                    <div className="flex flex-col md:flex-row gap-4 md:gap-8 mt-4">
+                      {creditCardSummary &&
+                        creditCardSummary.closedTotal > 0 && (
+                          <div className="flex flex-col">
+                            <p className="text-base font-bold italic text-red-500">
+                              {t("creditCard.closedInvoice")}
+                            </p>
 
-                <div className="flex flex-col gap-3">
-                  <p className="text-base md:text-2xl font-bold">
-                    {t("creditCard.dueDay")}
-                  </p>
+                            <p className="text-red-500">
+                              {creditCardSummary.closedTotal.toLocaleString(
+                                locale,
+                                {
+                                  style: "currency",
+                                  currency: locale === "pt" ? "BRL" : "USD",
+                                }
+                              )}
+                            </p>
+                          </div>
+                        )}
 
-                  <p>{creditCard?.dueDay}</p>
-                </div>
+                      <div className="flex flex-col">
+                        <p className="text-base font-bold italic text-sky-500">
+                          {t("creditCard.currentInvoice")}
+                        </p>
+
+                        <p className="text-sky-500">
+                          {creditCardSummary!.currentMonthInvoiceTotal.toLocaleString(
+                            locale,
+                            {
+                              style: "currency",
+                              currency: locale === "pt" ? "BRL" : "USD",
+                            }
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="text-base font-bold italic text-amber-500">
+                          {t("creditCard.nextMonths")}
+                        </p>
+
+                        <p className="text-amber-500">
+                          {creditCardSummary!.otherMonthsTotal.toLocaleString(
+                            locale,
+                            {
+                              style: "currency",
+                              currency: locale === "pt" ? "BRL" : "USD",
+                            }
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="text-base font-bold italic">
+                          {t("creditCard.availableLimit")}
+                        </p>
+
+                        <p>
+                          {availableLimit!.toLocaleString(locale, {
+                            style: "currency",
+                            currency: locale === "pt" ? "BRL" : "USD",
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </Fragment>
@@ -133,6 +230,22 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
       {creditCard?.invoices && creditCard!.invoices.length > 0 && (
         <Invoices invoices={creditCard!.invoices!} locale={locale} />
       )}
+
+      {creditCard &&
+        creditCard.subscriptions &&
+        creditCard.subscriptions.length > 0 && (
+          <div className="mt-5">
+            <Subscriptions
+              locale={locale}
+              error={error}
+              initialSubscriptions={creditCard.subscriptions.map((sub) => ({
+                ...sub,
+                creditCard,
+              }))}
+              displayFilters={false}
+            />
+          </div>
+        )}
     </Fragment>
   );
 };

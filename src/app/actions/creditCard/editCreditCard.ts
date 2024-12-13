@@ -9,7 +9,10 @@ export default async function editCreditCard(creditCard: ICreditCard) {
     config: {
       options: {
         method: "PUT",
-        body: JSON.stringify(creditCard),
+        body: JSON.stringify({
+          ...creditCard,
+          limit: Number(creditCard.limit),
+        }),
       },
     },
   });

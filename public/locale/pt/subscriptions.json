@@ -4,6 +4,8 @@
     "subscriptionDeleted": "assinatura deletada",
     "selectACreditCard": "selecione um cartão de crédito",
     "createSubscription": "nova assinatura",
-    "editSubscription": "editar assinatura"
+    "editSubscription": "editar assinatura",
+    "billingDay": "dia de cobrança",
+    "successfullUpdate": "assinatura atualizada com sucesso"
   }
 }

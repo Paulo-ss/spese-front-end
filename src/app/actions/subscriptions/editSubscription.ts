@@ -14,7 +14,10 @@ export default async function editSubscription(
     config: {
       options: {
         method: "PUT",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          billingDay: Number(formData.billingDay),
+        }),
       },
     },
   });

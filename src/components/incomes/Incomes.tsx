@@ -34,7 +34,7 @@ interface IProps {
 }
 
 const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
-  const { date, toDate, updateIsLoading } = useContext(GlobalDateContext);
+  const { fromDate, toDate, updateIsLoading } = useContext(GlobalDateContext);
 
   const [incomes, setIncomes] = useState(initialIncomes);
   const [errorMessage, setErrorMessage] = useState(
@@ -52,7 +52,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
       updateIsLoading(true);
       setIsLoading(true);
 
-      const [fromYear, fromMonth, fromDay] = date
+      const [fromYear, fromMonth, fromDay] = fromDate
         .toISOString()
         .split("T")[0]
         .split("-");
@@ -109,7 +109,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, toDate]);
+  }, [fromDate, toDate]);
 
   useEffect(() => {
     if (!isFirstRender.current) {
@@ -118,7 +118,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
     }
 
     isFirstRender.current = false;
-  }, [date, toDate, setIncomes, fetchIncomes]);
+  }, [fromDate, toDate, setIncomes, fetchIncomes]);
 
   if (isLoading) {
     return (

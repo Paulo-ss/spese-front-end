@@ -402,11 +402,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
               </div>
             )}
 
-            <div
-              className={`${
-                creditCard ? "mt-6" : "mt-2"
-              } p-6 flex gap-2 justify-end`}
-            >
+            <div className="mt-2 p-6 flex gap-2 justify-end">
               <IconButton
                 type="submit"
                 icon={<IconSend width={30} height={30} />}

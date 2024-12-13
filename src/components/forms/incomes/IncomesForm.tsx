@@ -198,6 +198,7 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                   render={({ field: { value, onChange } }) => (
                     <DatePicker
                       value={value}
+                      label="incomes.date"
                       onChange={onChange}
                       error={!!errors?.date?.message}
                       helperText={errors.date?.message}

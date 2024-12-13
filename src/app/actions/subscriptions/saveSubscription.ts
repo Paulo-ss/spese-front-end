@@ -11,7 +11,10 @@ export default async function saveSubscription(formData: ISubscriptionForm) {
     config: {
       options: {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          billingDay: Number(formData.billingDay),
+        }),
       },
     },
   });

@@ -5,6 +5,7 @@ export interface ISubscription {
   name: string;
   price: number;
   creditCard: ICreditCard;
+  billingDay: number;
   userId: number;
   createdAt: Date;
   updatedAt: Date;
@@ -18,4 +19,5 @@ export interface ISubscriptionForm {
   name: string;
   price: number;
   creditCardId: number;
+  billingDay: number;
 }

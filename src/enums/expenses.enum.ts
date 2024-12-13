@@ -22,4 +22,5 @@ export enum ExpenseCategory {
   UBER = "UBER",
   INVESTIMENT = "INVESTIMENTO",
   GYM = "ACADEMIA",
+  SUBSCRIPTION = "ASSINATURA",
 }

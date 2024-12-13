@@ -4,6 +4,8 @@
     "subscriptionDeleted": "subscription deleted",
     "selectACreditCard": "select a credit card",
     "createSubscription": "create subscription",
-    "editSubscription": "edit subscription"
+    "editSubscription": "edit subscription",
+    "billingDay": "billing day",
+    "successfullUpdate": "subscription successfully updated"
   }
 }

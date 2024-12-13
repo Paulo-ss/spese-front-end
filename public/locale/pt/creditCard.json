@@ -15,6 +15,8 @@
     "currentInvoice": "fatura atual",
     "nextMonths": "próximos meses",
     "bank": "banco",
-    "limit": "limite"
+    "limit": "limite",
+    "invoicesSummary": "resumo das faturas",
+    "availableLimit": "limite disponível"
   }
 }
