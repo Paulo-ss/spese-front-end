@@ -1,5 +1,6 @@
 {
   "subscriptions": {
+    "DEFAULT": "subscription",
     "yourSubscriptions": "your subscriptions",
     "subscriptionDeleted": "subscription deleted",
     "selectACreditCard": "select a credit card",

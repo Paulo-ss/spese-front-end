@@ -7,7 +7,10 @@ import CardLoading from "@/components/ui/loading/CardLoading";
 import ListItemLoading from "@/components/ui/loading/ListItemLoading";
 import { GlobalDateContext } from "@/contexts/GlobalDateContext";
 import { IAPIError } from "@/interfaces/api-error.interface";
-import { IExpense } from "@/interfaces/expenses.interface";
+import {
+  ExpenseGroup as ExpenseGroupType,
+  IExpense,
+} from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
 import {
   IconChevronRight,
@@ -26,11 +29,13 @@ import {
   useRef,
   useState,
 } from "react";
-import ExpenseItem from "./ExpenseItem";
+import limitExpenses from "@/utils/expenses/limitExpenses";
+import groupExpensesByDate from "@/utils/expenses/groupExpensesByDate";
+import ExpenseGroup from "./ExpenseGroup";
 
 interface IProps {
   locale: string;
-  initialExpenses?: IExpense[];
+  initialExpenses?: ExpenseGroupType;
   error?: IAPIError;
   limit?: number;
   displayFilters?: boolean;
@@ -47,10 +52,13 @@ const Expenses: FC<IProps> = ({
   const t = useTranslations();
   const router = useRouter();
 
-  const [expenses, setExpenses] = useState(
+  const [expenses, setExpenses] = useState<ExpenseGroupType | undefined>(
     initialExpenses
       ? limit
-        ? initialExpenses!.splice(0, limit)
+        ? limitExpenses<ExpenseGroupType>(initialExpenses, {
+            limit,
+            groupExpenses: true,
+          })
         : initialExpenses
       : undefined
   );
@@ -60,6 +68,10 @@ const Expenses: FC<IProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const isFirstRender = useRef(true);
+
+  const ungroupedExpenses = expenses
+    ? limitExpenses<IExpense[]>(expenses!, {})
+    : undefined;
 
   const fetchExpenses = useCallback(async () => {
     try {
@@ -90,8 +102,12 @@ const Expenses: FC<IProps> = ({
 
       if (data) {
         for (const expense of data) {
+          const [year, month, day] = expense.expenseDate.split("-").map(Number);
+
           expense.expenseDate = new Date(
-            expense.expenseDate
+            year,
+            month - 1,
+            day
           ).toLocaleDateString(locale, {
             weekday: "short",
             day: "2-digit",
@@ -100,7 +116,7 @@ const Expenses: FC<IProps> = ({
         }
       }
 
-      setExpenses(data);
+      setExpenses(data ? groupExpensesByDate(data) : undefined);
     } catch (error) {
       if (error && error instanceof Error) {
         setErrorMessage(error.message ?? t("utils.somethingWentWrong"));
@@ -135,6 +151,8 @@ const Expenses: FC<IProps> = ({
       icon={<IconCoins />}
       action={
         <div className="flex items-center gap-2">
+          {displayFilters && <div></div>}
+
           <IconButton
             type="button"
             color="primary"
@@ -156,7 +174,7 @@ const Expenses: FC<IProps> = ({
         <ErrorDisplay errorMessage={errorMessage} />
       ) : (
         <Fragment>
-          {expenses && expenses.length === 0 ? (
+          {ungroupedExpenses && ungroupedExpenses.length === 0 ? (
             <div className="flex flex-col justify-center items-center">
               <IconClipboardOff width={40} height={40} />
 
@@ -166,13 +184,41 @@ const Expenses: FC<IProps> = ({
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {expenses?.map((expense) => (
-                <ExpenseItem
-                  key={expense.id}
-                  expense={expense}
-                  locale={locale}
-                />
-              ))}
+              {displayFilters && (
+                <p className="self-end">
+                  Total:{" "}
+                  {ungroupedExpenses!
+                    .reduce(
+                      (total, expense) => total + Number(expense.price),
+                      0
+                    )
+                    .toLocaleString(locale, {
+                      style: "currency",
+                      currency: locale === "pt" ? "BRL" : "USD",
+                    })}
+                </p>
+              )}
+
+              {Object.keys(expenses!).map((expensesDate) => {
+                const groupedExpenses = expenses![expensesDate];
+
+                return (
+                  <ExpenseGroup
+                    key={expensesDate}
+                    locale={locale}
+                    expenses={groupedExpenses}
+                    expensesDate={expensesDate}
+                  />
+                );
+              })}
+            </div>
+          )}
+
+          {limit && ungroupedExpenses && ungroupedExpenses.length > limit && (
+            <div className="flex justify-center items-center gap-3 mt-3">
+              <span className="w-2 h-2 bg-transparent border border-zinc-600 dark:border-zinc-200 rounded-full" />
+              <span className="w-2 h-2 bg-transparent border border-zinc-600 dark:border-zinc-200 rounded-full" />
+              <span className="w-2 h-2 bg-transparent border border-zinc-600 dark:border-zinc-200 rounded-full" />
             </div>
           )}
         </Fragment>

@@ -8,7 +8,7 @@ import { InvoiceStatus } from "@/enums/invoice.enum";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { IInvoice } from "@/interfaces/invoice.interface";
 import { EmblaCarouselType } from "embla-carousel";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import InvoiceItem from "./InvoiceItem";
 
 interface IProps {
@@ -45,9 +45,22 @@ const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
     findFirstInvoiceSlide(invoices)
   );
 
+  const isFirstRender = useRef(true);
+
   const updateCurrentSlide = useCallback((emblaApi: EmblaCarouselType) => {
     setCurrentSlide(emblaApi.selectedScrollSnap());
   }, []);
+
+  useEffect(() => {
+    if (!carousel) {
+      return;
+    }
+
+    if (isFirstRender.current && currentSlide !== 0) {
+      carousel.scrollTo(currentSlide, true);
+      isFirstRender.current = false;
+    }
+  }, [carousel, isFirstRender, currentSlide]);
 
   useEffect(() => {
     if (!carousel) {
@@ -102,7 +115,6 @@ const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
                 month - 1,
                 day
               ).toLocaleDateString(locale, {
-                day: "2-digit",
                 month: "short",
                 year: year !== today.getFullYear() ? "2-digit" : undefined,
               });
@@ -121,7 +133,7 @@ const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
                     carousel.scrollTo(index);
                   }}
                 >
-                  {formattedDueDate}
+                  {formattedDueDate.toUpperCase()}
                 </div>
               );
             })}

@@ -1,5 +1,6 @@
 {
   "subscriptions": {
+    "DEFAULT": "assinatura",
     "yourSubscriptions": "suas assinaturas",
     "subscriptionDeleted": "assinatura deletada",
     "selectACreditCard": "selecione um cartão de crédito",

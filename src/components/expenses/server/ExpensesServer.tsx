@@ -2,6 +2,7 @@ import { IExpense } from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
 import Expenses from "../client/Expenses";
 import { getLanguage } from "@/app/actions/cookies/getLanguague";
+import groupExpensesByDate from "@/utils/expenses/groupExpensesByDate";
 
 interface IProps {
   limit?: number;
@@ -26,7 +27,9 @@ export default async function ExpensesServer({ limit }: IProps) {
 
   if (data) {
     for (const expense of data) {
-      expense.expenseDate = new Date(expense.expenseDate).toLocaleDateString(
+      const [year, month, day] = expense.expenseDate.split("-").map(Number);
+
+      expense.expenseDate = new Date(year, month - 1, day).toLocaleDateString(
         locale,
         { weekday: "short", day: "2-digit", month: "short" }
       );
@@ -36,7 +39,7 @@ export default async function ExpensesServer({ limit }: IProps) {
   return (
     <Expenses
       locale={locale}
-      initialExpenses={data}
+      initialExpenses={data ? groupExpensesByDate(data!) : undefined}
       error={error}
       limit={limit}
     />

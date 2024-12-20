@@ -35,3 +35,5 @@ export interface IExpensesFilters {
   creditCardId?: number;
   userId: number;
 }
+
+export type ExpenseGroup = { [key: string]: IExpense[] };

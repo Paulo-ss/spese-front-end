@@ -123,7 +123,7 @@ const SubscriptionItem: FC<IProps> = ({
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>
-                {t("utils.confirmDelete", { name: t("incomes.DEFAULT") })}
+                {t("utils.confirmDelete", { name: t("subscriptions.DEFAULT") })}
               </DialogTitle>
 
               <DialogDescription>
