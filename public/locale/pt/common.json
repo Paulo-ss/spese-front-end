@@ -27,7 +27,8 @@
     "cancel": "cancelar",
     "name": "nome",
     "price": "preço",
-    "pickADate": "seleciona uma data"
+    "pickADate": "seleciona uma data",
+    "pay": "pagar"
   },
   "menuItems": {
     "main": "principais",

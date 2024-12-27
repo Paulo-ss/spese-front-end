@@ -71,60 +71,59 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
             <div className="flex flex-col gap-3">
               {creditCards!.map((creditCard) => {
                 return (
-                  <Link
-                    key={creditCard.id}
-                    href={`/credit-cards/${creditCard.id}`}
-                  >
-                    <div className="p-2 flex items-center gap-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10">
-                          <Image
-                            src={`/images/logos/${creditCard.bank}.png`}
-                            width={512}
-                            height={512}
-                            alt={`${creditCard.bank} logo`}
-                            className="overflow-hidden rounded-full"
-                          />
+                  <div key={creditCard.id} className="flex flex-col gap-3 p-2">
+                    <Link href={`/credit-cards/${creditCard.id}`}>
+                      <div className="p-2 flex items-center gap-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10">
+                            <Image
+                              src={`/images/logos/${creditCard.bank}.png`}
+                              width={512}
+                              height={512}
+                              alt={`${creditCard.bank} logo`}
+                              className="overflow-hidden rounded-full"
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="grow flex items-end gap-2">
+                        <div className="grow flex items-end gap-2">
+                          <div className="flex flex-col">
+                            <p className="text-base font-bold">
+                              {creditCard.nickname}
+                            </p>
+
+                            <p className="text-base md:text-lg font-bold">
+                              {(
+                                creditCard.closedTotal +
+                                creditCard.currentMonthInvoiceTotal +
+                                creditCard.otherMonthsTotal
+                              ).toLocaleString(locale, {
+                                style: "currency",
+                                currency: locale === "pt" ? "BRL" : "USD",
+                              })}
+                            </p>
+                          </div>
+                        </div>
+
                         <div className="flex flex-col">
-                          <p className="text-base font-bold">
-                            {creditCard.nickname}
+                          <p className="text-base">
+                            {t("creditCard.closes")} {creditCard.closingDate}
                           </p>
 
                           <p className="text-base md:text-lg font-bold">
-                            {(
-                              creditCard.closedTotal +
-                              creditCard.currentMonthInvoiceTotal +
-                              creditCard.otherMonthsTotal
-                            ).toLocaleString(locale, {
+                            {Number(creditCard.limit).toLocaleString(locale, {
                               style: "currency",
                               currency: locale === "pt" ? "BRL" : "USD",
                             })}
                           </p>
                         </div>
 
-                        <InvoiceBar creditCard={creditCard} locale={locale} />
+                        <IconChevronRight />
                       </div>
+                    </Link>
 
-                      <div className="flex flex-col">
-                        <p className="text-base">
-                          {t("creditCard.closes")} {creditCard.closingDate}
-                        </p>
-
-                        <p className="text-base md:text-lg font-bold">
-                          {Number(creditCard.limit).toLocaleString(locale, {
-                            style: "currency",
-                            currency: locale === "pt" ? "BRL" : "USD",
-                          })}
-                        </p>
-                      </div>
-
-                      <IconChevronRight />
-                    </div>
-                  </Link>
+                    <InvoiceBar creditCard={creditCard} locale={locale} />
+                  </div>
                 );
               })}
             </div>

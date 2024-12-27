@@ -185,8 +185,8 @@ const Expenses: FC<IProps> = ({
           ) : (
             <div className="flex flex-col gap-3">
               {displayFilters && (
-                <p className="self-end">
-                  Total:{" "}
+                <p className="self-end font-bold italic text-base md:text-lg">
+                  total:{" "}
                   {ungroupedExpenses!
                     .reduce(
                       (total, expense) => total + Number(expense.price),
@@ -214,7 +214,7 @@ const Expenses: FC<IProps> = ({
             </div>
           )}
 
-          {limit && ungroupedExpenses && ungroupedExpenses.length > limit && (
+          {limit && ungroupedExpenses && ungroupedExpenses.length >= limit && (
             <div className="flex justify-center items-center gap-3 mt-3">
               <span className="w-2 h-2 bg-transparent border border-zinc-600 dark:border-zinc-200 rounded-full" />
               <span className="w-2 h-2 bg-transparent border border-zinc-600 dark:border-zinc-200 rounded-full" />

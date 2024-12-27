@@ -17,6 +17,7 @@
     "bank": "banco",
     "limit": "limite",
     "invoicesSummary": "resumo das faturas",
-    "availableLimit": "limite disponível"
+    "availableLimit": "limite disponível",
+    "payInvoice": "pagar fatura"
   }
 }

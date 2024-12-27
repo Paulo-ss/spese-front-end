@@ -1,11 +1,13 @@
 {
   "expenses": {
+    "DEFAULT": "expenses",
     "yourExpenses": "your expenses",
     "credit_card": "credit",
     "debit": "debit",
     "PAID": "paid",
     "PENDING": "pending",
     "installed": "installed",
-    "of": "of"
+    "of": "of",
+    "payAllExpenses": "pay all expenses"
   }
 }

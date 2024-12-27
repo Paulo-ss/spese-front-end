@@ -118,15 +118,33 @@ const Subscriptions: FC<IProps> = ({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1">
-              {subscriptions?.map((subscription) => (
-                <SubscriptionItem
-                  key={subscription.id}
-                  subscription={subscription}
-                  locale={locale}
-                  fetchSubscriptions={fetchSubscriptions}
-                />
-              ))}
+            <div className="flex flex-col gap-3">
+              {displayFilters && (
+                <p className="self-end font-bold italic text-base md:text-lg">
+                  total:{" "}
+                  {subscriptions!
+                    .reduce(
+                      (total, subscription) =>
+                        total + Number(subscription.price),
+                      0
+                    )
+                    .toLocaleString(locale, {
+                      style: "currency",
+                      currency: locale === "pt" ? "BRL" : "USD",
+                    })}
+                </p>
+              )}
+
+              <div className="grid grid-cols-1">
+                {subscriptions?.map((subscription) => (
+                  <SubscriptionItem
+                    key={subscription.id}
+                    subscription={subscription}
+                    locale={locale}
+                    fetchSubscriptions={fetchSubscriptions}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </Fragment>

@@ -17,6 +17,7 @@
     "bank": "bank",
     "limit": "limit",
     "invoicesSummary": "invoices summary",
-    "availableLimit": "available credit limit"
+    "availableLimit": "available credit limit",
+    "payInvoice": "pay invoice"
   }
 }

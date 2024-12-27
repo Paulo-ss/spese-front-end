@@ -37,7 +37,13 @@ const BankAccountItem: FC<IProps> = ({ bankAccount, locale }) => {
         <div className="flex flex-col items-end">
           <p className="text-base">{t("bankAccount.currentBalance")}</p>
 
-          <p className="text-base md:text-lg font-bold">
+          <p
+            className={`text-base md:text-lg font-bold ${
+              bankAccount.currentBalance &&
+              bankAccount.currentBalance < 0 &&
+              "text-red-500"
+            }`}
+          >
             {Number(bankAccount.currentBalance).toLocaleString(locale, {
               style: "currency",
               currency: locale === "pt" ? "BRL" : "USD",

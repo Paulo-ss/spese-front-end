@@ -11,6 +11,7 @@ export default async function CreditCardPage({
 }) {
   const { data: creditCard, error } = await fetchResource<ICreditCard>({
     url: `/credit-card/${params.creditCardId}`,
+    config: { options: { next: { tags: ["credit-card-details"] } } },
   });
 
   const locale = await getLanguage();

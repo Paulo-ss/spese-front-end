@@ -94,12 +94,12 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 w-full gap-4 rounded-md">
+    <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-4 rounded-md">
       {errorMessage ? (
         <ErrorDisplay errorMessage={errorMessage} />
       ) : (
         <Fragment>
-          <div className="col-span-1 flex items-center gap-2 p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
+          <div className="col-span-1 flex items-center gap-2 p-2 md:p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
             <div className="flex items-center justify-center p-3 rounded-md bg-emerald-100 dark:bg-emerald-300">
               <IconCurrencyDollar color={theme.colors.emerald[500]} />
             </div>
@@ -109,7 +109,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 {t("analytics.budget")}
               </p>
 
-              <p className="text-lg font-bold">
+              <p className="text-base md:text-lg font-bold">
                 {monthSummary?.budget.toLocaleString(locale, {
                   style: "currency",
                   currency: locale === "pt" ? "BRL" : "USD",
@@ -118,7 +118,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
             </div>
           </div>
 
-          <div className="col-span-1 flex items-center gap-2 p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
+          <div className="col-span-1 flex items-center gap-2 p-2 md:p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
             <div className="flex items-center justify-center p-3 rounded-md bg-red-100 dark:bg-red-300">
               <IconCurrencyDollar color={theme.colors.red[500]} />
             </div>
@@ -128,7 +128,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 {t("analytics.expensesTotal")}
               </p>
 
-              <p className="text-lg font-bold">
+              <p className="text-base md:text-lg font-bold">
                 {monthSummary?.expensesTotal.toLocaleString(locale, {
                   style: "currency",
                   currency: locale === "pt" ? "BRL" : "USD",
@@ -137,7 +137,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
             </div>
           </div>
 
-          <div className="col-span-1 flex items-center gap-2 p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
+          <div className="col-span-1 flex items-center gap-2 p-2 md:p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
             <div className="flex items-center justify-center p-3 rounded-md bg-sky-100 dark:bg-sky-300">
               <IconCheckbox color={theme.colors.sky[500]} />
             </div>
@@ -147,7 +147,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 {t("analytics.paidTotal")}
               </p>
 
-              <p className="text-lg font-bold">
+              <p className="text-base md:text-lg font-bold">
                 {monthSummary?.paidTotal.toLocaleString(locale, {
                   style: "currency",
                   currency: locale === "pt" ? "BRL" : "USD",
@@ -156,7 +156,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
             </div>
           </div>
 
-          <div className="col-span-1 flex items-center gap-2 p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
+          <div className="col-span-1 flex items-center gap-2 p-2 md:p-3 rounded-md shadow-sm bg-white dark:bg-zinc-900">
             <div className="flex items-center justify-center p-3 rounded-md bg-zinc-100 dark:bg-zinc-300">
               <IconPlusMinus color={theme.colors.zinc[500]} />
             </div>
@@ -166,7 +166,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 {t("analytics.monthBalance")}
               </p>
 
-              <p className="text-lg font-bold">
+              <p className="text-base md:text-lg font-bold">
                 {monthSummary?.monthBalance.toLocaleString(locale, {
                   style: "currency",
                   currency: locale === "pt" ? "BRL" : "USD",
