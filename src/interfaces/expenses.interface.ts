@@ -25,15 +25,15 @@ export interface IExpense {
 }
 
 export interface IExpensesFilters {
-  fromMonth: string;
-  toMonth?: string;
+  month: string | null;
+  fromDate: string | null;
+  toDate: string | null;
   category?: ExpenseCategory;
   customCategory?: number;
   name?: string;
   priceRange?: number[];
   status?: ExpenseStatus;
   creditCardId?: number;
-  userId: number;
 }
 
 export type ExpenseGroup = { [key: string]: IExpense[] };

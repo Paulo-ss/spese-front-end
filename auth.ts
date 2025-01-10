@@ -57,7 +57,7 @@ export const {
             );
           }
 
-          idToken = googleData?.id_token!;
+          idToken = googleData?.id_token ?? null;
         }
 
         const isExternalOAuth = !!idToken;

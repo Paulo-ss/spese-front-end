@@ -11,7 +11,7 @@ export default async function ExpensesPage() {
   const locale = await getLanguage();
 
   return (
-    <PageContainer title="suas despesas - spese">
+    <PageContainer title="expenses.yourExpenses">
       <GlobalDateContextProvider>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="col-span-1 md:col-span-2 flex">
@@ -26,7 +26,7 @@ export default async function ExpensesPage() {
                 </CardLoading>
               }
             >
-              <ExpensesServer />
+              <ExpensesServer displayFilters isExpensesPage />
             </Suspense>
           </div>
         </div>

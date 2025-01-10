@@ -3,9 +3,11 @@
     "DEFAULT": "categoria",
     "createCustomCategories": "crie suas próprias categorias de despesas",
     "categoryName": "nome da categoria",
+    "categoryColor": "cor da categoria",
     "yourCategories": "suas categorias",
     "createCategory": "criar categoria",
     "editCategory": "editar categoria",
-    "categoryDeleted": "categoria deletada"
+    "categoryDeleted": "categoria deletada",
+    "selectAColor": "selecione uma cor"
   }
 }

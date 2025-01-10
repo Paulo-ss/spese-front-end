@@ -73,13 +73,16 @@ const CategoryItem: FC<IProps> = ({ category }) => {
     <div className="col-span-1 p-2 flex items-center gap-3">
       <div className="flex items-center">
         <div
-          className={`flex justify-center items-center p-2 w-12 h-12 rounded-full border border-yellow-400 dark:border-yellow-800 bg-yellow-100 dark:bg-yellow-300 text-yellow-400 dark:text-yellow-800`}
+          className={`flex justify-center items-center p-2 w-12 h-12 rounded-full`}
+          style={{
+            backgroundColor: category.color,
+          }}
         >
           {category.name.charAt(0).toUpperCase()}
         </div>
       </div>
 
-      <div className="grow flex items-end gap-2">
+      <div className="grow flex items-end">
         <p className="text-base font-bold">{category.name}</p>
       </div>
 

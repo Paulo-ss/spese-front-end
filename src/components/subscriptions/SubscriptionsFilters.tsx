@@ -8,14 +8,14 @@ import { fetchResource } from "@/services/fetchService";
 import { useTranslations } from "next-intl";
 import { FC, Fragment, useEffect, useState } from "react";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import Button from "../ui/button/Button";
 import { IconChartCandle, IconX } from "@tabler/icons-react";
 import IconButton from "../ui/button/IconButton";
@@ -51,7 +51,7 @@ const SubscriptionsFilters: FC<IProps> = ({
   const { control, getValues, reset, setValue } =
     useForm<ISubscriptionFiltersForm>();
 
-  const [isDialogOpened, setIsDialogOpened] = useState(false);
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
   const [creditCards, setCreditCards] = useState<ICreditCard[]>([]);
   const [isLoadingCreditCards, setIsLoadingCreditCards] = useState(false);
 
@@ -130,22 +130,22 @@ const SubscriptionsFilters: FC<IProps> = ({
   }, [setValue]);
 
   return (
-    <Sheet
-      open={isDialogOpened}
-      onOpenChange={(isOpened) => setIsDialogOpened(isOpened)}
+    <Drawer
+      open={isDrawerOpened}
+      onOpenChange={(isOpened) => setIsDrawerOpened(isOpened)}
     >
-      <SheetTrigger asChild onClick={fetchCreditCards}>
+      <DrawerTrigger asChild onClick={fetchCreditCards}>
         <IconButton type="button" color="neutral" icon={<IconChartCandle />} />
-      </SheetTrigger>
+      </DrawerTrigger>
 
-      <SheetContent side="bottom">
-        <SheetHeader>
-          <SheetTitle>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>
             {t("utils.filter", { name: t("incomes.DEFAULT") })}
-          </SheetTitle>
-        </SheetHeader>
+          </DrawerTitle>
+        </DrawerHeader>
 
-        <SheetDescription>
+        <DrawerDescription>
           <span className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <span className="col-span-1">
               <Controller
@@ -199,9 +199,9 @@ const SubscriptionsFilters: FC<IProps> = ({
               />
             </span>
           </span>
-        </SheetDescription>
+        </DrawerDescription>
 
-        <SheetFooter>
+        <DrawerFooter>
           <Button
             type="button"
             color="neutral"
@@ -212,7 +212,7 @@ const SubscriptionsFilters: FC<IProps> = ({
                 getValues(),
                 "subsFormState"
               );
-              setIsDialogOpened(false);
+              setIsDrawerOpened(false);
             }}
           />
 
@@ -243,9 +243,9 @@ const SubscriptionsFilters: FC<IProps> = ({
             disabled={isLoading}
             isLoading={isLoading}
           />
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

@@ -3,9 +3,11 @@
     "DEFAULT": "category",
     "createCustomCategories": "create your own custom expense categories",
     "categoryName": "category name",
+    "categoryColor": "category color",
     "yourCategories": "your categories",
     "createCategory": "create category",
     "editCategory": "edit category",
-    "categoryDeleted": "deleted category"
+    "categoryDeleted": "deleted category",
+    "selectAColor": "select a color"
   }
 }

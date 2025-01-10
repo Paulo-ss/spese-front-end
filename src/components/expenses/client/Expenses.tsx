@@ -10,6 +10,7 @@ import { IAPIError } from "@/interfaces/api-error.interface";
 import {
   ExpenseGroup as ExpenseGroupType,
   IExpense,
+  IExpensesFilters,
 } from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
 import {
@@ -30,8 +31,10 @@ import {
   useState,
 } from "react";
 import limitExpenses from "@/utils/expenses/limitExpenses";
-import groupExpensesByDate from "@/utils/expenses/groupExpensesByDate";
 import ExpenseGroup from "./ExpenseGroup";
+import { usePathname } from "next/navigation";
+import ExpensesFilters from "../expensesFilters/ExpensesFilters";
+import groupExpensesByCategory from "@/utils/expenses/groupExpensesByCategory";
 
 interface IProps {
   locale: string;
@@ -48,9 +51,13 @@ const Expenses: FC<IProps> = ({
   limit,
   displayFilters,
 }) => {
-  const { date, updateIsLoading } = useContext(GlobalDateContext);
+  const { date, fromDate, toDate, updateIsLoading } =
+    useContext(GlobalDateContext);
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isExpensesPage = pathname.includes("expenses");
 
   const [expenses, setExpenses] = useState<ExpenseGroupType | undefined>(
     initialExpenses
@@ -78,16 +85,37 @@ const Expenses: FC<IProps> = ({
       updateIsLoading(true);
       setIsLoading(true);
 
-      const selectedMonth = date
-        .toLocaleDateString("en", { month: "2-digit", year: "numeric" })
-        .replace("/", "-");
+      const selectedDate = isExpensesPage ? fromDate : date;
+
+      const selectedMonth = selectedDate
+        .toLocaleDateString("en", {
+          day: isExpensesPage ? "2-digit" : undefined,
+          month: "2-digit",
+          year: "numeric",
+        })
+        .replaceAll("/", "-");
+      const selectedToMonth = isExpensesPage
+        ? toDate
+            .toLocaleDateString("en", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+            .replaceAll("/", "-")
+        : undefined;
+
+      const body: IExpensesFilters = {
+        month: !isExpensesPage ? selectedMonth : null,
+        fromDate: isExpensesPage ? selectedMonth : null,
+        toDate: isExpensesPage ? selectedToMonth! : null,
+      };
 
       const { data, error } = await fetchResource<IExpense[]>({
         url: "/expense/filter",
         config: {
           options: {
             method: "POST",
-            body: JSON.stringify({ fromMonth: selectedMonth }),
+            body: JSON.stringify(body),
           },
         },
       });
@@ -116,7 +144,7 @@ const Expenses: FC<IProps> = ({
         }
       }
 
-      setExpenses(data ? groupExpensesByDate(data) : undefined);
+      setExpenses(data ? groupExpensesByCategory(data) : undefined);
     } catch (error) {
       if (error && error instanceof Error) {
         setErrorMessage(error.message ?? t("utils.somethingWentWrong"));
@@ -126,7 +154,7 @@ const Expenses: FC<IProps> = ({
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date]);
+  }, [date, fromDate, toDate]);
 
   useEffect(() => {
     if (!isFirstRender.current) {
@@ -135,7 +163,7 @@ const Expenses: FC<IProps> = ({
     }
 
     isFirstRender.current = false;
-  }, [date, fetchExpenses]);
+  }, [date, fromDate, toDate, fetchExpenses]);
 
   if (isLoading) {
     return (
@@ -151,7 +179,7 @@ const Expenses: FC<IProps> = ({
       icon={<IconCoins />}
       action={
         <div className="flex items-center gap-2">
-          {displayFilters && <div></div>}
+          {displayFilters && <ExpensesFilters />}
 
           <IconButton
             type="button"
@@ -160,13 +188,15 @@ const Expenses: FC<IProps> = ({
             onClick={() => router.push("/expenses/create")}
           />
 
-          <IconButton
-            type="button"
-            color="secondary"
-            variant="outlined"
-            icon={<IconChevronRight />}
-            onClick={() => router.push("/expenses")}
-          />
+          {!isExpensesPage && (
+            <IconButton
+              type="button"
+              color="secondary"
+              variant="outlined"
+              icon={<IconChevronRight />}
+              onClick={() => router.push("/expenses")}
+            />
+          )}
         </div>
       }
     >
@@ -185,7 +215,7 @@ const Expenses: FC<IProps> = ({
           ) : (
             <div className="flex flex-col gap-3">
               {displayFilters && (
-                <p className="self-end font-bold italic text-base md:text-lg">
+                <p className="font-bold italic text-base md:text-lg">
                   total:{" "}
                   {ungroupedExpenses!
                     .reduce(
@@ -199,15 +229,15 @@ const Expenses: FC<IProps> = ({
                 </p>
               )}
 
-              {Object.keys(expenses!).map((expensesDate) => {
-                const groupedExpenses = expenses![expensesDate];
+              {Object.keys(expenses!).map((category) => {
+                const groupedExpenses = expenses![category];
 
                 return (
                   <ExpenseGroup
-                    key={expensesDate}
+                    key={category}
                     locale={locale}
                     expenses={groupedExpenses}
-                    expensesDate={expensesDate}
+                    groupName={category}
                   />
                 );
               })}

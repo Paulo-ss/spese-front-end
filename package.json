@@ -11,7 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@headlessui/react": "^2.1.10",
-    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
@@ -30,13 +31,15 @@
     "next-nprogress-bar": "^2.3.15",
     "react": "^18",
     "react-awesome-reveal": "^4.2.14",
+    "react-colorful": "^5.6.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-select": "^5.8.1",
     "react-use-wizard": "^2.3.0",
     "tailwind-merge": "^2.5.3",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",

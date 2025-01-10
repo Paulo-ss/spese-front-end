@@ -118,9 +118,9 @@ const Subscriptions: FC<IProps> = ({
               </p>
             </div>
           ) : (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               {displayFilters && (
-                <p className="self-end font-bold italic text-base md:text-lg">
+                <p className="font-bold italic text-base md:text-lg">
                   total:{" "}
                   {subscriptions!
                     .reduce(

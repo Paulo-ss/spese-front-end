@@ -1,5 +1,5 @@
 import { ExpenseGroup, IExpense } from "@/interfaces/expenses.interface";
-import groupExpensesByDate from "./groupExpensesByDate";
+import groupExpensesByCategory from "./groupExpensesByCategory";
 
 const limitExpenses = <T>(
   expenseGroup: ExpenseGroup,
@@ -23,7 +23,7 @@ const limitExpenses = <T>(
     });
   }
 
-  return (groupExpenses ? groupExpensesByDate(expenses) : expenses) as T;
+  return (groupExpenses ? groupExpensesByCategory(expenses) : expenses) as T;
 };
 
 export default limitExpenses;

@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { getCurrentTheme } from "@/app/actions/cookies/getCurrentTheme";
 import { Afacad } from "next/font/google";
-
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -26,13 +25,15 @@ export default async function RootLayout({
   return (
     <html lang={locale} className="h-full">
       <body className={`h-full ${theme} ${afacad.className}`}>
-        <NProgressProvider>
-          <NextIntlClientProvider messages={messages}>
-            {children}
+        <div vaul-drawer-wrapper="">
+          <NProgressProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
 
-            <Toaster />
-          </NextIntlClientProvider>
-        </NProgressProvider>
+              <Toaster />
+            </NextIntlClientProvider>
+          </NProgressProvider>
+        </div>
       </body>
     </html>
   );
