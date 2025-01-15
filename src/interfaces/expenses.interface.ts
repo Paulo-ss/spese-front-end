@@ -28,12 +28,24 @@ export interface IExpensesFilters {
   month: string | null;
   fromDate: string | null;
   toDate: string | null;
-  category?: ExpenseCategory;
-  customCategory?: number;
-  name?: string;
-  priceRange?: number[];
-  status?: ExpenseStatus;
-  creditCardId?: number;
+  category?: ExpenseCategory | null;
+  customCategory?: number | null;
+  name?: string | null;
+  priceRange?: number[] | null;
+  status?: ExpenseStatus | null;
+  creditCardId?: number | null;
+}
+
+export interface IExpenseForm {
+  name?: string | null;
+  price?: number | null;
+  expenseDate?: Date | null;
+  expenseType?: ExpenseType | null;
+  bankAccountId?: number | null;
+  creditCardId?: number | null;
+  installments?: number | null;
+  category?: ExpenseCategory | null;
+  customCategory?: number | null;
 }
 
 export type ExpenseGroup = { [key: string]: IExpense[] };

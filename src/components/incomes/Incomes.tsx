@@ -130,7 +130,17 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
 
   return (
     <Card
-      title="incomes.yourIncomes"
+      title={`${t("incomes.yourIncomes")} ${incomes ? "-" : ""} ${
+        incomes
+          ? incomes!
+              .reduce((total, income) => total + Number(income.value), 0)
+              .toLocaleString(locale, {
+                style: "currency",
+                currency: locale === "pt" ? "BRL" : "USD",
+              })
+          : ""
+      }`}
+      translateTitle={false}
       icon={<IconCashRegister />}
       action={
         <div className="flex items-center gap-2">

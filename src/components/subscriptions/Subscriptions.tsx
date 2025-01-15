@@ -79,7 +79,22 @@ const Subscriptions: FC<IProps> = ({
 
   return (
     <Card
-      title="subscriptions.yourSubscriptions"
+      title={`${t("subscriptions.yourSubscriptions")} ${
+        subscriptions ? "-" : ""
+      } ${
+        subscriptions
+          ? subscriptions!
+              .reduce(
+                (total, subscription) => total + Number(subscription.price),
+                0
+              )
+              .toLocaleString(locale, {
+                style: "currency",
+                currency: locale === "pt" ? "BRL" : "USD",
+              })
+          : ""
+      }`}
+      translateTitle={false}
       icon={<IconContract />}
       action={
         <div className="flex items-center gap-2">
@@ -119,22 +134,6 @@ const Subscriptions: FC<IProps> = ({
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {displayFilters && (
-                <p className="font-bold italic text-base md:text-lg">
-                  total:{" "}
-                  {subscriptions!
-                    .reduce(
-                      (total, subscription) =>
-                        total + Number(subscription.price),
-                      0
-                    )
-                    .toLocaleString(locale, {
-                      style: "currency",
-                      currency: locale === "pt" ? "BRL" : "USD",
-                    })}
-                </p>
-              )}
-
               <div className="grid grid-cols-1">
                 {subscriptions?.map((subscription) => (
                   <SubscriptionItem

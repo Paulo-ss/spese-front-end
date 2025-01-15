@@ -3,32 +3,42 @@
 import { IExpense } from "@/interfaces/expenses.interface";
 import { FC } from "react";
 import ExpenseItem from "./ExpenseItem";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface IProps {
   expenses: IExpense[];
   groupName: string;
   locale: string;
+  index: number;
 }
 
-const ExpenseGroup: FC<IProps> = ({ expenses, groupName, locale }) => {
+const ExpenseGroup: FC<IProps> = ({ expenses, groupName, locale, index }) => {
   return (
-    <div className="flex flex-col mb-2">
-      <div className="flex items-center gap-2 mb-2">
-        <p className="text-base flex text-right">
-          {groupName} -{" "}
-          {expenses
-            .reduce((total, { price }) => total + Number(price), 0)
-            .toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRL" : "USD",
-            })}
-        </p>
-      </div>
+    <AccordionItem value={String(index)}>
+      <div className="flex flex-col mb-2">
+        <AccordionTrigger className="flex items-center gap-2">
+          <p className="text-base flex text-right">
+            {groupName} -{" "}
+            {expenses
+              .reduce((total, { price }) => total + Number(price), 0)
+              .toLocaleString(locale, {
+                style: "currency",
+                currency: locale === "pt" ? "BRL" : "USD",
+              })}
+          </p>
+        </AccordionTrigger>
 
-      {expenses?.map((expense) => (
-        <ExpenseItem key={expense.id} expense={expense} locale={locale} />
-      ))}
-    </div>
+        <AccordionContent>
+          {expenses?.map((expense) => (
+            <ExpenseItem key={expense.id} expense={expense} locale={locale} />
+          ))}
+        </AccordionContent>
+      </div>
+    </AccordionItem>
   );
 };
 

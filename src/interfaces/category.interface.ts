@@ -1,3 +1,5 @@
+import { categories } from "@/utils/category/categoriesLangIcon";
+
 export interface ICategory {
   id: number;
   name: string;
@@ -8,3 +10,5 @@ export interface ICategory {
 export interface ICategoryForm {
   categories: { name: string; color: string }[];
 }
+
+export type CategoryKey = keyof typeof categories;

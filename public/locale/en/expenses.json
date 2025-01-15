@@ -8,6 +8,21 @@
     "PENDING": "pending",
     "installed": "installed",
     "of": "of",
-    "payAllExpenses": "pay all expenses"
+    "payAllExpenses": "pay all expenses",
+    "name": "expense name",
+    "status": "status",
+    "priceRange": "price range",
+    "category": "category",
+    "customCategory": "custom category",
+    "newExpense": "new expense",
+    "bankAccount": "bank account",
+    "creditCard": "credit card",
+    "type": "expense type",
+    "price": "price",
+    "installments": "installments",
+    "date": "expense date",
+    "overallInfo": "overall info",
+    "bankAndCard": "bank and card",
+    "selectAType": "select a type"
   }
 }

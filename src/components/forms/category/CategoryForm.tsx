@@ -108,8 +108,17 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
         <ErrorDisplay errorMessage={error.errorMessage} />
       ) : (
         <Fade duration={300} direction="up" triggerOnce cascade>
+          {category && (
+            <div
+              className="w-full h-20 p-4 mb-2 rounded-t-md relative"
+              style={{ backgroundColor: category.color }}
+            >
+              <p className="absolute font-bold text-base">{category.name}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt-2 flex flex-col gap-4 px-6">
+            <div className="mt-2 flex flex-col gap-4 px-4">
               {fields.map((field, index) => (
                 <div
                   key={field.id}

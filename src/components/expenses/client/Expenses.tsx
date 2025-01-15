@@ -33,8 +33,11 @@ import {
 import limitExpenses from "@/utils/expenses/limitExpenses";
 import ExpenseGroup from "./ExpenseGroup";
 import { usePathname } from "next/navigation";
-import ExpensesFilters from "../expensesFilters/ExpensesFilters";
+import ExpensesFilters from "./ExpensesFilters";
 import groupExpensesByCategory from "@/utils/expenses/groupExpensesByCategory";
+import { Accordion } from "@/components/ui/accordion";
+import getFormState from "@/utils/getFormState";
+import { ExpenseCategory } from "@/enums/expenses.enum";
 
 interface IProps {
   locale: string;
@@ -80,6 +83,10 @@ const Expenses: FC<IProps> = ({
     ? limitExpenses<IExpense[]>(expenses!, {})
     : undefined;
 
+  const updateLoading = (isLoading: boolean) => {
+    setIsLoading(isLoading);
+  };
+
   const fetchExpenses = useCallback(async () => {
     try {
       updateIsLoading(true);
@@ -104,10 +111,21 @@ const Expenses: FC<IProps> = ({
             .replaceAll("/", "-")
         : undefined;
 
+      const formFiltersState =
+        getFormState<IExpensesFilters>("expensesFormState");
+
       const body: IExpensesFilters = {
         month: !isExpensesPage ? selectedMonth : null,
         fromDate: isExpensesPage ? selectedMonth : null,
         toDate: isExpensesPage ? selectedToMonth! : null,
+        creditCardId: Number(formFiltersState?.creditCardId),
+        status: formFiltersState?.status,
+        priceRange: formFiltersState?.priceRange,
+        name: formFiltersState?.name,
+        category: formFiltersState?.customCategory
+          ? ExpenseCategory.CUSTOM
+          : formFiltersState?.category,
+        customCategory: Number(formFiltersState?.customCategory),
       };
 
       const { data, error } = await fetchResource<IExpense[]>({
@@ -175,11 +193,36 @@ const Expenses: FC<IProps> = ({
 
   return (
     <Card
-      title="expenses.yourExpenses"
+      title={`${t("expenses.DEFAULT")} ${ungroupedExpenses ? "-" : ""} ${
+        ungroupedExpenses
+          ? ungroupedExpenses
+              .reduce((total, expense) => total + Number(expense.price), 0)
+              .toLocaleString(locale, {
+                style: "currency",
+                currency: locale === "pt" ? "BRL" : "USD",
+              })
+          : ""
+      }`}
+      translateTitle={false}
       icon={<IconCoins />}
       action={
         <div className="flex items-center gap-2">
-          {displayFilters && <ExpensesFilters />}
+          {displayFilters && (
+            <ExpensesFilters
+              isLoading={isLoading}
+              updateLoading={updateLoading}
+              updateErrorMessage={(errorMessage) =>
+                setErrorMessage(errorMessage)
+              }
+              updateExpenses={(expenses) =>
+                setExpenses(
+                  expenses ? groupExpensesByCategory(expenses) : undefined
+                )
+              }
+              locale={locale}
+              isExpensesPage={isExpensesPage}
+            />
+          )}
 
           <IconButton
             type="button"
@@ -213,23 +256,12 @@ const Expenses: FC<IProps> = ({
               </p>
             </div>
           ) : (
-            <div className="flex flex-col gap-3">
-              {displayFilters && (
-                <p className="font-bold italic text-base md:text-lg">
-                  total:{" "}
-                  {ungroupedExpenses!
-                    .reduce(
-                      (total, expense) => total + Number(expense.price),
-                      0
-                    )
-                    .toLocaleString(locale, {
-                      style: "currency",
-                      currency: locale === "pt" ? "BRL" : "USD",
-                    })}
-                </p>
-              )}
-
-              {Object.keys(expenses!).map((category) => {
+            <Accordion
+              className="flex flex-col gap-3"
+              type="multiple"
+              defaultValue={["0"]}
+            >
+              {Object.keys(expenses!).map((category, index) => {
                 const groupedExpenses = expenses![category];
 
                 return (
@@ -238,10 +270,11 @@ const Expenses: FC<IProps> = ({
                     locale={locale}
                     expenses={groupedExpenses}
                     groupName={category}
+                    index={index}
                   />
                 );
               })}
-            </div>
+            </Accordion>
           )}
 
           {limit && ungroupedExpenses && ungroupedExpenses.length >= limit && (

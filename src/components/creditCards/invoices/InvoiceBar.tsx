@@ -36,7 +36,7 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
 
           <PopoverContent>
             <p>
-              {t("creditCard.closedInvoice")}:
+              {t("creditCard.closedInvoice")} -{" "}
               {creditCard.closedTotal.toLocaleString(locale, {
                 style: "currency",
                 currency: locale === "pt" ? "BRL" : "USD",
@@ -58,7 +58,7 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
 
           <PopoverContent>
             <p>
-              {t("creditCard.currentInvoice")}:
+              {t("creditCard.currentInvoice")} -{" "}
               {creditCard.currentMonthInvoiceTotal.toLocaleString(locale, {
                 style: "currency",
                 currency: locale === "pt" ? "BRL" : "USD",
@@ -80,7 +80,7 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
 
           <PopoverContent>
             <p>
-              {t("creditCard.nextMonths")}:
+              {t("creditCard.nextMonths")} -{" "}
               {creditCard.otherMonthsTotal.toLocaleString(locale, {
                 style: "currency",
                 currency: locale === "pt" ? "BRL" : "USD",

@@ -27,7 +27,7 @@ const Card: FC<IProps> = ({
         <div className="flex items-center gap-2">
           {icon && <span>{icon}</span>}
 
-          <p className="text-lg font-bold">
+          <p className="text-base md:text-lg font-bold">
             {translateTitle ? t(title) : title}
           </p>
         </div>

@@ -8,6 +8,20 @@
     "PENDING": "pendente",
     "installed": "parcelada",
     "of": "de",
-    "payAllExpenses": "pagar todas as despesas"
+    "payAllExpenses": "pagar todas as despesas",
+    "name": "nome da despesa",
+    "status": "status",
+    "priceRange": "faixa de preço",
+    "category": "categoria",
+    "newExpense": "nova despesa",
+    "bankAccount": "conta bancária",
+    "creditCard": "cartão de crédito",
+    "type": "tipo da despesa",
+    "price": "preço",
+    "installments": "parcelas",
+    "date": "data da despesa",
+    "overallInfo": "informações gerais",
+    "bankAndCard": "banco e cartão",
+    "selectAType": "select a type"
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { GlobalDateContext } from "@/contexts/GlobalDateContext";
-import { FC, useContext, useState } from "react";
+import { FC, Fragment, useContext, useState } from "react";
 import { Popover } from "../ui/popover";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import {
@@ -32,19 +32,17 @@ const MonthRangePicker: FC<IProps> = ({ locale }) => {
           <div className="flex items-center gap-2">
             <IconCalendar />
 
-            <p>
-              <b>
-                {fromDate
-                  .toLocaleDateString(locale, {
-                    month: "short",
-                    year: "numeric",
-                    day: "2-digit",
-                  })
-                  .toLowerCase()}
-              </b>
+            <p className="text-sm md:text-base">
+              {fromDate
+                .toLocaleDateString(locale, {
+                  month: "short",
+                  year: "numeric",
+                  day: "2-digit",
+                })
+                .toLowerCase()}
 
               {toDate && (
-                <b>
+                <Fragment>
                   {" "}
                   /{" "}
                   {toDate
@@ -54,7 +52,7 @@ const MonthRangePicker: FC<IProps> = ({ locale }) => {
                       day: "2-digit",
                     })
                     .toLowerCase()}
-                </b>
+                </Fragment>
               )}
             </p>
 

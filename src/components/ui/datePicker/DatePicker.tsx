@@ -18,6 +18,7 @@ interface IProps {
   error?: boolean;
   helperText?: string;
   disableFuture?: boolean;
+  disabled?: boolean;
 }
 
 const DatePicker: FC<IProps> = ({
@@ -28,6 +29,7 @@ const DatePicker: FC<IProps> = ({
   helperText,
   locale,
   disableFuture,
+  disabled,
 }) => {
   const t = useTranslations();
 
@@ -36,7 +38,7 @@ const DatePicker: FC<IProps> = ({
       <Label label={t(label)} name="date" />
 
       <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={disabled}>
           <div
             className={`flex justify-between items-center py-3 px-2 text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 ${
               error

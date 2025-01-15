@@ -3,20 +3,20 @@
 import { ExpenseStatus } from "@/enums/expenses.enum";
 import { IExpense } from "@/interfaces/expenses.interface";
 import {
+  IconBarbell,
   IconBeach,
   IconBurger,
   IconCar,
   IconCash,
   IconChevronRight,
+  IconContract,
   IconDeviceGamepad2,
   IconDog,
-  IconGymnastics,
+  IconForbid,
   IconHanger,
   IconHome,
   IconHospital,
   IconSchool,
-  IconSignLeft,
-  IconStopwatch,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -29,7 +29,7 @@ interface IProps {
 
 const categories = {
   "NÃO INFORMADO": {
-    icon: <IconStopwatch />,
+    icon: <IconForbid />,
   },
   SAÚDE: {
     icon: <IconHospital />,
@@ -62,10 +62,10 @@ const categories = {
     icon: <IconCash />,
   },
   ACADEMIA: {
-    icon: <IconGymnastics />,
+    icon: <IconBarbell />,
   },
   ASSINATURA: {
-    icon: <IconSignLeft />,
+    icon: <IconContract />,
   },
 };
 
@@ -78,10 +78,10 @@ const ExpenseItem: FC<IProps> = ({ expense, locale }) => {
 
   return (
     <Link key={expense.id} href={`/expenses/${expense.id}`}>
-      <div className="p-1 md:p-4 mb-2 flex gap-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors">
+      <div className="p-1 md:p-3 flex gap-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors">
         <div className="flex">
           <div
-            className={`flex justify-center items-center p-1 w-8 h-8 md:p-2 md:w-12 md:h-12 rounded-full bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-200`}
+            className={`flex justify-center items-center p-1 w-8 h-8 md:p-2 md:w-12 md:h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-zinc-200`}
             style={{
               backgroundColor: expense.customCategory
                 ? expense.customCategory.color

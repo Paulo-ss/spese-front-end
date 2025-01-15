@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className="h-full">
       <body className={`h-full ${theme} ${afacad.className}`}>
-        <div vaul-drawer-wrapper="">
+        <div vaul-drawer-wrapper="" className={`h-full`}>
           <NProgressProvider>
             <NextIntlClientProvider messages={messages}>
               {children}

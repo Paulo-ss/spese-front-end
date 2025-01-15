@@ -21,9 +21,10 @@ const MonthPicker: FC<IProps> = ({ locale }) => {
   const t = useTranslations();
 
   const [isCalendarOpened, setIsCalendarOpened] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState<DateRange | undefined>(
-    undefined
-  );
+  const [selectedMonth, setSelectedMonth] = useState<DateRange | undefined>({
+    from: startOfMonth(date),
+    to: endOfMonth(date),
+  });
 
   return (
     <div className="flex justify-center items-center z-40">

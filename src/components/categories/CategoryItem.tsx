@@ -70,7 +70,7 @@ const CategoryItem: FC<IProps> = ({ category }) => {
   };
 
   return (
-    <div className="col-span-1 p-2 flex items-center gap-3">
+    <div className="col-span-1 p-2 flex items-center gap-3 rounded-md">
       <div className="flex items-center">
         <div
           className={`flex justify-center items-center p-2 w-12 h-12 rounded-full`}
