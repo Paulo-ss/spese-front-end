@@ -90,7 +90,16 @@ const ExpenseForm: FC<IProps> = ({
       setIsLoading(true);
 
       const { error } = expense
-        ? await editExpense(expense.id, data)
+        ? await editExpense(expense.id, {
+            ...data,
+            bankAccountId: expense.bankAccount?.id,
+            creditCardId: expense.creditCard?.id,
+            category: data.category ?? expense.category,
+            customCategory:
+              Number(data.customCategory) ?? expense.customCategory?.id,
+            expenseType: expense.expenseType,
+            installments: expense.totalInstallments,
+          })
         : await createExpense(data);
 
       if (error) {
@@ -213,7 +222,7 @@ const ExpenseForm: FC<IProps> = ({
       });
 
       setValue("name", expense.name);
-      setValue("price", expense.price);
+      setValue("price", Number(expense.price));
       setValue(
         "category",
         expense
@@ -274,7 +283,7 @@ const ExpenseForm: FC<IProps> = ({
                 </div>
 
                 {!expense && (
-                  <div className="col-span-12 sm:col-span-6 md:col-span-4 flex flex-col gap-4">
+                  <div className="col-span-12 sm:col-span-6 flex flex-col gap-4">
                     <p>{t("expenses.type")}</p>
 
                     <Controller
@@ -395,9 +404,7 @@ const ExpenseForm: FC<IProps> = ({
                     </p>
                   </div>
                 )}
-              </div>
 
-              <div className="w-full grid grid-cols-1 sm:grid-cols-12 gap-4">
                 <div className="col-span-12 sm:col-span-6 md:col-span-4">
                   <Controller
                     control={control}
@@ -792,7 +799,9 @@ const ExpenseForm: FC<IProps> = ({
                                       : ""
                                   } transition-colors`}
                                 >
-                                  {category.lang[locale as Locale]}
+                                  {category.lang[
+                                    locale as Locale
+                                  ].toLowerCase()}
 
                                   {category.icon}
                                 </label>
@@ -807,10 +816,10 @@ const ExpenseForm: FC<IProps> = ({
               </div>
             </div>
 
-            <div className="mt-2 p-6 flex gap-2 justify-end">
+            <div className="mt-2 p-2 md:p-6 flex gap-2 justify-end">
               <IconButton
                 type="submit"
-                icon={<IconSend width={30} height={30} />}
+                icon={<IconSend />}
                 color="primary"
                 disabled={isLoading}
                 isLoading={isLoading}

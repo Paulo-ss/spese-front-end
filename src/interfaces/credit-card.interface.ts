@@ -7,6 +7,7 @@ export interface ICreditCard {
   nickname: string;
   bank: Banks;
   limit: number;
+  lastFourDigits: string;
   closingDay: number;
   dueDay: number;
   invoices?: IInvoice[];
@@ -18,6 +19,7 @@ export interface ICreditCardForm {
   nickname: string;
   bank: Banks;
   limit: number;
+  lastFourDigits: string;
   closingDay: number;
   dueDay: number;
 }
@@ -31,6 +33,7 @@ export interface ICreditCardSummary {
   nickname: string;
   currentMonthInvoiceTotal: number;
   otherMonthsTotal: number;
+  lastFourDigits: string;
   closedTotal: number;
   bank: Banks;
   closingDate: string;

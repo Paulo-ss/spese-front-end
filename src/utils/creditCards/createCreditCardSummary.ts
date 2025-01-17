@@ -45,6 +45,7 @@ const createCreditCardSummary = (
     otherMonthsTotal,
     closingDate: "",
     dueDate: "",
+    lastFourDigits: creditCard.lastFourDigits,
   };
 };
 

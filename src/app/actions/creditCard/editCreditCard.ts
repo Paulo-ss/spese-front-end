@@ -2,6 +2,7 @@
 
 import { fetchResource } from "@/services/fetchService";
 import { ICreditCard } from "@/interfaces/credit-card.interface";
+import { revalidateTag } from "next/cache";
 
 export default async function editCreditCard(creditCard: ICreditCard) {
   const { data, error } = await fetchResource<ICreditCard>({
@@ -16,6 +17,8 @@ export default async function editCreditCard(creditCard: ICreditCard) {
       },
     },
   });
+
+  revalidateTag("credit-card-details");
 
   return { data, error };
 }

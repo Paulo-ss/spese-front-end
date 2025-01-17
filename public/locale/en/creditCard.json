@@ -18,6 +18,7 @@
     "limit": "limit",
     "invoicesSummary": "invoices summary",
     "availableLimit": "available credit limit",
-    "payInvoice": "pay invoice"
+    "payInvoice": "pay invoice",
+    "lastFourDigits": "last four digits"
   }
 }

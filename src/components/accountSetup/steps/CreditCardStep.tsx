@@ -2,6 +2,11 @@
 
 import saveMultipleCreditCards from "@/app/actions/creditCard/saveMultipleCreditCards";
 import IconButton from "@/components/ui/button/IconButton";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import Input from "@/components/ui/input/Input";
 import Label from "@/components/ui/label/Label";
 import {
@@ -24,6 +29,7 @@ import {
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useState } from "react";
@@ -49,6 +55,7 @@ const CreditCardStep = () => {
           dueDay: 1,
           limit: 0,
           nickname: "",
+          lastFourDigits: "",
         },
       ],
     },
@@ -322,6 +329,38 @@ const CreditCardStep = () => {
                     )}
                   />
                 </div>
+
+                <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                  <Controller
+                    control={control}
+                    name={`creditCards.${index}.lastFourDigits`}
+                    defaultValue=""
+                    render={({ field: { name, ...fileldProps } }) => (
+                      <Fragment>
+                        <div className="mb-2">
+                          <Label
+                            name={name}
+                            label={t("creditCard.lastFourDigits")}
+                          />
+                        </div>
+
+                        <InputOTP
+                          maxLength={4}
+                          name={name}
+                          {...fileldProps}
+                          pattern={REGEXP_ONLY_DIGITS}
+                        >
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </Fragment>
+                    )}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -340,6 +379,7 @@ const CreditCardStep = () => {
                 nickname: "",
                 dueDay: 1,
                 closingDay: 1,
+                lastFourDigits: "",
               })
             }
           />

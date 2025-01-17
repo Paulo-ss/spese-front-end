@@ -10,6 +10,7 @@ export default getRequestConfig(async () => {
   const category = await import(`../../public/locale/${locale}/category.json`);
   const expenses = await import(`../../public/locale/${locale}/expenses.json`);
   const incomes = await import(`../../public/locale/${locale}/incomes.json`);
+  const cashFlow = await import(`../../public/locale/${locale}/cashFlow.json`);
   const subscriptions = await import(
     `../../public/locale/${locale}/subscriptions.json`
   );
@@ -44,6 +45,7 @@ export default getRequestConfig(async () => {
       ...expenses,
       ...incomes,
       ...subscriptions,
+      ...cashFlow,
     },
   };
 });

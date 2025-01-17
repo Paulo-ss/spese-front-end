@@ -1,0 +1,11 @@
+{
+  "cashFlow": {
+    "DEFAULT": "fluxo de caixa",
+    "cashBalance": "saldo em conta",
+    "dayBalance": "saldo do dia",
+    "day": "dia",
+    "month": "mês",
+    "today": "hoje",
+    "noEvents": "nenhuma movimentação nessa data"
+  }
+}

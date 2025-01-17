@@ -28,10 +28,13 @@
     "name": "nome",
     "price": "preço",
     "pickADate": "seleciona uma data",
-    "pay": "pagar"
+    "pay": "pagar",
+    "close": "fechar",
+    "more": "mais"
   },
   "menuItems": {
     "main": "principais",
+    "cashFlow": "fluxo de caixa",
     "expenses": "despesas",
     "incomes": {
       "DEFAULT": "rendas",
@@ -45,7 +48,7 @@
     "analytics": "analítico",
     "reports": {
       "DEFAULT": "relatórios",
-      "graphics": "gráficos",
+      "charts": "gráficos",
       "export": "exportar"
     }
   },

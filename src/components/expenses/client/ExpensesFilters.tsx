@@ -427,7 +427,7 @@ const ExpensesFilters: FC<IProps> = ({
                                   : ""
                               } transition-colors`}
                             >
-                              {category.lang[locale as Locale]}
+                              {category.lang[locale as Locale].toLowerCase()}
 
                               {category.icon}
                             </label>

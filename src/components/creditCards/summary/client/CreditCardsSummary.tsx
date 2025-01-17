@@ -89,7 +89,7 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
                         <div className="grow flex items-end gap-2">
                           <div className="flex flex-col">
                             <p className="text-base font-bold">
-                              {creditCard.nickname}
+                              {creditCard.nickname} {creditCard.lastFourDigits}
                             </p>
 
                             <p className="text-base md:text-lg font-bold">

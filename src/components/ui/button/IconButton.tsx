@@ -67,7 +67,7 @@ const IconButton: FC<IProps> = ({
 
   return (
     <button
-      className={`p-2 rounded-md ${
+      className={`p-1 md:p-2 rounded-md ${
         fullWidth ? "w-full" : "w-fit"
       } flex justify-center items-center outline-none border ${
         variant === "outlined"

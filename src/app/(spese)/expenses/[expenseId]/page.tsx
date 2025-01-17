@@ -3,6 +3,8 @@ import ExpenseDetails from "@/components/expenses/client/ExpenseDetails";
 import PageContainer from "@/components/pageContainer/PageContainer";
 import { IExpense } from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
+import { format } from "date-fns";
+import { enUS, pt } from "date-fns/locale";
 
 export default async function ExpenseDetailsPage({
   params,
@@ -15,6 +17,12 @@ export default async function ExpenseDetailsPage({
   });
 
   const locale = await getLanguage();
+
+  if (expense) {
+    expense.expenseDate = format(expense!.expenseDate, "PPP", {
+      locale: locale === "pt" ? pt : enUS,
+    });
+  }
 
   return (
     <PageContainer title="creditCard.yourCreditCard">

@@ -57,7 +57,7 @@ const Button: FC<IProps> = ({
     },
     neutral: {
       contained:
-        "bg-zinc-100 border-transparent hover:bg-zinc-300 focus:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-950",
+        "bg-zinc-100 border-transparent hover:bg-zinc-200 focus:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:focus:bg-zinc-900",
       outlined:
         "bg-transparent border-zinc-100 hover:bg-zinc-300 focus:bg-zinc-300 dark:border-zinc-950 dark:hover:bg-zinc-950",
     },

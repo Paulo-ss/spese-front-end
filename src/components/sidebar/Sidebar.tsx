@@ -7,6 +7,7 @@ import { IMenuItem } from "@/interfaces/menu-items.interface";
 import {
   IconBuildingBank,
   IconCash,
+  IconCashRegister,
   IconCategory,
   IconCoins,
   IconContract,
@@ -27,6 +28,11 @@ export const menuItems: IMenuItem[] = [
   {
     title: "menuItems.main",
     subHeader: true,
+  },
+  {
+    title: "menuItems.cashFlow",
+    icon: <IconCashRegister />,
+    path: "/cash-flow",
   },
   {
     title: "menuItems.expenses",
@@ -74,13 +80,13 @@ export const menuItems: IMenuItem[] = [
     icon: <IconReport />,
     children: [
       {
-        title: "menuItems.reports.graphics",
-        path: "/graphs",
+        title: "menuItems.reports.charts",
+        path: "/reports/charts",
         icon: <IconPoint />,
       },
       {
         title: "menuItems.reports.export",
-        path: "/report/download",
+        path: "/reports/download",
         icon: <IconPoint />,
       },
     ],

@@ -18,6 +18,7 @@
     "limit": "limite",
     "invoicesSummary": "resumo das faturas",
     "availableLimit": "limite disponível",
-    "payInvoice": "pagar fatura"
+    "payInvoice": "pagar fatura",
+    "lastFourDigits": "últimos 4 dígitos"
   }
 }

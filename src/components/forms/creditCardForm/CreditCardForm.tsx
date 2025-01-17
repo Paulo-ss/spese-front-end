@@ -5,6 +5,11 @@ import saveMultipleCreditCards from "@/app/actions/creditCard/saveMultipleCredit
 import IconButton from "@/components/ui/button/IconButton";
 import Card from "@/components/ui/card/Card";
 import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import Input from "@/components/ui/input/Input";
 import Label from "@/components/ui/label/Label";
 import {
@@ -34,6 +39,7 @@ import {
   IconSend,
   IconTrash,
 } from "@tabler/icons-react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-nprogress-bar";
 import Image from "next/image";
@@ -130,6 +136,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
         dueDay: creditCard.dueDay,
         limit: creditCard.limit,
         nickname: creditCard.nickname,
+        lastFourDigits: creditCard.lastFourDigits,
       });
     }
   }, [creditCard, update]);
@@ -377,6 +384,38 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                         )}
                       />
                     </div>
+
+                    <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                      <Controller
+                        control={control}
+                        name={`creditCards.${index}.lastFourDigits`}
+                        defaultValue=""
+                        render={({ field: { name, ...fileldProps } }) => (
+                          <Fragment>
+                            <div className="mb-2">
+                              <Label
+                                name={name}
+                                label={t("creditCard.lastFourDigits")}
+                              />
+                            </div>
+
+                            <InputOTP
+                              maxLength={4}
+                              name={name}
+                              {...fileldProps}
+                              pattern={REGEXP_ONLY_DIGITS}
+                            >
+                              <InputOTPGroup>
+                                <InputOTPSlot index={0} />
+                                <InputOTPSlot index={1} />
+                                <InputOTPSlot index={2} />
+                                <InputOTPSlot index={3} />
+                              </InputOTPGroup>
+                            </InputOTP>
+                          </Fragment>
+                        )}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -396,6 +435,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                       nickname: "",
                       dueDay: 1,
                       closingDay: 1,
+                      lastFourDigits: "",
                     })
                   }
                 />

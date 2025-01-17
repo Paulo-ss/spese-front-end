@@ -1,0 +1,11 @@
+{
+  "cashFlow": {
+    "DEFAULT": "cash flow",
+    "cashBalance": "cash balance",
+    "dayBalance": "day balance",
+    "day": "day",
+    "month": "month",
+    "today": "today",
+    "noEvents": "no cash flow for this date"
+  }
+}

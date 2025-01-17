@@ -28,10 +28,13 @@
     "name": "name",
     "price": "price",
     "pickADate": "pick a date",
-    "pay": "pay"
+    "pay": "pay",
+    "close": "close",
+    "more": "more"
   },
   "menuItems": {
     "main": "main menu",
+    "cashFlow": "cash flow",
     "expenses": "expenses",
     "incomes": {
       "DEFAULT": "incomes",
@@ -45,7 +48,7 @@
     "analytics": "analytics",
     "reports": {
       "DEFAULT": "reports",
-      "graphics": "graphs",
+      "charts": "charts",
       "export": "export"
     }
   },
