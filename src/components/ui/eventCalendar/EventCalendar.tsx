@@ -18,6 +18,10 @@ import {
 } from "../dialog";
 import { useTranslations } from "next-intl";
 import Toolbar from "./toolbar/Toolbar";
+import MonthHeader from "./monthHeader/MonthHeader";
+import DateHeader from "./dateHeader/DateHeader";
+import IconButton from "../button/IconButton";
+import { IconPlus } from "@tabler/icons-react";
 
 interface IProps {
   locale: string;
@@ -99,8 +103,14 @@ const EventCalendar: FC<IProps> = ({ locale }) => {
           event: (props) => <Event view={view} locale={locale} {...props} />,
           toolbar: (props) => <Toolbar locale={locale} {...props} />,
           month: {
-            header: ({ date }) => (
-              <>{date.toLocaleDateString(locale, { weekday: "short" })}</>
+            header: (props) => <MonthHeader locale={locale} {...props} />,
+            dateHeader: (props) => (
+              <DateHeader
+                setDate={handleNavigate}
+                handleViewChange={handleViewChange}
+                locale={locale}
+                {...props}
+              />
             ),
           },
         }}

@@ -53,9 +53,18 @@ const Event: FC<IProps> = ({ event, view, locale }) => {
 
   return (
     <div
-      className={`px-1 text-sm rounded-md font-bold text-zinc-900 text-ellipsis text-nowrap overflow-hidden ${event.color}`}
+      className={`flex items-center justify-between px-1 text-sm rounded-md font-bold text-zinc-900 text-ellipsis text-nowrap overflow-hidden ${event.color}`}
     >
-      {event.title}
+      <p className="overflow-hidden text-ellipsis text-nowrap max-w-28">
+        {event.title}
+      </p>
+
+      <p className="hidden md:block">
+        {event.value.toLocaleString(locale, {
+          style: "currency",
+          currency: locale === "pt" ? "BRL" : "USD",
+        })}
+      </p>
     </div>
   );
 };

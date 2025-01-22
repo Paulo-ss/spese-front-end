@@ -139,7 +139,7 @@ const SubscriptionsFilters: FC<IProps> = ({
       onOpenChange={(isOpened) => setIsDrawerOpened(isOpened)}
     >
       <DrawerTrigger asChild onClick={fetchCreditCards}>
-        <IconButton type="button" color="neutral" icon={<IconChartCandle />} />
+        <IconButton type="button" color="neutral" variant="outlined" icon={<IconChartCandle />} />
       </DrawerTrigger>
 
       <DrawerContent aria-describedby="">

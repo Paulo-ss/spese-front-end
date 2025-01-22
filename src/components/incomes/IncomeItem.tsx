@@ -57,7 +57,7 @@ const IncomeItem: FC<IProps> = ({ locale, income, fetchIncomes }) => {
       fetchIncomes();
       toast({
         title: t("utils.success"),
-        description: t("category.categoryDeleted"),
+        description: t("incomes.deleted"),
         action: (
           <IconCheckbox className="w-6 h-6" color={theme.colors.emerald[400]} />
         ),

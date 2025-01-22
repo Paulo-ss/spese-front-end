@@ -258,6 +258,8 @@ button.rbc-input::-moz-focus-inner {
 .rbc-month-header .rbc-header {
   border-left: none !important;
   border-right: none !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .rbc-month-row {
   display: -webkit-flex;
@@ -322,7 +324,14 @@ button.rbc-input::-moz-focus-inner {
   -webkit-flex: 1 0 0%;
   -ms-flex: 1 0 0%;
   flex: 1 0 0%;
-  border: none !important;
+}
+.dark .rbc-day-bg + .rbc-day-bg {
+  border-right-width: 0;
+  border-left: 1px solid #3f3f46;
+}
+.light .rbc-day-bg + .rbc-day-bg {
+  border-right-width: 0;
+  border-left: 1px solid #d4d4d8;
 }
 .rbc-rtl .rbc-day-bg + .rbc-day-bg {
   border-left-width: 0;

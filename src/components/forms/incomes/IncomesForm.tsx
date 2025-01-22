@@ -68,12 +68,6 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
         return;
       }
 
-      if (!income) {
-        router.push("/incomes");
-
-        return;
-      }
-
       toast({
         title: t("utils.error"),
         description: t("incomes.successfullUpdate"),
@@ -81,6 +75,8 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
           <IconCheckbox className="w-6 h-6" color={theme.colors.emerald[400]} />
         ),
       });
+
+      router.push("/incomes");
     } catch (error) {
       if (error && error instanceof Error) {
         toast({

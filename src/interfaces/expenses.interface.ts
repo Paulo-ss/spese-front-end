@@ -48,4 +48,6 @@ export interface IExpenseForm {
   customCategory?: number | null;
 }
 
+export type ExpenseFormKeys = keyof IExpenseForm;
+
 export type ExpenseGroup = { [key: string]: IExpense[] };

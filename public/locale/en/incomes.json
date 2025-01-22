@@ -5,6 +5,7 @@
     "newIncome": "new income",
     "editIncome": "edit income",
     "date": "date",
-    "successfullUpdate": "successfully updated income"
+    "successfullUpdate": "successfully updated income",
+    "deleted": "income deleted"
   }
 }

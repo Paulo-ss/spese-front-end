@@ -21,7 +21,11 @@ import { IAPIError } from "@/interfaces/api-error.interface";
 import { IBankAccount } from "@/interfaces/bank-account.interface";
 import { CategoryKey, ICategory } from "@/interfaces/category.interface";
 import { ICreditCard } from "@/interfaces/credit-card.interface";
-import { IExpense, IExpenseForm } from "@/interfaces/expenses.interface";
+import {
+  ExpenseFormKeys,
+  IExpense,
+  IExpenseForm,
+} from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
 import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
 import {
@@ -88,6 +92,15 @@ const ExpenseForm: FC<IProps> = ({
   const onSubmit = async (data: IExpenseForm) => {
     try {
       setIsLoading(true);
+
+      for (const key in data) {
+        if (
+          data[key as ExpenseFormKeys] === null ||
+          data[key as ExpenseFormKeys] === undefined
+        ) {
+          delete data[key as ExpenseFormKeys];
+        }
+      }
 
       const { error } = expense
         ? await editExpense(expense.id, {
@@ -298,13 +311,7 @@ const ExpenseForm: FC<IProps> = ({
                       render={({ field: { value, onChange } }) => {
                         return (
                           <div className="flex gap-2 items-center">
-                            <div
-                              className={`${
-                                !!expense
-                                  ? "cursor-not-allowed pointer-events-none"
-                                  : "cursor-pointer"
-                              }`}
-                            >
+                            <div className="cursor-pointer">
                               <input
                                 className="hidden"
                                 type="checkbox"
@@ -336,20 +343,14 @@ const ExpenseForm: FC<IProps> = ({
                                   value && value === ExpenseType.DEBIT
                                     ? "bg-emerald-300 dark:bg-emerald-600 dar:text-zinc-50"
                                     : ""
-                                } transition-colors`}
+                                } transition-colors cursor-pointer`}
                                 aria-disabled={!!expense}
                               >
                                 {t("expenses.debit")}
                               </label>
                             </div>
 
-                            <div
-                              className={`${
-                                !!expense
-                                  ? "cursor-not-allowed pointer-events-none"
-                                  : "cursor-pointer"
-                              }`}
-                            >
+                            <div className="cursor-pointer">
                               <input
                                 className="hidden"
                                 type="checkbox"
@@ -385,7 +386,7 @@ const ExpenseForm: FC<IProps> = ({
                                   value && value === ExpenseType.CREDIT_CARD
                                     ? "bg-emerald-300 dark:bg-emerald-600 dar:text-zinc-50"
                                     : ""
-                                } transition-colors`}
+                                } transition-colors cursor-pointer`}
                               >
                                 {t("expenses.credit_card")}
                               </label>

@@ -5,6 +5,7 @@
     "newIncome": "nova renda extra",
     "editIncome": "editar renda extra",
     "date": "data",
-    "successfullUpdate": "renda extra atualizada com sucesso"
+    "successfullUpdate": "renda extra atualizada com sucesso",
+    "deleted": "renda extra deletada"
   }
 }

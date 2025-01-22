@@ -21,20 +21,33 @@ interface IProps extends ToolbarProps<ICalendarEvent> {
   locale: string;
 }
 
+const today = new Date();
+
 const Toolbar: FC<IProps> = ({ date, onNavigate, onView, view, locale }) => {
   const t = useTranslations();
 
-  return (
-    <div className="flex flex-col justify-center gap-4 items-center md:flex-row md:justify-between p-2 md:p-4 border-b border-zinc-300 dark:border-zinc-800">
-      <div>
-        {date.toLocaleDateString(locale, {
-          day: view === "day" ? "2-digit" : undefined,
-          month: "long",
-          year: "numeric",
-        })}
-      </div>
+  const isToday =
+    view === "month"
+      ? date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      : date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
 
+  return (
+    <div className="flex justify-between gap-4 items-center py-4 px-2 md:p-6 border-b border-zinc-300 dark:border-zinc-800">
       <div className="flex items-center gap-2">
+        <p
+          onClick={() => onNavigate("TODAY")}
+          className={`py-1 px-2  transition-colors rounded-md cursor-pointer ${
+            isToday
+              ? "bg-emerald-200 dark:bg-emerald-700 hover:bg-emerald-400 dark:hover:bg-emerald-800"
+              : "bg-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900"
+          }`}
+        >
+          {t("cashFlow.today")}
+        </p>
+
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger className="text-start w-full">
@@ -56,17 +69,20 @@ const Toolbar: FC<IProps> = ({ date, onNavigate, onView, view, locale }) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+      </div>
 
+      <div className="flex items-center gap-2">
         <IconChevronLeft
           onClick={() => onNavigate("PREV")}
           className="cursor-pointer"
         />
 
-        <p
-          onClick={() => onNavigate("TODAY")}
-          className="py-1 px-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-md cursor-pointer"
-        >
-          {t("cashFlow.today")}
+        <p>
+          {date.toLocaleDateString(locale, {
+            day: view === "day" ? "2-digit" : undefined,
+            month: "long",
+            year: "numeric",
+          })}
         </p>
 
         <IconChevronRight

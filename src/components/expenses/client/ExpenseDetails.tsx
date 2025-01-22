@@ -154,7 +154,9 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
                     currency: locale === "pt" ? "BRL" : "USD",
                   })}
                 </p>
-                <p className="italic text-sm">{expense?.expenseType}</p>
+                <p className="italic text-sm">
+                  {t(`expenses.${expense?.expenseType}`)}
+                </p>
               </div>
 
               <div

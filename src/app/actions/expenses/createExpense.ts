@@ -22,6 +22,7 @@ export default async function createExpense(expense: IExpenseForm) {
           bankAccountId: Number(expense.bankAccountId),
           creditCardId: Number(expense.creditCardId),
           installments: Number(expense.installments),
+          customCategory: Number(expense.customCategory),
         }),
       },
     },
