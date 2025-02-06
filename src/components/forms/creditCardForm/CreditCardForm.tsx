@@ -25,10 +25,12 @@ import { Banks } from "@/enums/banks.enum";
 import { InvoiceStatus } from "@/enums/invoice.enum";
 import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
+import { IBankAccount } from "@/interfaces/bank-account.interface";
 import {
   ICreditCard,
   ICreditCardsForm,
 } from "@/interfaces/credit-card.interface";
+import { fetchResource } from "@/services/fetchService";
 import { banksSelectOptions } from "@/utils/bankAccounts/bankAccountsSelectOptions";
 import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
 import {
@@ -38,14 +40,15 @@ import {
   IconPlus,
   IconSend,
   IconTrash,
+  IconX,
 } from "@tabler/icons-react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-nprogress-bar";
 import Image from "next/image";
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 
 interface IProps {
   creditCard?: ICreditCard;
@@ -67,6 +70,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
     control,
     formState: { errors },
     getValues,
+    setValue,
     handleSubmit,
   } = useForm<ICreditCardsForm>({
     defaultValues: {
@@ -85,11 +89,39 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
     control,
     name: "creditCards",
   });
+  const { creditCards } = useWatch({ control });
   const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [bankAccounts, setBankAccounts] = useState<IBankAccount[]>([]);
+
+  const fetchBankAccounts = useCallback(async () => {
+    try {
+      const { data, error } = await fetchResource<IBankAccount[]>({
+        url: "/bank-account/all/user",
+      });
+
+      if (error) {
+        throw new Error(
+          Array.isArray(error.errorMessage)
+            ? error.errorMessage[0]
+            : error.errorMessage
+        );
+      }
+
+      setBankAccounts(data!);
+    } catch (error) {
+      if (error && error instanceof Error) {
+        toast({
+          title: t("utils.error"),
+          description: error.message ?? t("utils.somethingWentWrong"),
+          variant: "destructive",
+        });
+      }
+    }
+  }, [t, toast]);
 
   const onSubmit = async (data: ICreditCardsForm) => {
     try {
@@ -137,9 +169,14 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
         limit: creditCard.limit,
         nickname: creditCard.nickname,
         lastFourDigits: creditCard.lastFourDigits,
+        bankAccountId: creditCard.bankAccount?.id,
       });
     }
-  }, [creditCard, update]);
+
+    if (!creditCard) {
+      fetchBankAccounts();
+    }
+  }, [creditCard, update, fetchBankAccounts]);
 
   const FormContent = (
     <Fragment>
@@ -155,7 +192,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                   className="flex flex-col items-end border border-zinc-300 dark:border-zinc-600 rounded-md p-4 mt-2"
                 >
                   <div className="mb-2 w-full flex flex-row justify-between items-center">
-                    <IconCreditCard width={30} height={30} />
+                    <IconCreditCard />
 
                     {!creditCard && (
                       <IconButton
@@ -321,7 +358,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                               disabled={!shouldDisableClosingAndDueDay}
                             >
                               <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
-                                <SelectValue placeholder={Banks.NUBANK} />
+                                <SelectValue />
                               </SelectTrigger>
 
                               <SelectContent>
@@ -364,7 +401,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                               disabled={!shouldDisableClosingAndDueDay}
                             >
                               <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
-                                <SelectValue placeholder={Banks.NUBANK} />
+                                <SelectValue />
                               </SelectTrigger>
 
                               <SelectContent>
@@ -384,6 +421,74 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                         )}
                       />
                     </div>
+
+                    {!creditCard && (
+                      <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                        <Controller
+                          control={control}
+                          name={`creditCards.${index}.bankAccountId`}
+                          render={({ field: { value, onChange, name } }) => (
+                            <Fragment>
+                              <div className="mb-2">
+                                <Label
+                                  name={name}
+                                  label={t("expenses.bankAccount")}
+                                />
+                              </div>
+
+                              <Select
+                                onValueChange={onChange}
+                                value={String(value)}
+                                name={name}
+                              >
+                                <div className="flex justify-between items-center w-full gap-2">
+                                  <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
+                                    <SelectValue></SelectValue>
+                                  </SelectTrigger>
+
+                                  {creditCards &&
+                                    creditCards[index] &&
+                                    creditCards[index].bankAccountId && (
+                                      <div
+                                        className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                                        onClick={() =>
+                                          setValue(
+                                            `creditCards.${index}.bankAccountId`,
+                                            null
+                                          )
+                                        }
+                                      >
+                                        <IconX className="w-4 h-4" />
+                                      </div>
+                                    )}
+                                </div>
+
+                                <SelectContent>
+                                  {bankAccounts.map((bankAccount) => (
+                                    <SelectItem
+                                      key={bankAccount.id}
+                                      value={String(bankAccount.id)}
+                                    >
+                                      <div className="p-2 flex rounded-md flex-row items-center gap-2">
+                                        <Image
+                                          src={`/images/logos/${bankAccount.bank}.png`}
+                                          width={512}
+                                          height={512}
+                                          alt={`${bankAccount.bank} logo`}
+                                          className="w-6 h-6 rounded-full"
+                                        />
+
+                                        <p>{bankAccount.bank}</p>
+                                      </div>
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </Fragment>
+                          )}
+                        />
+                      </div>
+                    )}
 
                     <div className="col-span-12 sm:col-span-6 md:col-span-4">
                       <Controller
@@ -425,7 +530,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
               <div className="mt-2 p-6">
                 <IconButton
                   type="button"
-                  icon={<IconPlus width={30} height={30} />}
+                  icon={<IconPlus />}
                   color="primary"
                   onClick={() =>
                     append({
@@ -436,6 +541,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                       dueDay: 1,
                       closingDay: 1,
                       lastFourDigits: "",
+                      bankAccountId: undefined,
                     })
                   }
                 />
@@ -445,7 +551,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
             <div className="mt-2 p-6 flex gap-2 justify-end">
               <IconButton
                 type="submit"
-                icon={<IconSend width={30} height={30} />}
+                icon={<IconSend />}
                 color="primary"
                 disabled={isLoading}
                 isLoading={isLoading}

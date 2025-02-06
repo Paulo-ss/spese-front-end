@@ -23,7 +23,7 @@ const WizardHeader = () => {
           <IconButton
             type="button"
             onClick={() => nextStep()}
-            icon={<IconPlayerTrackNext width={30} height={30} />}
+            icon={<IconPlayerTrackNext />}
             color="info"
           />
         )}

@@ -9,23 +9,35 @@ import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
 import {
-  IconAlertTriangle,
   IconCheckbox,
   IconChevronLeft,
   IconEdit,
   IconPlus,
   IconSend2,
+  IconX,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-nprogress-bar";
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { IIncome, IIncomeForm } from "@/interfaces/income.interface";
 import editIncome from "@/app/actions/incomes/editIncome";
 import saveIncome from "@/app/actions/incomes/saveIncome";
 import DatePicker from "@/components/ui/datePicker/DatePicker";
 import { theme } from "@/lib/theme/theme";
+import { IBankAccount } from "@/interfaces/bank-account.interface";
+import { fetchResource } from "@/services/fetchService";
+import Label from "@/components/ui/label/Label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select/Select";
+import Image from "next/image";
+import { IWage } from "@/interfaces/wage.interface";
 
 interface IProps {
   income?: IIncome;
@@ -40,12 +52,67 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
     setValue,
     handleSubmit,
   } = useForm<IIncomeForm>();
+  const { bankAccountId, wageId } = useWatch({ control });
 
   const router = useRouter();
   const t = useTranslations();
   const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [bankAccounts, setBankAccounts] = useState<IBankAccount[]>([]);
+  const [wages, setWages] = useState<IWage[]>([]);
+
+  const fetchBankAccounts = useCallback(async () => {
+    try {
+      const { data, error } = await fetchResource<IBankAccount[]>({
+        url: "/bank-account/all/user",
+      });
+
+      if (error) {
+        throw new Error(
+          Array.isArray(error.errorMessage)
+            ? error.errorMessage[0]
+            : error.errorMessage
+        );
+      }
+
+      setBankAccounts(data!);
+    } catch (error) {
+      if (error && error instanceof Error) {
+        toast({
+          title: t("utils.error"),
+          description: error.message ?? t("utils.somethingWentWrong"),
+          variant: "destructive",
+        });
+      }
+    }
+  }, [t, toast]);
+
+  const fetchWages = useCallback(async () => {
+    try {
+      const { data, error } = await fetchResource<IWage[]>({
+        url: "/income/wage/all/user",
+      });
+
+      if (error) {
+        throw new Error(
+          Array.isArray(error.errorMessage)
+            ? error.errorMessage[0]
+            : error.errorMessage
+        );
+      }
+
+      setWages(data!);
+    } catch (error) {
+      if (error && error instanceof Error) {
+        toast({
+          title: t("utils.error"),
+          description: error.message ?? t("utils.somethingWentWrong"),
+          variant: "destructive",
+        });
+      }
+    }
+  }, [t, toast]);
 
   const onSubmit = async (data: IIncomeForm) => {
     try {
@@ -62,15 +129,16 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
             ? error.errorMessage[0]
             : error.errorMessage,
           variant: "destructive",
-          action: <IconAlertTriangle />,
         });
 
         return;
       }
 
       toast({
-        title: t("utils.error"),
-        description: t("incomes.successfullUpdate"),
+        title: t("utils.success"),
+        description: income
+          ? t("incomes.successfullUpdate")
+          : t("incomes.successfullCreated"),
         action: (
           <IconCheckbox className="w-6 h-6" color={theme.colors.emerald[400]} />
         ),
@@ -100,8 +168,13 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
         Number(formatDecimalNumber({ value: income.value, returnValue: true }))
       );
       setValue("date", new Date(year, month - 1, day));
+      setValue("bankAccountId", income.bankAccount?.id);
+      setValue("wageId", income.wage?.id);
     }
-  }, [income, setValue]);
+
+    fetchBankAccounts();
+    fetchWages();
+  }, [income, setValue, fetchBankAccounts, fetchWages]);
 
   return (
     <Card
@@ -124,11 +197,12 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
       ) : (
         <Fade duration={300} direction="up" triggerOnce cascade>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="col-span-1 w-full md:w-auto">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+              <div className="col-span-12 sm:col-span-6 md:col-span-4">
                 <Controller
                   control={control}
                   name={`name`}
+                  defaultValue=""
                   rules={{
                     required: {
                       value: true,
@@ -149,10 +223,11 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                 />
               </div>
 
-              <div className="col-span-1 w-full md:w-auto">
+              <div className="col-span-12 sm:col-span-6 md:col-span-4">
                 <Controller
                   control={control}
                   name={`value`}
+                  defaultValue={0}
                   rules={{
                     required: {
                       value: true,
@@ -176,15 +251,18 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                       }}
                       error={errors && !!errors.value?.message}
                       helperText={errors?.value?.message}
+                      disabled={!!wageId}
                     />
                   )}
                 />
               </div>
 
-              <div className="col-span-1 w-full md:w-auto">
+              <div className="col-span-12 sm:col-span-6 md:col-span-4">
                 <Controller
                   control={control}
                   name={`date`}
+                  defaultValue={new Date()}
+                  disabled={!!income}
                   rules={{
                     required: {
                       value: true,
@@ -199,7 +277,149 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                       error={!!errors?.date?.message}
                       helperText={errors.date?.message}
                       locale={locale}
+                      disabled={!!income}
                     />
+                  )}
+                />
+              </div>
+
+              <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                <Controller
+                  control={control}
+                  name="bankAccountId"
+                  defaultValue={
+                    income && income.bankAccount
+                      ? income.bankAccount.id
+                      : undefined
+                  }
+                  render={({ field: { value, onChange, name } }) => (
+                    <Fragment>
+                      <div className="mb-2">
+                        <Label name={name} label={t("expenses.bankAccount")} />
+                      </div>
+
+                      <Select
+                        onValueChange={onChange}
+                        value={String(value)}
+                        name={name}
+                        disabled={!!income}
+                      >
+                        <div className="flex justify-between items-center w-full gap-2">
+                          <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
+                            <SelectValue></SelectValue>
+                          </SelectTrigger>
+
+                          {bankAccountId && !income && (
+                            <div
+                              className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                              onClick={() =>
+                                setValue("bankAccountId", undefined)
+                              }
+                            >
+                              <IconX className="w-4 h-4" />
+                            </div>
+                          )}
+                        </div>
+
+                        <SelectContent>
+                          {bankAccounts.map((bankAccount) => (
+                            <SelectItem
+                              key={bankAccount.id}
+                              value={String(bankAccount.id)}
+                            >
+                              <div className="p-2 flex rounded-md flex-row items-center gap-2">
+                                <Image
+                                  src={`/images/logos/${bankAccount.bank}.png`}
+                                  width={512}
+                                  height={512}
+                                  alt={`${bankAccount.bank} logo`}
+                                  className="w-6 h-6 rounded-full"
+                                />
+
+                                <p>{bankAccount.bank}</p>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Fragment>
+                  )}
+                />
+              </div>
+
+              <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                <Controller
+                  control={control}
+                  name="wageId"
+                  defaultValue={
+                    income && income.wage ? income.wage.id : undefined
+                  }
+                  render={({ field: { value, onChange, name } }) => (
+                    <Fragment>
+                      <div className="mb-2">
+                        <Label name={name} label={t("wagePrice")} />
+                      </div>
+
+                      <Select
+                        onValueChange={(value) => {
+                          const wage = wages.find(
+                            (wage) => wage.id === Number(value)
+                          );
+                          onChange(value);
+
+                          if (wage) {
+                            setValue(
+                              "value",
+                              Number(
+                                formatDecimalNumber({
+                                  value: wage.wage,
+                                  returnValue: true,
+                                })
+                              )
+                            );
+                          }
+                        }}
+                        value={String(value)}
+                        name={name}
+                        disabled={!!income}
+                      >
+                        <div className="flex justify-between items-center w-full gap-2">
+                          <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
+                            <SelectValue></SelectValue>
+                          </SelectTrigger>
+
+                          {wageId && !income && (
+                            <div
+                              className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                              onClick={() => setValue("wageId", undefined)}
+                            >
+                              <IconX className="w-4 h-4" />
+                            </div>
+                          )}
+                        </div>
+
+                        <SelectContent>
+                          {wages.map((wage) => (
+                            <SelectItem key={wage.id} value={String(wage.id)}>
+                              <div className="p-2 flex rounded-md flex-row items-center gap-2">
+                                <div
+                                  className={`flex justify-center items-center p-2 w-6 h-6 rounded-full border border-emerald-400 dark:border-emerald-800 bg-emerald-100 dark:bg-emerald-300 text-emerald-400 dark:text-emerald-800`}
+                                >
+                                  {locale === "pt" ? "S" : "W"}
+                                </div>
+
+                                <p>
+                                  {Number(wage.wage).toLocaleString(locale, {
+                                    style: "currency",
+                                    currency: locale === "pt" ? "BRL" : "USD",
+                                  })}
+                                </p>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Fragment>
                   )}
                 />
               </div>

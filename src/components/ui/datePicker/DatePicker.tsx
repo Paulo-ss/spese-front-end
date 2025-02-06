@@ -44,7 +44,9 @@ const DatePicker: FC<IProps> = ({
               error
                 ? "border-red-500 dark:border-red-500"
                 : "border-gray-100 dark:border-zinc-500"
-            } transition-colors duration-300 dark:bg-zinc-900 dark:border dark:text-white`}
+            } transition-colors duration-300 dark:bg-zinc-900 dark:border dark:text-white ${
+              disabled && "cursor-not-allowed"
+            }`}
           >
             {value ? (
               format(value, "PPP", {
@@ -58,18 +60,20 @@ const DatePicker: FC<IProps> = ({
           </div>
         </PopoverTrigger>
 
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={value}
-            onSelect={onChange}
-            disabled={(date) =>
-              date < new Date("1900-01-01") ||
-              (!!disableFuture && date > new Date())
-            }
-            initialFocus
-          />
-        </PopoverContent>
+        {!disabled && (
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={value}
+              onSelect={onChange}
+              disabled={(date) =>
+                date < new Date("1900-01-01") ||
+                (!!disableFuture && date > new Date())
+              }
+              initialFocus
+            />
+          </PopoverContent>
+        )}
       </Popover>
 
       {helperText && (

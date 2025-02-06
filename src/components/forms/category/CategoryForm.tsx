@@ -227,7 +227,7 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
                     <div className="max-w-fit">
                       <IconButton
                         type="button"
-                        icon={<IconTrash width={30} height={30} />}
+                        icon={<IconTrash />}
                         color="error"
                         fullWidth
                         onClick={() => remove(index)}
@@ -242,7 +242,7 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
               <div className="mt-2 p-6">
                 <IconButton
                   type="button"
-                  icon={<IconPlus width={30} height={30} />}
+                  icon={<IconPlus />}
                   color="primary"
                   onClick={() => append({ name: "", color: "" })}
                 />
@@ -256,7 +256,7 @@ const CategoryForm: FC<IProps> = ({ category, error }) => {
             >
               <IconButton
                 type="submit"
-                icon={<IconSend2 width={30} height={30} />}
+                icon={<IconSend2 />}
                 color="primary"
                 disabled={isLoading}
                 isLoading={isLoading}

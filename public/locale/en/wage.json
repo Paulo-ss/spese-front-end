@@ -1,5 +1,16 @@
 {
   "informYourWage": "inform your wage",
   "yourWage": "your wage",
-  "wageUpdated": "wage updated"
+  "yourWages": "your wages",
+  "wagePrice": "wage",
+  "editYourWage": "edit your wage",
+  "createNewWages": "create new wages",
+  "wageCreated": "wages successfully created",
+  "wageUpdated": "wage successfully updated",
+  "wageDeleted": "wage deleted",
+  "paymentDay": "payment day",
+  "businessDay": "business day",
+  "infoBusinessDay": "if the payment day is not a business day, do you get paid before or after?",
+  "BEFORE": "before",
+  "AFTER": "after"
 }

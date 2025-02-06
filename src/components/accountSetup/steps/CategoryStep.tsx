@@ -129,7 +129,7 @@ const CategoryStep = () => {
                 <div className="max-w-fit">
                   <IconButton
                     type="button"
-                    icon={<IconTrash width={30} height={30} />}
+                    icon={<IconTrash />}
                     color="error"
                     fullWidth
                     onClick={() => remove(index)}
@@ -143,7 +143,7 @@ const CategoryStep = () => {
         <div className="mt-2 p-6">
           <IconButton
             type="button"
-            icon={<IconPlus width={30} height={30} />}
+            icon={<IconPlus />}
             color="primary"
             onClick={() => append({ name: "" })}
           />
@@ -152,7 +152,7 @@ const CategoryStep = () => {
         <div className="mt-2 p-6 flex gap-2 justify-end border-t border-zinc-300 dark:border-zinc-600">
           <IconButton
             type="submit"
-            icon={<IconCheck width={30} height={30} />}
+            icon={<IconCheck />}
             color="primary"
             disabled={isLoading}
             isLoading={isLoading}

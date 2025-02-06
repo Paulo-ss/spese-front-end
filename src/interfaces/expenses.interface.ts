@@ -46,6 +46,7 @@ export interface IExpenseForm {
   installments?: number | null;
   category?: ExpenseCategory | null;
   customCategory?: number | null;
+  status?: ExpenseStatus | null;
 }
 
 export type ExpenseFormKeys = keyof IExpenseForm;

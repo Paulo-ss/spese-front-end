@@ -3,6 +3,7 @@
 import { fetchResource } from "@/services/fetchService";
 import { IGenericMessageResponse } from "@/interfaces/generic-message.interface";
 import { IExpenseForm } from "@/interfaces/expenses.interface";
+import { ExpenseStatus } from "@/enums/expenses.enum";
 
 export default async function createExpense(expense: IExpenseForm) {
   const { data, error } = await fetchResource<IGenericMessageResponse>({
@@ -23,6 +24,7 @@ export default async function createExpense(expense: IExpenseForm) {
           creditCardId: Number(expense.creditCardId),
           installments: Number(expense.installments),
           customCategory: Number(expense.customCategory),
+          status: ExpenseStatus.PENDING,
         }),
       },
     },

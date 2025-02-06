@@ -229,7 +229,7 @@ const BankAccountForm: FC<IProps> = ({ bankAccount, error }) => {
                     <div className="grow w-full md:grow-0 md:w-fit">
                       <IconButton
                         type="button"
-                        icon={<IconTrash width={30} height={30} />}
+                        icon={<IconTrash />}
                         color="error"
                         fullWidth
                         onClick={() => remove(index)}
@@ -244,7 +244,7 @@ const BankAccountForm: FC<IProps> = ({ bankAccount, error }) => {
               <div className="mt-2 p-6">
                 <IconButton
                   type="button"
-                  icon={<IconPlus width={30} height={30} />}
+                  icon={<IconPlus />}
                   color="primary"
                   onClick={() =>
                     append({ bank: Banks.NUBANK, currentBalance: 0 })
@@ -260,7 +260,7 @@ const BankAccountForm: FC<IProps> = ({ bankAccount, error }) => {
             >
               <IconButton
                 type="submit"
-                icon={<IconSend2 width={30} height={30} />}
+                icon={<IconSend2 />}
                 color="primary"
                 disabled={isLoading}
                 isLoading={isLoading}

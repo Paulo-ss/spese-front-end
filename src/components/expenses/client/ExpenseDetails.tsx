@@ -206,7 +206,7 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
                   {expense!.bankAccount && (
                     <div className="col-span-1 flex flex-col gap-3 md:grow">
                       <p className="text-base md:text-2xl font-bold">
-                        {t("creditCard.bank")}
+                        {t("expenses.bankAccount")}
                       </p>
 
                       <div className="flex flex-row items-center gap-2">

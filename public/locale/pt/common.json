@@ -39,7 +39,7 @@
     "incomes": {
       "DEFAULT": "rendas",
       "wage": "salário",
-      "others": "outros"
+      "entries": "entradas"
     },
     "bankAccounts": "contas bancárias",
     "creditCards": "cartões de crédito",

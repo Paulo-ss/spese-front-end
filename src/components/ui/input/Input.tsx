@@ -28,7 +28,6 @@ interface IProps {
   endAdortment?: ReactNode;
 }
 
-// eslint-disable-next-line react/display-name
 const Input = forwardRef<any, IProps>((props, ref) => {
   const {
     name,
@@ -58,11 +57,13 @@ const Input = forwardRef<any, IProps>((props, ref) => {
 
       <div className="w-full flex items-center relative">
         <input
-          className={`w-full py-3 px-2 text-sm border-2 rounded-md focus:outline-none focus:border-emerald-400 ${
+          className={`w-full py-3 px-2 text-sm border-2 rounded-md focus:outline-none focus:shadow-[rgba(0,0,15,0.5)_1px_1px_5px_1px] focus:shadow-emerald-200 focus:border-emerald-400 ${
             error
               ? "border-red-500 dark:border-red-500"
               : "border-gray-100 dark:border-zinc-500"
-          } transition-colors duration-300 dark:bg-zinc-900 dark:border dark:text-white`}
+          } transition-colors duration-300 dark:focus:shadow-emerald-800 dark:bg-zinc-900 dark:border dark:text-white ${
+            disabled && "cursor-not-allowed bg-zinc-100"
+          }`}
           type={type}
           id={name}
           value={value}
@@ -93,5 +94,7 @@ const Input = forwardRef<any, IProps>((props, ref) => {
     </div>
   );
 });
+
+Input.displayName = "Input";
 
 export default Input;

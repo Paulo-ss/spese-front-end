@@ -1,6 +1,7 @@
 import { Banks } from "@/enums/banks.enum";
 import { ISubscription } from "./subscription.interface";
 import { IInvoice } from "./invoice.interface";
+import { IBankAccount } from "./bank-account.interface";
 
 export interface ICreditCard {
   id: number;
@@ -9,6 +10,7 @@ export interface ICreditCard {
   limit: number;
   lastFourDigits: string;
   closingDay: number;
+  bankAccount?: IBankAccount;
   dueDay: number;
   invoices?: IInvoice[];
   subscriptions?: ISubscription[];
@@ -22,6 +24,7 @@ export interface ICreditCardForm {
   lastFourDigits: string;
   closingDay: number;
   dueDay: number;
+  bankAccountId?: number | null;
 }
 
 export interface ICreditCardsForm {

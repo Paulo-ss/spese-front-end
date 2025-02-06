@@ -4,16 +4,17 @@ import { IIncome, IIncomeForm } from "@/interfaces/income.interface";
 import { fetchResource } from "@/services/fetchService";
 import { revalidateTag } from "next/cache";
 
-export default async function saveIncome(formDate: IIncomeForm) {
+export default async function saveIncome(formData: IIncomeForm) {
   const body = {
-    ...formDate,
-    incomeMonth: formDate.date
+    ...formData,
+    incomeMonth: formData.date
       .toLocaleDateString("en", {
         month: "2-digit",
         day: "2-digit",
         year: "numeric",
       })
       .replaceAll("/", "-"),
+    bankAccountId: Number(formData.bankAccountId),
   };
 
   const { data, error } = await fetchResource<IIncome>({

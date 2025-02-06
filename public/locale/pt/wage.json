@@ -1,5 +1,16 @@
 {
   "informYouWage": "defina o seu salário",
   "yourWage": "seu salário",
-  "wageUpdated": "salário atualizado"
+  "yourWages": "seus salários",
+  "wagePrice": "salário",
+  "editYourWage": "editar salário",
+  "createNewWages": "criar novos salários",
+  "wageCreated": "salários salvos com sucesso",
+  "wageUpdated": "salário atualizado com sucesso",
+  "wageDeleted": "salário deletado",
+  "paymentDay": "dia do pagamento",
+  "businessDay": "dia útil",
+  "infoBusinessDay": "se o dia do pagamento não for um dia útil, você recebe antes ou depois?",
+  "BEFORE": "antes",
+  "AFTER": "depois"
 }

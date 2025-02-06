@@ -118,6 +118,26 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                     </div>
                   </div>
 
+                  {creditCard?.bankAccount && (
+                    <div className="col-span-1 flex flex-col gap-3">
+                      <p className="text-base md:text-2xl font-bold">
+                        {t("expenses.bankAccount")}
+                      </p>
+
+                      <div className="flex flex-row items-center gap-2">
+                        <Image
+                          src={`/images/logos/${creditCard?.bankAccount?.bank}.png`}
+                          width={512}
+                          height={512}
+                          alt={`${creditCard?.bankAccount?.bank} logo`}
+                          className="w-6 h-6 rounded-full"
+                        />
+
+                        <p>{creditCard?.bankAccount?.bank}</p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="col-span-1 flex flex-col gap-3">
                     <p className="text-base md:text-2xl font-bold">
                       {t("creditCard.limit")}

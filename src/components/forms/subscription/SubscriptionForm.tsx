@@ -187,6 +187,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
                 <Controller
                   control={control}
                   name={`name`}
+                  defaultValue=""
                   rules={{
                     required: {
                       value: true,
@@ -211,6 +212,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
                 <Controller
                   control={control}
                   name={`price`}
+                  defaultValue={0}
                   rules={{
                     required: {
                       value: true,

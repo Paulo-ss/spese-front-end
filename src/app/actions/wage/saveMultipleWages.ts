@@ -2,20 +2,17 @@
 
 import { IWage, IWageForm } from "@/interfaces/wage.interface";
 import { fetchResource } from "@/services/fetchService";
-import { revalidateTag } from "next/cache";
 
-export default async function editWage(wage: IWageForm, wageId: number) {
+export default async function saveMultipleWages(wages: IWageForm[]) {
   const { data, error } = await fetchResource<IWage>({
-    url: `/income/wage/${wageId}`,
+    url: "/income/wage/multiple",
     config: {
       options: {
-        method: "PUT",
-        body: JSON.stringify(wage),
+        method: "POST",
+        body: JSON.stringify(wages),
       },
     },
   });
-
-  revalidateTag("wage");
 
   return { data, error };
 }

@@ -203,7 +203,6 @@ const ExpenseForm: FC<IProps> = ({
     try {
       const { data, error } = await fetchResource<IBankAccount[]>({
         url: "/bank-account/all/user",
-        config: { options: { next: { tags: ["bank-accounts"] } } },
       });
 
       if (error) {
@@ -796,7 +795,7 @@ const ExpenseForm: FC<IProps> = ({
                                       ExpenseCategory[
                                         categoryKey as CategoryKey
                                       ]
-                                      ? "bg-zinc-300 dark:bg-zinc-500"
+                                      ? "bg-zinc-300 dark:bg-zinc-950"
                                       : ""
                                   } transition-colors`}
                                 >

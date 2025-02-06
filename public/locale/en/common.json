@@ -39,7 +39,7 @@
     "incomes": {
       "DEFAULT": "incomes",
       "wage": "wage",
-      "others": "others"
+      "entries": "incomes"
     },
     "bankAccounts": "bank accounts",
     "creditCards": "credit cards",
