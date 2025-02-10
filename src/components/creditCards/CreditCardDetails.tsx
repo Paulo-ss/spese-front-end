@@ -99,7 +99,7 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
               <div>
                 <CreditCard creditCard={creditCard!} />
 
-                <div className="grid grid-cols-2 gap-4 md:flex md:flex-row md:gap-8 p-4">
+                <div className="grid grid-cols-2 gap-4 md:flex md:flex-row md:gap-8 p-4 mt-4">
                   <div className="col-span-1 flex flex-col gap-3">
                     <p className="text-base md:text-2xl font-bold">
                       {t("creditCard.bank")}

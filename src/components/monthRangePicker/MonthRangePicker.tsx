@@ -4,16 +4,9 @@ import { GlobalDateContext } from "@/contexts/GlobalDateContext";
 import { FC, Fragment, useContext, useState } from "react";
 import { Popover } from "../ui/popover";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
-import {
-  IconCalendar,
-  IconChevronDown,
-  IconChevronUp,
-} from "@tabler/icons-react";
+import { IconCalendar, IconTrash } from "@tabler/icons-react";
 import { Calendar } from "../ui/calendar";
-
-const today = new Date();
-const tomorrow = new Date();
-tomorrow.setDate(today.getDate() + 1);
+import { useTranslations } from "next-intl";
 
 interface IProps {
   locale: string;
@@ -25,56 +18,76 @@ const MonthRangePicker: FC<IProps> = ({ locale }) => {
 
   const [isCalendarOpened, setIsCalendarOpened] = useState(false);
 
+  const t = useTranslations();
+
+  const resetDates = () => {
+    updateFromDate(undefined);
+    updateToDate(undefined);
+  };
+
   return (
-    <div className="flex justify-center items-center z-50">
+    <div className="flex items-center z-50 w-full">
       <Popover open={isCalendarOpened} onOpenChange={setIsCalendarOpened}>
-        <PopoverTrigger>
-          <div className="flex items-center gap-2">
-            <IconCalendar />
+        <PopoverTrigger className="w-full">
+          <div className="rounded-3xl p-3 bg-white dark:bg-zinc-950 shadow-md flex justify-between items-center gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <IconCalendar />
+            </div>
 
-            <p className="text-sm md:text-base">
-              {fromDate
-                .toLocaleDateString(locale, {
-                  month: "short",
-                  year: "numeric",
-                  day: "2-digit",
-                })
-                .toLowerCase()}
+            {!fromDate || !toDate ? (
+              <p className="text-sm md:text-base italic">
+                {t("utils.selectThePeriod")}
+              </p>
+            ) : (
+              <p className="text-sm md:text-base italic">
+                {fromDate
+                  .toLocaleDateString(locale, {
+                    month: "short",
+                    year: "numeric",
+                    day: "2-digit",
+                  })
+                  .toLowerCase()}
 
-              {toDate && (
-                <Fragment>
-                  {" "}
-                  /{" "}
-                  {toDate
-                    .toLocaleDateString(locale, {
-                      month: "short",
-                      year: "numeric",
-                      day: "2-digit",
-                    })
-                    .toLowerCase()}
-                </Fragment>
-              )}
-            </p>
-
-            {isCalendarOpened ? <IconChevronUp /> : <IconChevronDown />}
+                {toDate && (
+                  <Fragment>
+                    {" "}
+                    /{" "}
+                    {toDate
+                      .toLocaleDateString(locale, {
+                        month: "short",
+                        year: "numeric",
+                        day: "2-digit",
+                      })
+                      .toLowerCase()}
+                  </Fragment>
+                )}
+              </p>
+            )}
           </div>
         </PopoverTrigger>
 
         <PopoverContent className="z-50">
-          <Calendar
-            mode="range"
-            defaultMonth={toDate ?? fromDate}
-            selected={{ from: fromDate, to: toDate }}
-            onSelect={(date) => {
-              updateFromDate(date && date.from ? date.from : today);
-              updateToDate(date && date.to ? date.to : tomorrow);
+          <div className="flex flex-col p-2 bg-white dark:bg-zinc-950 mt-2 rounded-md shadow-md">
+            <Calendar
+              mode="range"
+              defaultMonth={toDate ?? fromDate}
+              selected={{ from: fromDate, to: toDate }}
+              onSelect={(date) => {
+                updateFromDate(date && date.from ? date.from : undefined);
+                updateToDate(date && date.to ? date.to : undefined);
+              }}
+              className="bg-white dark:bg-zinc-950"
+            />
 
-              if (date?.from && date.to) {
-                setIsCalendarOpened(false);
-              }
-            }}
-            className="bg-white dark:bg-zinc-900 rounded-md mt-2 shadow-md"
-          />
+            {fromDate && toDate && (
+              <div
+                className="rounded-full p-2 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer self-end w-fit"
+                onClick={resetDates}
+              >
+                <IconTrash />
+              </div>
+            )}
+          </div>
         </PopoverContent>
       </Popover>
     </div>

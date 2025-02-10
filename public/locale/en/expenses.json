@@ -4,6 +4,8 @@
     "yourExpenses": "your expenses",
     "credit_card": "credit",
     "debit": "debit",
+    "pay": "pay",
+    "payExpense": "pay expense",
     "PAID": "paid",
     "PENDING": "pending",
     "installed": "installed",

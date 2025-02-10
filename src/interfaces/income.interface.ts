@@ -18,4 +18,5 @@ export interface IIncomeForm {
   date: Date;
   bankAccountId?: number;
   wageId?: number;
+  wage?: IWage;
 }

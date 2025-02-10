@@ -41,6 +41,7 @@ export interface IExpenseForm {
   price?: number | null;
   expenseDate?: Date | null;
   expenseType?: ExpenseType | null;
+  status?: ExpenseStatus | null;
   bankAccountId?: number | null;
   creditCardId?: number | null;
   installments?: number | null;

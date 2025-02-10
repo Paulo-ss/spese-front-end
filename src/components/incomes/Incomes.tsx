@@ -48,65 +48,69 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
   const isFirstRender = useRef(true);
 
   const fetchIncomes = useCallback(async () => {
-    try {
-      updateIsLoading(true);
-      setIsLoading(true);
+    if (fromDate && toDate) {
+      try {
+        updateIsLoading(true);
+        setIsLoading(true);
 
-      const [fromYear, fromMonth, fromDay] = fromDate
-        .toISOString()
-        .split("T")[0]
-        .split("-");
-      const [toYear, toMonth, toDay] = toDate
-        .toISOString()
-        .split("T")[0]
-        .split("-");
+        const [fromYear, fromMonth, fromDay] = fromDate
+          .toISOString()
+          .split("T")[0]
+          .split("-");
+        const [toYear, toMonth, toDay] = toDate
+          .toISOString()
+          .split("T")[0]
+          .split("-");
 
-      const { data: incomes, error } = await fetchResource<IIncome[]>({
-        url: "/income/filter",
-        config: {
-          options: {
-            method: "POST",
-            body: JSON.stringify({
-              fromDate: `${fromMonth}-${fromDay}-${fromYear}`,
-              toDate: `${toMonth}-${toDay}-${toYear}`,
-            }),
-            next: { tags: ["incomes"] },
+        const { data: incomes, error } = await fetchResource<IIncome[]>({
+          url: "/income/filter",
+          config: {
+            options: {
+              method: "POST",
+              body: JSON.stringify({
+                fromDate: `${fromMonth}-${fromDay}-${fromYear}`,
+                toDate: `${toMonth}-${toDay}-${toYear}`,
+              }),
+              next: { tags: ["incomes"] },
+            },
           },
-        },
-      });
+        });
 
-      if (incomes) {
-        for (const income of incomes) {
-          const [year, month, day] = income.incomeMonth.split("-").map(Number);
+        if (incomes) {
+          for (const income of incomes) {
+            const [year, month, day] = income.incomeMonth
+              .split("-")
+              .map(Number);
 
-          income.incomeMonth = new Date(
-            year,
-            month - 1,
-            day
-          ).toLocaleDateString(locale, {
-            weekday: "short",
-            day: "2-digit",
-            month: "short",
-          });
+            income.incomeMonth = new Date(
+              year,
+              month - 1,
+              day
+            ).toLocaleDateString(locale, {
+              weekday: "short",
+              day: "2-digit",
+              month: "short",
+            });
+          }
         }
-      }
 
-      if (error) {
-        throw new Error(
-          Array.isArray(error.errorMessage)
-            ? error.errorMessage[0]
-            : error.errorMessage
-        );
-      }
+        if (error) {
+          throw new Error(
+            Array.isArray(error.errorMessage)
+              ? error.errorMessage[0]
+              : error.errorMessage
+          );
+        }
 
-      setIncomes(incomes);
-    } catch (error) {
-      if (error && error instanceof Error) {
-        setErrorMessage(error.message ?? t("utils.somethingWentWrong"));
+        setIncomes(incomes);
+      } catch (error) {
+        if (error && error instanceof Error) {
+          setErrorMessage(error.message ?? t("utils.somethingWentWrong"));
+        }
+      } finally {
+        updateIsLoading(false);
+        setIsLoading(false);
       }
-    } finally {
-      updateIsLoading(false);
-      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromDate, toDate]);

@@ -65,14 +65,14 @@ const Button: FC<IProps> = ({
 
   return (
     <button
-      className={`py-3 px-4 w-full ${
-        extraRounded ? "rounded-3xl" : "rounded-md"
-      } flex justify-between items-center outline-none transition-colors dark:text-zinc-50 border ${
+      className={`py-3 px-4 w-full flex justify-between items-center outline-none transition-colors dark:text-zinc-50 border ${
+        colorsScheme[color][variant]
+      } ${extraRounded ? "rounded-3xl" : "rounded-md"} ${
         small && "text-sm py-1 px-2"
       } ${fullWidth ? "sm:max-w-full" : "sm:max-w-max"} ${
         disabled &&
         "cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 disabled:dark:bg-zinc-700 disabled:dark:text-zinc-500 disabled:hover:bg-none"
-      } ${colorsScheme[color][variant]}`}
+      }`}
       type={type}
       onClick={onClick}
       disabled={disabled}

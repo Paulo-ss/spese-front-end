@@ -3,7 +3,7 @@
 import { FC } from "react";
 import Label from "../label/Label";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
-import { IconCalendar } from "@tabler/icons-react";
+import { IconCalendar, IconQuestionMark } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale/pt";
@@ -19,6 +19,7 @@ interface IProps {
   helperText?: string;
   disableFuture?: boolean;
   disabled?: boolean;
+  info?: string;
 }
 
 const DatePicker: FC<IProps> = ({
@@ -30,12 +31,29 @@ const DatePicker: FC<IProps> = ({
   locale,
   disableFuture,
   disabled,
+  info,
 }) => {
   const t = useTranslations();
 
   return (
     <div className="flex flex-col">
-      <Label label={t(label)} name="date" />
+      <div className="flex items-center gap-2">
+        <Label label={t(label)} name="date" />
+
+        {info && (
+          <Popover>
+            <PopoverTrigger asChild disabled={disabled}>
+              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-zinc-950 text-zinc-50 dark:bg-white dark:text-zinc-950 shadow-md cursor-pointer">
+                <IconQuestionMark />
+              </span>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-auto p-0" align="start">
+              <div className="italic p-2">{info}</div>
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
 
       <Popover>
         <PopoverTrigger asChild disabled={disabled}>
@@ -65,6 +83,7 @@ const DatePicker: FC<IProps> = ({
             <Calendar
               mode="single"
               selected={value}
+              defaultMonth={value}
               onSelect={onChange}
               disabled={(date) =>
                 date < new Date("1900-01-01") ||

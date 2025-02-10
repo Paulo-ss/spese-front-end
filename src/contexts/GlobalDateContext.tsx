@@ -4,12 +4,12 @@ import { ReactNode, createContext, useState } from "react";
 
 interface IContextProps {
   date: Date;
-  fromDate: Date;
-  toDate: Date;
+  fromDate: Date | undefined;
+  toDate: Date | undefined;
   isLoading: boolean;
   updateDate: (date: Date) => void;
-  updateFromDate: (date: Date) => void;
-  updateToDate: (date: Date) => void;
+  updateFromDate: (date: Date | undefined) => void;
+  updateToDate: (date: Date | undefined) => void;
   updateIsLoading: (isLoading: boolean) => void;
 }
 
@@ -29,19 +29,21 @@ export const GlobalDateContextProvider = ({
   children: ReactNode;
 }) => {
   const [date, setDate] = useState<Date>(today);
-  const [fromDate, setFromDate] = useState<Date>(firstDayOfTheMonth);
-  const [toDate, setToDate] = useState<Date>(lastDayOfTheMonth);
+  const [fromDate, setFromDate] = useState<Date | undefined>(
+    firstDayOfTheMonth
+  );
+  const [toDate, setToDate] = useState<Date | undefined>(lastDayOfTheMonth);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateDate = (date: Date) => {
     setDate(date);
   };
 
-  const updateToDate = (date: Date) => {
+  const updateToDate = (date: Date | undefined) => {
     setToDate(date);
   };
 
-  const updateFromDate = (date: Date) => {
+  const updateFromDate = (date: Date | undefined) => {
     setFromDate(date);
   };
 

@@ -73,13 +73,17 @@ const ExpensesFilters: FC<IProps> = ({
 
   const fetchExpenses = async () => {
     try {
+      if (isExpensesPage && (!fromDate || !toDate)) {
+        return;
+      }
+
       const formData = getValues();
 
       updateLoading(true);
 
       saveFormState<IExpensesFilters>(formData, "expensesFormState");
 
-      const selectedDate = isExpensesPage ? fromDate : date;
+      const selectedDate = isExpensesPage ? fromDate! : date;
 
       const selectedMonth = selectedDate
         .toLocaleDateString("en", {
@@ -89,7 +93,7 @@ const ExpensesFilters: FC<IProps> = ({
         })
         .replaceAll("/", "-");
       const selectedToMonth = isExpensesPage
-        ? toDate
+        ? toDate!
             .toLocaleDateString("en", {
               day: "2-digit",
               month: "2-digit",

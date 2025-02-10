@@ -118,9 +118,16 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
     try {
       setIsLoading(true);
 
+      const formData: IIncomeForm = {
+        ...data,
+        wage: data.wageId
+          ? wages.find((wage) => wage.id === Number(data.wageId))
+          : undefined,
+      };
+
       const { error } = income
-        ? await editIncome(data, income.id)
-        : await saveIncome(data);
+        ? await editIncome(formData, income.id)
+        : await saveIncome(formData);
 
       if (error) {
         toast({

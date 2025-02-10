@@ -4,6 +4,8 @@
     "yourExpenses": "suas despesas",
     "credit_card": "crédito",
     "debit": "débito",
+    "pay": "pagar",
+    "payExpense": "pagar despesa",
     "PAID": "paga",
     "PENDING": "pendente",
     "installed": "parcelada",

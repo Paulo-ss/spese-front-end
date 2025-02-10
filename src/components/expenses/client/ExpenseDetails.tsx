@@ -12,6 +12,7 @@ import {
   IconBurger,
   IconCar,
   IconCash,
+  IconCheck,
   IconChevronLeft,
   IconContract,
   IconDeviceGamepad2,
@@ -23,6 +24,7 @@ import {
   IconHospital,
   IconSchool,
   IconX,
+  IconXboxX,
 } from "@tabler/icons-react";
 import IconButton from "@/components/ui/button/IconButton";
 import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
@@ -31,6 +33,20 @@ import Image from "next/image";
 import CreditCard from "@/components/creditCards/CreditCard";
 import Link from "next/link";
 import { Fade } from "react-awesome-reveal";
+import payExpense from "@/app/actions/expenses/payExpense";
+import { useToast } from "@/hooks/use-toast";
+import { theme } from "@/lib/theme/theme";
+import revalidateExpense from "@/app/actions/expenses/revalidateExpense";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Button from "@/components/ui/button/Button";
 
 interface IProps {
   expense?: IExpense;
@@ -84,11 +100,46 @@ type CategoryKey = keyof typeof categories;
 
 const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpened, setIsDialogOpened] = useState(false);
 
   const router = useRouter();
   const t = useTranslations();
+  const { toast } = useToast();
 
   const updateIsEditing = (isEditing: boolean) => setIsEditing(isEditing);
+
+  const handlePayExpense = async () => {
+    try {
+      setIsLoading(true);
+
+      const { error } = await payExpense(expense!.id);
+
+      if (error) {
+        throw new Error(
+          Array.isArray(error.errorMessage)
+            ? error.errorMessage[0]
+            : error.errorMessage
+        );
+      }
+
+      await revalidateExpense();
+      setIsDialogOpened(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "erro",
+          description: error.message,
+          action: (
+            <IconXboxX className="w-6 h-6" color={theme.colors.red[500]} />
+          ),
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Fragment>
@@ -162,9 +213,14 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
               <div
                 className={`absolute bottom-4 right-2 md:right-4 p-2 md:py-2 md:px-4 rounded-2xl font-bold ${
                   expense.status === ExpenseStatus.PENDING
-                    ? "bg-amber-500 dark:bg-amber-700 text-zinc-50"
-                    : "bg-emerald-400 dark:bg-emerald-600 text-zinc-50"
+                    ? "bg-amber-500 dark:bg-amber-700 text-zinc-50 cursor-pointer shadow-2xl shadow-amber-500"
+                    : "bg-emerald-400 dark:bg-emerald-600 text-zinc-50 shadow-2xl shadow-emerald-500"
                 } transition-colors`}
+                onClick={() => {
+                  if (expense.status === ExpenseStatus.PENDING) {
+                    setIsDialogOpened(true);
+                  }
+                }}
               >
                 {expense.status === ExpenseStatus.PENDING
                   ? t("expenses.PENDING")
@@ -263,6 +319,42 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
           </div>
         )}
       </div>
+
+      <Dialog
+        open={isDialogOpened}
+        onOpenChange={(isOpened) => setIsDialogOpened(isOpened)}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("expenses.payExpense")}?</DialogTitle>
+
+            <DialogDescription>{expense?.name}</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                color="neutral"
+                text={t("utils.cancel")}
+                trailing={<IconX />}
+                small
+              />
+            </DialogClose>
+
+            <Button
+              type="button"
+              color="primary"
+              text={t("expenses.pay")}
+              onClick={handlePayExpense}
+              trailing={<IconCheck />}
+              disabled={isLoading}
+              isLoading={isLoading}
+              small
+            />
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Fragment>
   );
 };

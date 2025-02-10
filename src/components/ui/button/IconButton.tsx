@@ -5,7 +5,7 @@ interface IProps {
   type: "submit" | "button";
   color: "primary" | "secondary" | "error" | "info" | "neutral";
   icon: ReactNode;
-  variant?: "outlined";
+  variant?: "outlined" | "contained";
   disabled?: boolean;
   isLoading?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -19,65 +19,47 @@ const IconButton: FC<IProps> = ({
   disabled,
   isLoading,
   onClick,
-  variant,
+  variant = "contained",
   fullWidth,
 }) => {
   const colorsScheme = {
     primary: {
-      bg: "bg-emerald-200",
-      darkBg: "dark:bg-emerald-800",
-      hoverBg: "hover:bg-emerald-400",
-      border: "border-emerald-400",
-      focusBg: "focus:bg-emerald-400",
-      darkHover: "dark:hover:bg-emerald-950",
+      contained:
+        "bg-emerald-200 border-transparent hover:bg-emerald-400 focus:bg-emerald-400 dark:bg-emerald-800 dark:hover:bg-emerald-950",
+      outlined:
+        "bg-transparent border-emerald-200 hover:bg-emerald-400 focus:bg-emerald-400 dark:border-emerald-950 dark:hover:bg-emerald-950",
     },
     secondary: {
-      bg: "bg-violet-200",
-      darkBg: "dark:bg-violet-800",
-      hoverBg: "hover:bg-violet-400",
-      border: "border-violet-400",
-      focusBg: "focus:bg-violet-400",
-      darkHover: "dark:hover:bg-violet-950",
+      contained:
+        "bg-violet-300 border-transparent hover:bg-violet-400 focus:bg-violet-400 dark:bg-violet-800 dark:hover:bg-violet-950",
+      outlined:
+        "bg-transparent border-violet-300 hover:bg-violet-400 focus:bg-violet-400 dark:border-violet-950 dark:hover:bg-violet-950",
     },
     error: {
-      bg: "bg-red-200",
-      darkBg: "dark:bg-red-800",
-      hoverBg: "hover:bg-red-400",
-      border: "border-red-400",
-      focusBg: "focus:bg-red-400",
-      darkHover: "dark:hover:bg-red-950",
+      contained:
+        "bg-red-200 border-transparent hover:bg-red-400 focus:bg-red-400 dark:bg-red-800 dark:hover:bg-red-950",
+      outlined:
+        "bg-transparent border-red-200 hover:bg-red-400 focus:bg-red-400 dark:border-red-950 dark:hover:bg-red-950",
     },
     info: {
-      bg: "bg-sky-200",
-      darkBg: "dark:bg-sky-800",
-      hoverBg: "hover:bg-sky-400",
-      border: "border-sky-400",
-      focusBg: "focus:bg-sky-400",
-      darkHover: "dark:hover:bg-sky-950",
+      contained:
+        "bg-sky-200 border-transparent hover:bg-sky-400 focus:bg-sky-400 dark:bg-sky-800 dark:hover:bg-sky-950",
+      outlined:
+        "bg-transparent border-sky-200 hover:bg-sky-400 focus:bg-sky-400 dark:border-sky-950 dark:hover:bg-sky-950",
     },
     neutral: {
-      bg: "bg-zinc-100",
-      darkBg: "dark:bg-zinc-800",
-      hoverBg: "hover:bg-zinc-200",
-      border: "border-zinc-400",
-      focusBg: "focus:bg-zinc-400",
-      darkHover: "dark:hover:bg-zinc-950",
+      contained:
+        "bg-zinc-100 border-transparent hover:bg-zinc-200 focus:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:focus:bg-zinc-900",
+      outlined:
+        "bg-transparent border-zinc-100 hover:bg-zinc-300 focus:bg-zinc-300 dark:border-zinc-950 dark:hover:bg-zinc-950",
     },
   };
 
   return (
     <button
-      className={`p-1 md:p-2 rounded-md ${
-        fullWidth ? "w-full" : "w-fit"
-      } flex justify-center items-center outline-none border ${
-        variant === "outlined"
-          ? `${colorsScheme[color].border} `
-          : `${colorsScheme[color].bg} border-transparent`
-      } ${colorsScheme[color].hoverBg} ${
-        colorsScheme[color].focusBg
-      } transition-colors dark:text-zinc-50 ${
-        variant ? "dark:bg-none" : colorsScheme[color].darkBg
-      } ${colorsScheme[color].darkHover} ${
+      className={`p-1 md:p-2 rounded-md flex justify-center items-center outline-none border transition-colors dark:text-zinc-50 ${
+        colorsScheme[color][variant]
+      } ${fullWidth ? "w-full" : "w-fit"} ${
         disabled &&
         "cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 disabled:dark:bg-zinc-700 disabled:dark:text-zinc-500 disabled:hover:bg-none"
       }`}

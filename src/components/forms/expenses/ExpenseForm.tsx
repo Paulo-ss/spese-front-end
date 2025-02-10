@@ -15,7 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/Select";
-import { ExpenseCategory, ExpenseType } from "@/enums/expenses.enum";
+import {
+  ExpenseCategory,
+  ExpenseStatus,
+  ExpenseType,
+} from "@/enums/expenses.enum";
 import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { IBankAccount } from "@/interfaces/bank-account.interface";
@@ -295,7 +299,13 @@ const ExpenseForm: FC<IProps> = ({
                 </div>
 
                 {!expense && (
-                  <div className="col-span-12 sm:col-span-6 flex flex-col gap-4">
+                  <div
+                    className={`col-span-12 sm:col-span-6 ${
+                      expenseType !== ExpenseType.CREDIT_CARD
+                        ? "md:col-span-4"
+                        : "md:col-span-6"
+                    }  flex flex-col gap-4`}
+                  >
                     <p>{t("expenses.type")}</p>
 
                     <Controller
@@ -401,6 +411,112 @@ const ExpenseForm: FC<IProps> = ({
                       }`}
                     >
                       {errors.expenseType?.message}
+                    </p>
+                  </div>
+                )}
+
+                {!expense && expenseType !== ExpenseType.CREDIT_CARD && (
+                  <div className="col-span-12 sm:col-span-6 md:col-span-4 flex flex-col gap-4">
+                    <p>{t("expenses.status")}</p>
+
+                    <Controller
+                      control={control}
+                      name="status"
+                      defaultValue={ExpenseStatus.PENDING}
+                      render={({ field: { value, onChange } }) => {
+                        return (
+                          <div className="flex gap-2 items-center">
+                            <div className="cursor-pointer">
+                              <input
+                                className="hidden"
+                                type="checkbox"
+                                checked={
+                                  value
+                                    ? value! === ExpenseStatus.PENDING
+                                    : false
+                                }
+                                id="pending-checkbox"
+                                name="pending-checkbox"
+                                value={ExpenseStatus.PENDING}
+                                onChange={(event) => {
+                                  if (expense) {
+                                    return;
+                                  }
+
+                                  if (
+                                    value &&
+                                    value === ExpenseStatus.PENDING
+                                  ) {
+                                    onChange(null);
+
+                                    return;
+                                  }
+
+                                  onChange(event.target.value);
+                                }}
+                                disabled={!!expense}
+                              />
+
+                              <label
+                                htmlFor="pending-checkbox"
+                                className={`p-2 md:py-2 md:px-4 rounded-2xl font-bold border border-amber-300 dark:border-amber-600   ${
+                                  value && value === ExpenseStatus.PENDING
+                                    ? "bg-amber-300 dark:bg-amber-600 dar:text-zinc-50"
+                                    : ""
+                                } transition-colors cursor-pointer`}
+                                aria-disabled={!!expense}
+                              >
+                                {t("expenses.PENDING")}
+                              </label>
+                            </div>
+
+                            <div className="cursor-pointer">
+                              <input
+                                className="hidden"
+                                type="checkbox"
+                                checked={
+                                  value ? value! === ExpenseStatus.PAID : false
+                                }
+                                id="paid-checkbox"
+                                name="paid-checkbox"
+                                value={ExpenseStatus.PAID}
+                                onChange={(event) => {
+                                  if (expense) {
+                                    return;
+                                  }
+
+                                  if (value && value === ExpenseStatus.PAID) {
+                                    onChange(null);
+
+                                    return;
+                                  }
+
+                                  onChange(event.target.value);
+                                }}
+                              />
+
+                              <label
+                                htmlFor="paid-checkbox"
+                                className={`p-2 md:py-2 md:px-4 rounded-2xl font-bold border border-emerald-300 dark:border-emerald-600 ${
+                                  value && value === ExpenseStatus.PAID
+                                    ? "bg-emerald-300 dark:bg-emerald-600 dar:text-zinc-50"
+                                    : ""
+                                } transition-colors cursor-pointer`}
+                              >
+                                {t("expenses.PAID")}
+                              </label>
+                            </div>
+                          </div>
+                        );
+                      }}
+                    />
+
+                    <p
+                      className={`mt-1 text-sm ${
+                        !!errors.status && "text-red-500"
+                      }`}
+                    >
+                      {errors.status?.message}
                     </p>
                   </div>
                 )}

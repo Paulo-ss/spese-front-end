@@ -89,10 +89,14 @@ const Expenses: FC<IProps> = ({
 
   const fetchExpenses = useCallback(async () => {
     try {
+      if (isExpensesPage && (!fromDate || !toDate)) {
+        return;
+      }
+
       updateIsLoading(true);
       setIsLoading(true);
 
-      const selectedDate = isExpensesPage ? fromDate : date;
+      const selectedDate = isExpensesPage ? fromDate! : date;
 
       const selectedMonth = selectedDate
         .toLocaleDateString("en", {
@@ -102,7 +106,7 @@ const Expenses: FC<IProps> = ({
         })
         .replaceAll("/", "-");
       const selectedToMonth = isExpensesPage
-        ? toDate
+        ? toDate!
             .toLocaleDateString("en", {
               day: "2-digit",
               month: "2-digit",

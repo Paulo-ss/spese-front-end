@@ -6,6 +6,8 @@ import {
   forwardRef,
 } from "react";
 import { ChangeHandler, Noop, RefCallBack } from "react-hook-form";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import { IconQuestionMark } from "@tabler/icons-react";
 
 interface IProps {
   type: HTMLInputTypeAttribute;
@@ -26,6 +28,7 @@ interface IProps {
   error?: boolean;
   helperText?: string;
   endAdortment?: ReactNode;
+  info?: string;
 }
 
 const Input = forwardRef<any, IProps>((props, ref) => {
@@ -47,13 +50,30 @@ const Input = forwardRef<any, IProps>((props, ref) => {
     minLength,
     pattern,
     endAdortment,
+    info,
   } = props;
 
   return (
     <div className="flex flex-col relative">
-      <label className="mb-2 text-black dark:text-zinc-50" htmlFor={name}>
-        {label}
-      </label>
+      <div className="flex items-center gap-2">
+        <label className="mb-2 text-black dark:text-zinc-50" htmlFor={name}>
+          {label}
+        </label>
+
+        {info && (
+          <Popover>
+            <PopoverTrigger asChild disabled={disabled}>
+              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-zinc-950 text-zinc-50 dark:bg-white dark:text-zinc-950 shadow-md cursor-pointer">
+                <IconQuestionMark />
+              </span>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-auto p-0" align="start">
+              <div className="italic p-2">{info}</div>
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
 
       <div className="w-full flex items-center relative">
         <input

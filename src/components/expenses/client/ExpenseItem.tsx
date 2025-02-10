@@ -8,7 +8,6 @@ import {
   IconBurger,
   IconCar,
   IconCash,
-  IconChevronRight,
   IconContract,
   IconDeviceGamepad2,
   IconDog,
@@ -129,8 +128,6 @@ const ExpenseItem: FC<IProps> = ({ expense, locale }) => {
         <div className="flex flex-col items-end gap-2">
           <p className="text-sm">{expense.expenseDate}</p>
         </div>
-
-        <IconChevronRight className="self-center" />
       </div>
     </Link>
   );

@@ -8,11 +8,15 @@ import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
 import Input from "@/components/ui/input/Input";
 import Label from "@/components/ui/label/Label";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select/Select";
@@ -24,11 +28,12 @@ import { IWage, IWagesForm } from "@/interfaces/wage.interface";
 import { fetchResource } from "@/services/fetchService";
 import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
 import {
-  IconCash,
   IconChevronLeft,
-  IconChevronRight,
+  IconCoin,
   IconEdit,
   IconPlus,
+  IconQuestionMark,
+  IconSend2,
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
@@ -126,7 +131,7 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
         return;
       }
 
-      router.push("/wages");
+      router.push("/wage");
     } catch (error) {
       if (error && error instanceof Error) {
         toast({
@@ -165,10 +170,10 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
               {fields.map((field, index) => (
                 <div
                   key={field.id}
-                  className="flex flex-col items-end border border-zinc-300 dark:border-zinc-600 rounded-md p-4 mt-2"
+                  className="flex flex-col items-end border-b border-zinc-300 dark:border-zinc-600 pb-5 mt-2"
                 >
                   <div className="mb-2 w-full flex flex-row justify-between items-center">
-                    <IconCash />
+                    <IconCoin />
 
                     {!wage && (
                       <IconButton
@@ -241,8 +246,30 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
                             defaultValue={1}
                             render={({ field: { value, onChange, name } }) => (
                               <Fragment>
-                                <div className="mb-2">
-                                  <Label name={name} label={t("paymentDay")} />
+                                <div className="flex items-center gap-2 mb-2">
+                                  <label
+                                    className="text-black dark:text-zinc-50"
+                                    htmlFor={name}
+                                  >
+                                    {t("paymentDay")}
+                                  </label>
+
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-zinc-950 text-zinc-50 dark:bg-white dark:text-zinc-950 shadow-md cursor-pointer">
+                                        <IconQuestionMark />
+                                      </span>
+                                    </PopoverTrigger>
+
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <div className="italic p-2 text-sm">
+                                        {t("infoPaymentDay")}
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
                                 </div>
 
                                 <Select
@@ -257,9 +284,6 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
 
                                   <SelectContent>
                                     <SelectGroup>
-                                      <SelectLabel>
-                                        {t("utils.daysOfTheMonth")}
-                                      </SelectLabel>
                                       {daysOfTheMonth.map((day) => (
                                         <SelectItem
                                           key={day}
@@ -283,8 +307,30 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
                             defaultValue={WageBusinessDay.BEFORE}
                             render={({ field: { value, onChange, name } }) => (
                               <Fragment>
-                                <div className="mb-2">
-                                  <Label name={name} label={t("paymentDay")} />
+                                <div className="flex items-center gap-2 mb-2">
+                                  <label
+                                    className="text-black dark:text-zinc-50"
+                                    htmlFor={name}
+                                  >
+                                    {t("businessDay")}
+                                  </label>
+
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-zinc-950 text-zinc-50 dark:bg-white dark:text-zinc-950 shadow-md cursor-pointer">
+                                        <IconQuestionMark />
+                                      </span>
+                                    </PopoverTrigger>
+
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <div className="italic p-2 text-sm">
+                                        {t("infoBusinessDay")}
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
                                 </div>
 
                                 <Select
@@ -299,24 +345,17 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
 
                                   <SelectContent>
                                     <SelectGroup>
-                                      <SelectLabel>
-                                        {t("infoBusinessDay")}
-                                      </SelectLabel>
                                       <SelectItem
                                         key={WageBusinessDay.BEFORE}
                                         value={WageBusinessDay.BEFORE}
                                       >
-                                        {t(
-                                          `${WageBusinessDay.BEFORE.toLowerCase()}`
-                                        )}
+                                        {t(`${WageBusinessDay.BEFORE}`)}
                                       </SelectItem>
                                       <SelectItem
                                         key={WageBusinessDay.AFTER}
                                         value={WageBusinessDay.AFTER}
                                       >
-                                        {t(
-                                          `${WageBusinessDay.AFTER.toLowerCase()}`
-                                        )}
+                                        {t(`${WageBusinessDay.AFTER}`)}
                                       </SelectItem>
                                     </SelectGroup>
                                   </SelectContent>
@@ -349,7 +388,7 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
                                       <SelectValue></SelectValue>
                                     </SelectTrigger>
 
-                                    {wages && wages[index].bankAccountId && (
+                                    {wages && wages[index]?.bankAccountId && (
                                       <div
                                         className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
                                         onClick={() =>
@@ -417,7 +456,7 @@ const WageForm: FC<IProps> = ({ wage, error, updateIsEditing }) => {
             <div className="mt-2 p-6 flex gap-2 justify-end">
               <IconButton
                 type="submit"
-                icon={<IconChevronRight />}
+                icon={<IconSend2 />}
                 color="primary"
                 disabled={isLoading}
                 isLoading={isLoading}

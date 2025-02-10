@@ -10,16 +10,16 @@ interface IProps {
 }
 
 const bankColors = {
-  [Banks.NUBANK]: "bg-purple-600",
-  [Banks.INTER]: "bg-orange-500",
-  [Banks.BRADESCO]: "bg-red-600",
-  [Banks.ITAU]: "bg-amber-600",
+  [Banks.NUBANK]: "bg-purple-600 shadow-purple-600",
+  [Banks.INTER]: "bg-orange-500 shadow-orange-600",
+  [Banks.BRADESCO]: "bg-red-600 shadow-red-600",
+  [Banks.ITAU]: "bg-amber-600 shadow-amber-600",
 };
 
 const CreditCard: FC<IProps> = ({ creditCard }) => {
   return (
     <div
-      className={`relative w-full sm:max-w-80 h-40 rounded-md p-2 md:p-4 text-zinc-50 ${
+      className={`relative w-full sm:max-w-80 h-40 rounded-md p-2 md:p-4 text-zinc-50 shadow-2xl ${
         bankColors[creditCard.bank]
       }`}
     >
