@@ -1,6 +1,5 @@
 "use client";
 
-import { ICalendarEvent } from "@/interfaces/calendar-events.interface";
 import {
   IconChevronDown,
   IconChevronLeft,
@@ -16,8 +15,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ICashFlowTransaction } from "@/interfaces/cash-flow.interface";
 
-interface IProps extends ToolbarProps<ICalendarEvent> {
+interface IProps extends ToolbarProps<ICashFlowTransaction> {
   locale: string;
 }
 
@@ -35,11 +35,11 @@ const Toolbar: FC<IProps> = ({ date, onNavigate, onView, view, locale }) => {
         date.getFullYear() === today.getFullYear();
 
   return (
-    <div className="flex justify-between gap-4 items-center py-4 px-2 md:p-6 border-b border-zinc-300 dark:border-zinc-800">
+    <div className="flex justify-between gap-4 items-center p-4 md:p-6 border-b border-zinc-300 dark:border-zinc-800">
       <div className="flex items-center gap-2">
         <p
           onClick={() => onNavigate("TODAY")}
-          className={`py-1 px-2  transition-colors rounded-md cursor-pointer ${
+          className={`py-1 px-2 transition-colors rounded-md cursor-pointer ${
             isToday
               ? "bg-emerald-200 dark:bg-emerald-700 hover:bg-emerald-400 dark:hover:bg-emerald-800"
               : "bg-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900"
@@ -48,7 +48,7 @@ const Toolbar: FC<IProps> = ({ date, onNavigate, onView, view, locale }) => {
           {t("cashFlow.today")}
         </p>
 
-        <div>
+        <div className="hidden md:block">
           <DropdownMenu>
             <DropdownMenuTrigger className="text-start w-full">
               <div className="py-1 px-2 flex items-center gap-2 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-900 rounded-md">
@@ -80,7 +80,7 @@ const Toolbar: FC<IProps> = ({ date, onNavigate, onView, view, locale }) => {
         <p>
           {date.toLocaleDateString(locale, {
             day: view === "day" ? "2-digit" : undefined,
-            month: "long",
+            month: "short",
             year: "numeric",
           })}
         </p>

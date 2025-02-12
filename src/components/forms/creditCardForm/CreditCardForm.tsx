@@ -169,13 +169,10 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
         limit: creditCard.limit,
         nickname: creditCard.nickname,
         lastFourDigits: creditCard.lastFourDigits,
-        bankAccountId: creditCard.bankAccount?.id,
       });
     }
 
-    if (!creditCard) {
-      fetchBankAccounts();
-    }
+    fetchBankAccounts();
   }, [creditCard, update, fetchBankAccounts]);
 
   const FormContent = (
@@ -422,73 +419,78 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                       />
                     </div>
 
-                    {!creditCard && (
-                      <div className="col-span-12 sm:col-span-6 md:col-span-4">
-                        <Controller
-                          control={control}
-                          name={`creditCards.${index}.bankAccountId`}
-                          render={({ field: { value, onChange, name } }) => (
-                            <Fragment>
-                              <div className="mb-2">
-                                <Label
-                                  name={name}
-                                  label={t("expenses.bankAccount")}
-                                />
+                    <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                      <Controller
+                        control={control}
+                        name={`creditCards.${index}.bankAccountId`}
+                        defaultValue={
+                          creditCard && creditCard.bankAccount
+                            ? creditCard.bankAccount.id
+                            : undefined
+                        }
+                        render={({ field: { value, onChange, name } }) => (
+                          <Fragment>
+                            <div className="mb-2">
+                              <Label
+                                name={name}
+                                label={t("expenses.bankAccount")}
+                              />
+                            </div>
+
+                            <Select
+                              onValueChange={onChange}
+                              value={String(value)}
+                              name={name}
+                              disabled={!!creditCard}
+                            >
+                              <div className="flex justify-between items-center w-full gap-2">
+                                <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
+                                  <SelectValue></SelectValue>
+                                </SelectTrigger>
+
+                                {creditCards &&
+                                  creditCards[index] &&
+                                  creditCards[index].bankAccountId &&
+                                  !creditCard && (
+                                    <div
+                                      className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                                      onClick={() =>
+                                        setValue(
+                                          `creditCards.${index}.bankAccountId`,
+                                          null
+                                        )
+                                      }
+                                    >
+                                      <IconX className="w-4 h-4" />
+                                    </div>
+                                  )}
                               </div>
 
-                              <Select
-                                onValueChange={onChange}
-                                value={String(value)}
-                                name={name}
-                              >
-                                <div className="flex justify-between items-center w-full gap-2">
-                                  <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
-                                    <SelectValue></SelectValue>
-                                  </SelectTrigger>
+                              <SelectContent>
+                                {bankAccounts.map((bankAccount) => (
+                                  <SelectItem
+                                    key={bankAccount.id}
+                                    value={String(bankAccount.id)}
+                                  >
+                                    <div className="p-2 flex rounded-md flex-row items-center gap-2">
+                                      <Image
+                                        src={`/images/logos/${bankAccount.bank}.png`}
+                                        width={512}
+                                        height={512}
+                                        alt={`${bankAccount.bank} logo`}
+                                        className="w-6 h-6 rounded-full"
+                                      />
 
-                                  {creditCards &&
-                                    creditCards[index] &&
-                                    creditCards[index].bankAccountId && (
-                                      <div
-                                        className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
-                                        onClick={() =>
-                                          setValue(
-                                            `creditCards.${index}.bankAccountId`,
-                                            null
-                                          )
-                                        }
-                                      >
-                                        <IconX className="w-4 h-4" />
-                                      </div>
-                                    )}
-                                </div>
-
-                                <SelectContent>
-                                  {bankAccounts.map((bankAccount) => (
-                                    <SelectItem
-                                      key={bankAccount.id}
-                                      value={String(bankAccount.id)}
-                                    >
-                                      <div className="p-2 flex rounded-md flex-row items-center gap-2">
-                                        <Image
-                                          src={`/images/logos/${bankAccount.bank}.png`}
-                                          width={512}
-                                          height={512}
-                                          alt={`${bankAccount.bank} logo`}
-                                          className="w-6 h-6 rounded-full"
-                                        />
-
-                                        <p>{bankAccount.bank}</p>
-                                      </div>
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </Fragment>
-                          )}
-                        />
-                      </div>
-                    )}
+                                      <p>{bankAccount.bank}</p>
+                                    </div>
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </Fragment>
+                        )}
+                      />
+                    </div>
 
                     <div className="col-span-12 sm:col-span-6 md:col-span-4">
                       <Controller

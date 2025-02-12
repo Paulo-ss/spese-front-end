@@ -1,11 +1,15 @@
 {
   "cashFlow": {
     "DEFAULT": "cash flow",
+    "currentAccountBalance": "current account balance",
     "cashBalance": "cash balance",
     "dayBalance": "day balance",
     "day": "day",
     "month": "month",
     "today": "today",
-    "noEvents": "no cash flow for this date"
+    "noEvents": "no cash flow for this date",
+    "openingBalance": "opening balance",
+    "closingBalance": "closing balance",
+    "noTransactionsForThisMonth": "no transaction for this month"
   }
 }

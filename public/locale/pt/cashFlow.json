@@ -1,11 +1,15 @@
 {
   "cashFlow": {
     "DEFAULT": "fluxo de caixa",
+    "currentAccountBalance": "saldo atual em conta",
     "cashBalance": "saldo em conta",
     "dayBalance": "saldo do dia",
     "day": "dia",
     "month": "mês",
     "today": "hoje",
-    "noEvents": "nenhuma movimentação nessa data"
+    "noEvents": "nenhuma movimentação nessa data",
+    "openingBalance": "saldo de abertura",
+    "closingBalance": "saldo de fechamento",
+    "noTransactionsForThisMonth": "sem transações para esse mês"
   }
 }
