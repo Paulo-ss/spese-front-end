@@ -567,6 +567,7 @@ button.rbc-input::-moz-focus-inner {
 .rbc-time-view .rbc-row {
   box-sizing: border-box;
   min-height: 20px;
+  overflow: visible;
 }
 .rbc-time-header {
   display: -webkit-flex;
@@ -715,14 +716,14 @@ button.rbc-input::-moz-focus-inner {
   justify-content: center;
 }
 
-.rbc-time-header-content .rbc-header {
-  all: unset;
-  width: 100%;
+.rbc-time-header-content {
   height: fit-content !important;
-  padding: 16px;
+}
+
+.rbc-time-header-content .rbc-header {
+  width: 100%;
 }
 
 .rbc-time-header-content .rbc-header button {
-  all: unset;
   width: 100%;
 }

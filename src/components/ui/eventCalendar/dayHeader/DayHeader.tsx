@@ -19,13 +19,13 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
 
     const dateCashFlow = dailyCashFlow[dateMinusThreeHours.toISOString()];
 
-    return dateCashFlow.closingBalance ? dateCashFlow : undefined;
+    return dateCashFlow?.closingBalance ? dateCashFlow : undefined;
   };
 
   const dateCashFlow = getDateCashFlow();
 
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex items-center justify-between w-full p-4">
       <p>
         {date.toLocaleDateString(locale, {
           day: "2-digit",
@@ -36,7 +36,7 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
 
       {dateCashFlow && (
         <div className="flex flex-col items-end">
-          <p className="text-sm italic">{t("cashFlow.dayBalance")}</p>
+          <p className="italic">{t("cashFlow.dayBalance")}</p>
 
           <p
             className={`font-bold ${

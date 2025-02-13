@@ -14,7 +14,7 @@ interface IProps {
   locale: string;
   localizer: DateLocalizer;
   view: View;
-  groupRefs: MutableRefObject<HTMLDivElement[]>;
+  groupRefs: MutableRefObject<Set<HTMLDivElement>>;
   onEventClick: (event: ICashFlowTransaction) => void;
 }
 
@@ -51,7 +51,7 @@ const MobileGroupedEvents: FC<IProps> = ({
             <div
               ref={(element) => {
                 if (element) {
-                  groupRefs.current.push(element);
+                  groupRefs.current.add(element);
                 }
               }}
               className="flex items-center justify-between border-y border-y-zinc-200 dark:border-y-zinc-700 p-2"

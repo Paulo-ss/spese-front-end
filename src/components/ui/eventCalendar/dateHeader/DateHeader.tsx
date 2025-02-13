@@ -10,7 +10,7 @@ interface IProps extends DateHeaderProps {
   handleViewChange: (newView: SetStateAction<View>) => void;
   locale: string;
   areThereEventsForThisDate: boolean;
-  groupRefs: MutableRefObject<HTMLDivElement[]>;
+  groupRefs: MutableRefObject<Set<HTMLDivElement>>;
   dailyCashFlow: TDailyCashFlow;
 }
 
@@ -39,8 +39,8 @@ const DateHeader: FC<IProps> = ({
 
   const onDateClick = () => {
     if (!isMobile) {
-      setDate(date);
       handleViewChange(Views.DAY);
+      setDate(date);
     }
 
     if (isMobile) {
@@ -49,13 +49,13 @@ const DateHeader: FC<IProps> = ({
         month: "long",
         year: "numeric",
       });
-      const dateGroup = groupRefs.current.find((element) => {
-        return element.firstChild?.textContent === formattedDate;
-      });
 
-      if (dateGroup) {
-        dateGroup.scrollIntoView({ behavior: "smooth" });
-      }
+      groupRefs.current.forEach((element) => {
+        if (element.firstChild?.textContent === formattedDate) {
+          element.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+      });
     }
   };
 
@@ -64,7 +64,11 @@ const DateHeader: FC<IProps> = ({
       className="flex flex-col items-center justify-center md:flex-row md:justify-between"
       onClick={onDateClick}
     >
-      <p className="hidden md:block p-1 pl-2 text-sm overflow-hidden text-ellipsis text-nowrap max-w-28">
+      <p
+        className={`hidden md:block p-1 pl-2 text-sm overflow-hidden text-ellipsis text-nowrap max-w-28 ${
+          Number(getDateBalance()) < 0 && "text-red-500"
+        }`}
+      >
         {getDateBalance()?.toLocaleString(locale, {
           style: "currency",
           currency: locale === "pt" ? "BRl" : "USD",

@@ -2,7 +2,14 @@
 
 import { Calendar, momentLocalizer, View, Views } from "react-big-calendar";
 import moment from "moment";
-import { FC, Fragment, SetStateAction, useRef, useState } from "react";
+import {
+  FC,
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CalendarEventType } from "@/enums/calendar-event-type.enum";
 import Event from "./event/Event";
 import {
@@ -68,23 +75,26 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
   const [isDialogOpened, setIsDialogOpened] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dailyCashFlow, setDailyCashFlow] = useState(initialDailyCashFlow);
-  const [monthEvents, setMonthEvents] =
+  const [events, setEvents] =
     useState<ICashFlowTransaction[]>(initialMonthEvents);
   const [selectedEvent, setSelectedEvent] =
     useState<ICashFlowTransaction | null>(null);
-  const [lastFetchedMoth, setLastFetchedMonth] = useState(
-    new Date().getMonth()
-  );
+  const [monthsCache, setMonthsCache] = useState([new Date().getMonth()]);
 
-  const mobileEventsGroupsRefs = useRef<HTMLDivElement[]>([]);
+  const mobileEventsGroupsRefs = useRef<Set<HTMLDivElement>>(new Set());
+
+  const monthEvents = events.filter(
+    (event) =>
+      event.start.getMonth() === date.getMonth() &&
+      event.start.getFullYear() === date.getFullYear()
+  );
 
   const handleNavigate = async (newDate: Date) => {
     setDate(newDate);
 
-    if (view === "month" || newDate.getMonth() !== lastFetchedMoth) {
+    if (!monthsCache.includes(newDate.getMonth())) {
       try {
-        mobileEventsGroupsRefs.current = [];
-        setLastFetchedMonth(newDate.getMonth());
+        setMonthsCache((state) => [...state, newDate.getMonth()]);
         setIsLoading(true);
 
         const currentMonth = newDate
@@ -139,8 +149,11 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
             [] as ICashFlowTransaction[]
           );
 
-          setDailyCashFlow(cashFlow.dailyCashFlow);
-          setMonthEvents(monthEvents);
+          setDailyCashFlow((state) => ({
+            ...state,
+            ...cashFlow.dailyCashFlow,
+          }));
+          setEvents((state) => [...state, ...monthEvents]);
         }
       } catch (error) {
         if (error && error instanceof Error) {
@@ -160,6 +173,12 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
     setView(newView);
   };
 
+  useEffect(() => {
+    if (isMobile && view === "day") {
+      setView("month");
+    }
+  }, [isMobile, view]);
+
   return (
     <div className="w-full ">
       <Calendar
@@ -171,7 +190,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
         onNavigate={handleNavigate}
         view={view}
         onView={handleViewChange}
-        events={monthEvents}
+        events={events}
         components={{
           event: (props) => <Event view={view} locale={locale} {...props} />,
           toolbar: (props) => <Toolbar locale={locale} {...props} />,
@@ -182,7 +201,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                 setDate={handleNavigate}
                 handleViewChange={handleViewChange}
                 locale={locale}
-                areThereEventsForThisDate={monthEvents.some(
+                areThereEventsForThisDate={events.some(
                   ({ start }) =>
                     start.toLocaleDateString(locale, {
                       day: "2-digit",
