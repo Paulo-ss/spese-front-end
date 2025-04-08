@@ -68,7 +68,11 @@ const InvoiceItem: FC<IProps> = ({ locale, invoice, index, currentSlide }) => {
     year: closingYear !== today.getFullYear() ? "2-digit" : undefined,
   });
 
-  const formattedPrice = Number(invoice.currentPrice).toLocaleString(locale, {
+  const formattedPrice = Number(
+    invoice.status === InvoiceStatus.PAID
+      ? invoice.totalPrice
+      : invoice.currentPrice
+  ).toLocaleString(locale, {
     style: "currency",
     currency: locale === "pt" ? "BRL" : "USD",
   });

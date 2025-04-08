@@ -5,6 +5,7 @@ import { IExpense } from "./expenses.interface";
 export interface IInvoice {
   id: number;
   currentPrice: number;
+  totalPrice: number;
   creditCard?: ICreditCard;
   closingDate: string;
   dueDate: string;

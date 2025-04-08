@@ -39,7 +39,7 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
           <p className="italic">{t("cashFlow.dayBalance")}</p>
 
           <p
-            className={`font-bold ${
+            className={`text-base md:text-lg font-bold ${
               Number(dateCashFlow.closingBalance) < 0 && "text-red-500"
             }`}
           >

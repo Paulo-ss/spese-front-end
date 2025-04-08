@@ -16,6 +16,7 @@ interface IProps {
   view: View;
   groupRefs: MutableRefObject<Set<HTMLDivElement>>;
   onEventClick: (event: ICashFlowTransaction) => void;
+  currentMonth: number;
 }
 
 const MobileGroupedEvents: FC<IProps> = ({
@@ -25,6 +26,7 @@ const MobileGroupedEvents: FC<IProps> = ({
   view,
   groupRefs,
   onEventClick,
+  currentMonth,
 }) => {
   const t = useTranslations();
 
@@ -37,14 +39,17 @@ const MobileGroupedEvents: FC<IProps> = ({
         }
 
         const [year, month, day] = key.split("T")[0].split("-").map(Number);
-        const formattedDate = new Date(year, month - 1, day).toLocaleDateString(
-          locale,
-          {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }
-        );
+        const date = new Date(year, month - 1, day);
+
+        if (date.getMonth() !== currentMonth) {
+          return null;
+        }
+
+        const formattedDate = date.toLocaleDateString(locale, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        });
 
         return (
           <Fragment key={key}>

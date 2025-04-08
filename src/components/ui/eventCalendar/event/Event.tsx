@@ -15,10 +15,14 @@ interface IProps extends EventProps {
 }
 
 const eventColor = {
-  [CalendarEventType.INCOME]: "bg-green-300 dark:bg-primary-dark",
-  [CalendarEventType.WAGE]: "bg-primary-mint dark:bg-primary-dark",
-  [CalendarEventType.EXPENSE]: "bg-red-500",
-  [CalendarEventType.INVOICE]: "bg-cyan-400",
+  [CalendarEventType.INCOME]:
+    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
+  [CalendarEventType.WAGE]:
+    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
+  [CalendarEventType.EXPENSE]:
+    "bg-red-100 text-red-700 dark:bg-red-700 dark:text-zinc-50",
+  [CalendarEventType.INVOICE]:
+    "bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-zinc-50",
 };
 
 const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
@@ -67,7 +71,7 @@ const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
 
   return (
     <div
-      className={`flex items-center justify-between px-1 text-sm rounded-md font-bold text-zinc-900 text-ellipsis text-nowrap overflow-hidden ${
+      className={`flex items-center justify-between px-1 text-sm rounded-md font-bold text-ellipsis text-nowrap overflow-hidden ${
         eventColor[event.type]
       }`}
     >

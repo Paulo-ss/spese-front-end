@@ -47,10 +47,14 @@ interface IProps {
 const localizer = momentLocalizer(moment);
 
 const eventColor = {
-  [CalendarEventType.INCOME]: "bg-green-300 dark:bg-primary-dark",
-  [CalendarEventType.WAGE]: "bg-primary-mint dark:bg-primary-dark",
-  [CalendarEventType.EXPENSE]: "bg-red-500",
-  [CalendarEventType.INVOICE]: "bg-cyan-400",
+  [CalendarEventType.INCOME]:
+    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
+  [CalendarEventType.WAGE]:
+    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
+  [CalendarEventType.EXPENSE]:
+    "bg-red-100 text-red-700 dark:bg-red-700 dark:text-zinc-50",
+  [CalendarEventType.INVOICE]:
+    "bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-zinc-50",
 };
 
 const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
@@ -153,7 +157,17 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
             ...state,
             ...cashFlow.dailyCashFlow,
           }));
-          setEvents((state) => [...state, ...monthEvents]);
+          setEvents((state) => {
+            const noDuplicatedEvents = [...state];
+
+            for (const event of monthEvents) {
+              if (!state.some((e) => e.id === event.id)) {
+                noDuplicatedEvents.push(event);
+              }
+            }
+
+            return noDuplicatedEvents;
+          });
         }
       } catch (error) {
         if (error && error instanceof Error) {
@@ -216,6 +230,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                 )}
                 groupRefs={mobileEventsGroupsRefs}
                 dailyCashFlow={dailyCashFlow}
+                isLoading={isLoading}
                 {...props}
               />
             ),
@@ -258,6 +273,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                   setSelectedEvent(event);
                   setIsDialogOpened(true);
                 }}
+                currentMonth={date.getMonth()}
               />
             </div>
           ) : (
