@@ -9,7 +9,11 @@ export default async function signUp(data: ISignUp) {
     await fetchResource<IGenericMessageResponse>({
       url: "/authorization/sign-up",
       config: {
-        options: { method: "POST", body: JSON.stringify({ ...data }) },
+        options: {
+          method: "POST",
+          body: JSON.stringify({ ...data }),
+          headers: { "X-Timezone": data.timezone },
+        },
       },
     });
 

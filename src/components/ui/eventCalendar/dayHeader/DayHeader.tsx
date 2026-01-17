@@ -1,6 +1,7 @@
 "use client";
 
 import { TDailyCashFlow } from "@/interfaces/cash-flow.interface";
+import { formatInClientTimezone } from "@/utils/dates/dateUtils";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import { HeaderProps } from "react-big-calendar";
@@ -14,10 +15,7 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
   const t = useTranslations();
 
   const getDateCashFlow = () => {
-    const dateMinusThreeHours = new Date(date);
-    dateMinusThreeHours.setHours(date.getHours() - 3);
-
-    const dateCashFlow = dailyCashFlow[dateMinusThreeHours.toISOString()];
+    const dateCashFlow = dailyCashFlow[formatInClientTimezone({ date })];
 
     return dateCashFlow?.closingBalance ? dateCashFlow : undefined;
   };

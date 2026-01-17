@@ -3,6 +3,13 @@ import { fetchResource } from "@/services/fetchService";
 import Expenses from "../client/Expenses";
 import { getLanguage } from "@/app/actions/cookies/getLanguague";
 import groupExpensesByCategory from "@/utils/expenses/groupExpensesByCategory";
+import {
+  formatDate,
+  formatForLocale,
+  getFirstDayOfMonth,
+  getLastDayOfMonth,
+  getToday,
+} from "@/utils/dates/dateUtils";
 
 interface IProps {
   limit?: number;
@@ -17,31 +24,18 @@ export default async function ExpensesServer({
 }: IProps) {
   const locale = await getLanguage();
 
-  const today = new Date();
-  const firstDayOfTheMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  const lastDayOfTheMonth = new Date(
-    today.getFullYear(),
-    today.getMonth() + 1,
-    0
-  );
+  const today = getToday();
+  const firstDayOfTheMonth = getFirstDayOfMonth(today);
+  const lastDayOfTheMonth = getLastDayOfMonth(today);
 
   const selectedDate = isExpensesPage ? firstDayOfTheMonth : today;
 
-  const selectedMonth = selectedDate
-    .toLocaleDateString("en", {
-      day: isExpensesPage ? "2-digit" : undefined,
-      month: "2-digit",
-      year: "numeric",
-    })
-    .replaceAll("/", "-");
+  const selectedMonth = formatDate(
+    selectedDate,
+    isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM"
+  );
   const selectedToMonth = isExpensesPage
-    ? lastDayOfTheMonth
-        .toLocaleDateString("en", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        })
-        .replaceAll("/", "-")
+    ? formatDate(lastDayOfTheMonth, "YYYY-MM-DD")
     : undefined;
 
   const body: IExpensesFilters = {
@@ -50,7 +44,7 @@ export default async function ExpensesServer({
     toDate: isExpensesPage ? selectedToMonth! : null,
   };
 
-  const { data, error } = await fetchResource<IExpense[]>({
+  const { data: expenses, error } = await fetchResource<IExpense[]>({
     url: "/expense/filter",
     config: {
       options: {
@@ -60,21 +54,18 @@ export default async function ExpensesServer({
     },
   });
 
-  if (data) {
-    for (const expense of data) {
-      const [year, month, day] = expense.expenseDate.split("-").map(Number);
-
-      expense.expenseDate = new Date(year, month - 1, day).toLocaleDateString(
-        locale,
-        { weekday: "short", day: "2-digit", month: "short" }
-      );
+  if (expenses) {
+    for (const expense of expenses) {
+      expense.expenseDate = formatForLocale(expense.expenseDate, locale);
     }
   }
 
   return (
     <Expenses
       locale={locale}
-      initialExpenses={data ? groupExpensesByCategory(data!) : undefined}
+      initialExpenses={
+        expenses ? groupExpensesByCategory(expenses!) : undefined
+      }
       error={error}
       limit={limit}
       displayFilters={displayFilters}

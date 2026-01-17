@@ -55,7 +55,10 @@ const SignInForm = () => {
   };
 
   const handleExternalOAuth2SignIn = useCallback(async () => {
-    const result = await externalOAuth2SignIn(params.get("code")!);
+    const result = await externalOAuth2SignIn(
+      params.get("code")!,
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
 
     if (result?.errorMessage) {
       toast({ title: t("utils.error"), description: result.errorMessage });

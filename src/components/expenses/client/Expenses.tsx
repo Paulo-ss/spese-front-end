@@ -38,6 +38,7 @@ import groupExpensesByCategory from "@/utils/expenses/groupExpensesByCategory";
 import { Accordion } from "@/components/ui/accordion";
 import getFormState from "@/utils/getFormState";
 import { ExpenseCategory } from "@/enums/expenses.enum";
+import { formatDate, formatForLocale } from "@/utils/dates/dateUtils";
 
 interface IProps {
   locale: string;
@@ -98,21 +99,12 @@ const Expenses: FC<IProps> = ({
 
       const selectedDate = isExpensesPage ? fromDate! : date;
 
-      const selectedMonth = selectedDate
-        .toLocaleDateString("en", {
-          day: isExpensesPage ? "2-digit" : undefined,
-          month: "2-digit",
-          year: "numeric",
-        })
-        .replaceAll("/", "-");
+      const selectedMonth = formatDate(
+        selectedDate,
+        isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM"
+      );
       const selectedToMonth = isExpensesPage
-        ? toDate!
-            .toLocaleDateString("en", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })
-            .replaceAll("/", "-")
+        ? formatDate(toDate!, "YYYY-MM-DD")
         : undefined;
 
       const formFiltersState =
@@ -132,7 +124,7 @@ const Expenses: FC<IProps> = ({
         customCategory: Number(formFiltersState?.customCategory),
       };
 
-      const { data, error } = await fetchResource<IExpense[]>({
+      const { data: expenses, error } = await fetchResource<IExpense[]>({
         url: "/expense/filter",
         config: {
           options: {
@@ -150,23 +142,13 @@ const Expenses: FC<IProps> = ({
         );
       }
 
-      if (data) {
-        for (const expense of data) {
-          const [year, month, day] = expense.expenseDate.split("-").map(Number);
-
-          expense.expenseDate = new Date(
-            year,
-            month - 1,
-            day
-          ).toLocaleDateString(locale, {
-            weekday: "short",
-            day: "2-digit",
-            month: "short",
-          });
+      if (expenses) {
+        for (const expense of expenses) {
+          expense.expenseDate = formatForLocale(expense.expenseDate, locale);
         }
       }
 
-      setExpenses(data ? groupExpensesByCategory(data) : undefined);
+      setExpenses(expenses ? groupExpensesByCategory(expenses) : undefined);
     } catch (error) {
       if (error && error instanceof Error) {
         setErrorMessage(error.message ?? t("utils.somethingWentWrong"));

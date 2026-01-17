@@ -8,6 +8,7 @@ export interface IUser {
   expiresIn: number;
   accessToken: string;
   refreshToken: string;
+  timezone: string;
 }
 
 export interface IUpdateUser {

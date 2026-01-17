@@ -1,8 +1,6 @@
 import { IFetchResponse } from "@/interfaces/fetch-response.interface";
-import { Session } from "next-auth";
-import { auth } from "../../auth";
-import { getSession } from "next-auth/react";
 import { IAPIError } from "@/interfaces/api-error.interface";
+import { getUserSession } from "@/utils/session/getUserSession";
 
 interface IFetchOptions {
   url: string;
@@ -17,19 +15,12 @@ export const fetchResource = async <T>({
   url,
   config,
 }: IFetchOptions): Promise<IFetchResponse<T>> => {
-  const isOnServer = typeof window === "undefined";
-  let session: Session | null = null;
-
-  if (isOnServer) {
-    session = await auth();
-  } else {
-    session = await getSession();
-  }
+  const session = await getUserSession();
 
   const requestOptions: RequestInit = {
     ...config?.options,
     headers: {
-      Authorization: `Bearer ${session?.user.accessToken}`,
+      Authorization: `Bearer ${session?.user?.accessToken}`,
       "Content-Type": "application/json",
       ...config?.options?.headers,
     },

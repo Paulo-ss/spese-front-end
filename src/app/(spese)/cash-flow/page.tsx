@@ -3,10 +3,9 @@ import CashFlow from "@/components/cashFlow/CashFlow";
 import { getLanguage } from "@/app/actions/cookies/getLanguague";
 import { fetchResource } from "@/services/fetchService";
 import { ICashFlowResponse } from "@/interfaces/cash-flow.interface";
+import { formatDate } from "@/utils/dates/dateUtils";
 
-const currentMonth = new Date()
-  .toLocaleDateString("en", { month: "2-digit", year: "numeric" })
-  .replaceAll("/", "-");
+const currentMonth = formatDate(new Date(), "YYYY-MM");
 
 export default async function CashFlowPage() {
   const locale = await getLanguage();
@@ -20,28 +19,23 @@ export default async function CashFlowPage() {
       if (cashFlow.dailyCashFlow[key].transactions) {
         cashFlow.dailyCashFlow[key].transactions.forEach(
           (transaction, index) => {
-            const start = String(transaction.start);
+            const start = String(transaction.start).split(" ")[0];
             const [startYear, startMonth, startDay] = start
               .split("-")
               .map(Number);
             cashFlow.dailyCashFlow[key].transactions[index].start = new Date(
               startYear,
               startMonth - 1,
-              startDay,
-              3,
-              0,
-              0
+              startDay
             );
 
-            const end = String(transaction.end);
+            const end = String(transaction.end).split(" ")[0];
             const [endYear, endMonth, endDay] = end.split("-").map(Number);
+
             cashFlow.dailyCashFlow[key].transactions[index].end = new Date(
               endYear,
               endMonth - 1,
-              endDay,
-              3,
-              0,
-              0
+              endDay
             );
           }
         );

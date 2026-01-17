@@ -35,7 +35,10 @@ const SignUpForm = () => {
   const onSubmit = async (data: ISignUp) => {
     setIsLoading(true);
 
-    const { responseData, error } = await signUp(data);
+    const { responseData, error } = await signUp({
+      ...data,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
 
     if (error?.errorMessage) {
       toast({

@@ -17,8 +17,6 @@ export default async function saveIncome(formData: IIncomeForm) {
     bankAccountId: Number(formData.bankAccountId),
   };
 
-  console.log({ wage: body.wage });
-
   const { data, error } = await fetchResource<IIncome>({
     url: "/income",
     config: {

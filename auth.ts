@@ -18,6 +18,7 @@ export const {
       credentials: {
         login: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
+        userTimezone: { label: "Timezone", type: "text" },
       },
       async authorize(credentials) {
         const emailOrUsernameOrCode = credentials.login as string;
@@ -83,6 +84,9 @@ export const {
             options: {
               method: "POST",
               body: JSON.stringify(body),
+              headers: {
+                "X-Timezone": credentials?.userTimezone as string,
+              },
             },
           },
         });
@@ -101,6 +105,7 @@ export const {
           accessToken: data!.accessToken,
           refreshToken: data!.refreshToken,
           expiresIn: 600 * 1000 + Date.now(),
+          timezone: data!.user.timezone,
         };
 
         if (user) {

@@ -1,18 +1,14 @@
 import { fetchResource } from "@/services/fetchService";
 import MonthSummary from "../client/MonthSummary";
 import { IMonthSummary } from "@/interfaces/analytics.interface";
+import { formatDate } from "@/utils/dates/dateUtils";
 
 interface IProps {
   locale: string;
 }
 
 export default async function MonthSummaryServer({ locale }: IProps) {
-  const currentMonth = new Date()
-    .toLocaleDateString("en", {
-      month: "numeric",
-      year: "numeric",
-    })
-    .replace("/", "-");
+  const currentMonth = formatDate(new Date(), "YYYY-MM");
 
   const { data, error } = await fetchResource<IMonthSummary>({
     url: "/analytics/month-summary",

@@ -43,7 +43,6 @@ export const menuItems: IMenuItem[] = [
     title: "menuItems.incomes.DEFAULT",
     icon: <IconCash />,
     children: [
-      { title: "menuItems.incomes.wage", path: "/wage", icon: <IconPoint /> },
       {
         title: "menuItems.incomes.entries",
         path: "/incomes",

@@ -6,7 +6,6 @@ export default getRequestConfig(async () => {
 
   const common = await import(`../../public/locale/${locale}/common.json`);
   const auth = await import(`../../public/locale/${locale}/auth.json`);
-  const wage = await import(`../../public/locale/${locale}/wage.json`);
   const category = await import(`../../public/locale/${locale}/category.json`);
   const expenses = await import(`../../public/locale/${locale}/expenses.json`);
   const incomes = await import(`../../public/locale/${locale}/incomes.json`);
@@ -34,7 +33,6 @@ export default getRequestConfig(async () => {
     locale,
     messages: {
       ...auth,
-      ...wage,
       ...common,
       ...accountSetup,
       ...notifications,

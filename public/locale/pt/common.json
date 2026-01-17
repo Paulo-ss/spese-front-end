@@ -39,7 +39,6 @@
     "expenses": "despesas",
     "incomes": {
       "DEFAULT": "rendas",
-      "wage": "salário",
       "entries": "entradas"
     },
     "bankAccounts": "contas bancárias",

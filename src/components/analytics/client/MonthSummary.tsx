@@ -23,6 +23,7 @@ import {
 } from "@tabler/icons-react";
 import { theme } from "@/lib/theme/theme";
 import { Fade } from "react-awesome-reveal";
+import { formatDate } from "@/utils/dates/dateUtils";
 
 interface IProps {
   initialMonthSummary?: IMonthSummary;
@@ -47,9 +48,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
       updateIsLoading(true);
       setIsLoading(true);
 
-      const selectedMonth = date
-        .toLocaleDateString("en", { month: "2-digit", year: "numeric" })
-        .replace("/", "-");
+      const selectedMonth = formatDate(date, "YYYY-MM");
 
       const { data, error } = await fetchResource<IMonthSummary>({
         url: "/analytics/month-summary",

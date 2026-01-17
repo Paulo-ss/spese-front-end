@@ -39,7 +39,6 @@
     "expenses": "expenses",
     "incomes": {
       "DEFAULT": "incomes",
-      "wage": "wage",
       "entries": "incomes"
     },
     "bankAccounts": "bank accounts",

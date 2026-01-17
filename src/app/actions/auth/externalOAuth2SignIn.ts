@@ -4,10 +4,11 @@ import { signIn as signInAuth } from "@/../auth";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { AuthError } from "next-auth";
 
-export async function externalOAuth2SignIn(code: string) {
+export async function externalOAuth2SignIn(code: string, userTimezone: string) {
   try {
     await signInAuth("credentials", {
       login: code,
+      userTimezone,
     });
   } catch (error) {
     if (error instanceof AuthError) {

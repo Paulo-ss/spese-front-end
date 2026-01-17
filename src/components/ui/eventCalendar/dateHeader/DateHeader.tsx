@@ -2,6 +2,7 @@
 
 import useViewport from "@/hooks/useViewport";
 import { TDailyCashFlow } from "@/interfaces/cash-flow.interface";
+import { formatInClientTimezone } from "@/utils/dates/dateUtils";
 import { FC, Fragment, MutableRefObject, SetStateAction } from "react";
 import { DateHeaderProps, View, Views } from "react-big-calendar";
 
@@ -29,14 +30,11 @@ const DateHeader: FC<IProps> = ({
   const { isMobile } = useViewport();
 
   const getDateBalance = () => {
-    const dateMinusThreeHours = new Date(date);
-    dateMinusThreeHours.setHours(date.getHours() - 3);
+    const dateInTimezone = formatInClientTimezone({ date });
 
-    return isNaN(
-      Number(dailyCashFlow[dateMinusThreeHours.toISOString()]?.closingBalance)
-    )
+    return isNaN(Number(dailyCashFlow[dateInTimezone]?.closingBalance))
       ? undefined
-      : Number(dailyCashFlow[dateMinusThreeHours.toISOString()].closingBalance);
+      : Number(dailyCashFlow[dateInTimezone]?.closingBalance);
   };
 
   const onDateClick = () => {

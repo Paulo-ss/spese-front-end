@@ -37,7 +37,6 @@ import {
   SelectValue,
 } from "@/components/ui/select/Select";
 import Image from "next/image";
-import { IWage } from "@/interfaces/wage.interface";
 
 interface IProps {
   income?: IIncome;
@@ -52,7 +51,7 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
     setValue,
     handleSubmit,
   } = useForm<IIncomeForm>();
-  const { bankAccountId, wageId } = useWatch({ control });
+  const { bankAccountId } = useWatch({ control });
 
   const router = useRouter();
   const t = useTranslations();
@@ -60,7 +59,6 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [bankAccounts, setBankAccounts] = useState<IBankAccount[]>([]);
-  const [wages, setWages] = useState<IWage[]>([]);
 
   const fetchBankAccounts = useCallback(async () => {
     try {
@@ -88,41 +86,12 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
     }
   }, [t, toast]);
 
-  const fetchWages = useCallback(async () => {
-    try {
-      const { data, error } = await fetchResource<IWage[]>({
-        url: "/income/wage/all/user",
-      });
-
-      if (error) {
-        throw new Error(
-          Array.isArray(error.errorMessage)
-            ? error.errorMessage[0]
-            : error.errorMessage
-        );
-      }
-
-      setWages(data!);
-    } catch (error) {
-      if (error && error instanceof Error) {
-        toast({
-          title: t("utils.error"),
-          description: error.message ?? t("utils.somethingWentWrong"),
-          variant: "destructive",
-        });
-      }
-    }
-  }, [t, toast]);
-
   const onSubmit = async (data: IIncomeForm) => {
     try {
       setIsLoading(true);
 
       const formData: IIncomeForm = {
         ...data,
-        wage: data.wageId
-          ? wages.find((wage) => wage.id === Number(data.wageId))
-          : undefined,
       };
 
       const { error } = income
@@ -176,12 +145,10 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
       );
       setValue("date", new Date(year, month - 1, day));
       setValue("bankAccountId", income.bankAccount?.id);
-      setValue("wageId", income.wage?.id);
     }
 
     fetchBankAccounts();
-    fetchWages();
-  }, [income, setValue, fetchBankAccounts, fetchWages]);
+  }, [income, setValue, fetchBankAccounts]);
 
   return (
     <Card
@@ -258,7 +225,6 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                       }}
                       error={errors && !!errors.value?.message}
                       helperText={errors?.value?.message}
-                      disabled={!!wageId}
                     />
                   )}
                 />
@@ -344,83 +310,6 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
                                 />
 
                                 <p>{bankAccount.bank}</p>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </Fragment>
-                  )}
-                />
-              </div>
-
-              <div className="col-span-12 sm:col-span-6 md:col-span-4">
-                <Controller
-                  control={control}
-                  name="wageId"
-                  defaultValue={
-                    income && income.wage ? income.wage.id : undefined
-                  }
-                  render={({ field: { value, onChange, name } }) => (
-                    <Fragment>
-                      <div className="mb-2">
-                        <Label name={name} label={t("wagePrice")} />
-                      </div>
-
-                      <Select
-                        onValueChange={(value) => {
-                          const wage = wages.find(
-                            (wage) => wage.id === Number(value)
-                          );
-                          onChange(value);
-
-                          if (wage) {
-                            setValue(
-                              "value",
-                              Number(
-                                formatDecimalNumber({
-                                  value: wage.wage,
-                                  returnValue: true,
-                                })
-                              )
-                            );
-                          }
-                        }}
-                        value={String(value)}
-                        name={name}
-                        disabled={!!income}
-                      >
-                        <div className="flex justify-between items-center w-full gap-2">
-                          <SelectTrigger className="py-[22px] px-2 dark:bg-zinc-900 dark:border-zinc-500">
-                            <SelectValue></SelectValue>
-                          </SelectTrigger>
-
-                          {wageId && !income && (
-                            <div
-                              className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
-                              onClick={() => setValue("wageId", undefined)}
-                            >
-                              <IconX className="w-4 h-4" />
-                            </div>
-                          )}
-                        </div>
-
-                        <SelectContent>
-                          {wages.map((wage) => (
-                            <SelectItem key={wage.id} value={String(wage.id)}>
-                              <div className="p-2 flex rounded-md flex-row items-center gap-2">
-                                <div
-                                  className={`flex justify-center items-center p-2 w-6 h-6 rounded-full border border-emerald-400 dark:border-emerald-800 bg-emerald-100 dark:bg-emerald-300 text-emerald-400 dark:text-emerald-800`}
-                                >
-                                  {locale === "pt" ? "S" : "W"}
-                                </div>
-
-                                <p>
-                                  {Number(wage.wage).toLocaleString(locale, {
-                                    style: "currency",
-                                    currency: locale === "pt" ? "BRL" : "USD",
-                                  })}
-                                </p>
                               </div>
                             </SelectItem>
                           ))}

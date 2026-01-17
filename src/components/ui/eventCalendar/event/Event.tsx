@@ -17,8 +17,6 @@ interface IProps extends EventProps {
 const eventColor = {
   [CalendarEventType.INCOME]:
     "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
-  [CalendarEventType.WAGE]:
-    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
   [CalendarEventType.EXPENSE]:
     "bg-red-100 text-red-700 dark:bg-red-700 dark:text-zinc-50",
   [CalendarEventType.INVOICE]:
@@ -59,7 +57,7 @@ const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
             }`}
           >
             {event.type === CalendarEventType.INCOME ? "+" : "-"}{" "}
-            {Number(event.value).toLocaleString(locale, {
+            {Number(event.price).toLocaleString(locale, {
               style: "currency",
               currency: locale === "pt" ? "BRL" : "USD",
             })}
@@ -80,7 +78,7 @@ const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
       </p>
 
       <p className="hidden md:block">
-        {Number(event.value).toLocaleString(locale, {
+        {Number(event.price).toLocaleString(locale, {
           style: "currency",
           currency: locale === "pt" ? "BRL" : "USD",
         })}

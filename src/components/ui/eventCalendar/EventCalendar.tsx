@@ -38,6 +38,7 @@ import ListItemLoading from "../loading/ListItemLoading";
 import useViewport from "@/hooks/useViewport";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../drawer";
 import DayHeader from "./dayHeader/DayHeader";
+import { formatDate } from "@/utils/dates/dateUtils";
 
 interface IProps {
   initialDailyCashFlow: TDailyCashFlow;
@@ -49,8 +50,6 @@ const localizer = momentLocalizer(moment);
 const eventColor = {
   [CalendarEventType.INCOME]:
     "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
-  [CalendarEventType.WAGE]:
-    "bg-teal-100 text-teal-700 dark:bg-teal-700 dark:text-zinc-50",
   [CalendarEventType.EXPENSE]:
     "bg-red-100 text-red-700 dark:bg-red-700 dark:text-zinc-50",
   [CalendarEventType.INVOICE]:
@@ -58,6 +57,7 @@ const eventColor = {
 };
 
 const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
+  const todayYearAndMonth = formatDate(new Date(), "YYYY-MM");
   const t = useTranslations();
   const { toast } = useToast();
   const { isMobile } = useViewport();
@@ -83,7 +83,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
     useState<ICashFlowTransaction[]>(initialMonthEvents);
   const [selectedEvent, setSelectedEvent] =
     useState<ICashFlowTransaction | null>(null);
-  const [monthsCache, setMonthsCache] = useState([new Date().getMonth()]);
+  const [monthsCache, setMonthsCache] = useState(new Set([todayYearAndMonth]));
 
   const mobileEventsGroupsRefs = useRef<Set<HTMLDivElement>>(new Set());
 
@@ -95,15 +95,14 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
 
   const handleNavigate = async (newDate: Date) => {
     setDate(newDate);
+    const newMonth = formatDate(newDate, "YYYY-MM");
 
-    if (!monthsCache.includes(newDate.getMonth())) {
+    if (!monthsCache.has(newMonth)) {
       try {
-        setMonthsCache((state) => [...state, newDate.getMonth()]);
+        setMonthsCache((state) => new Set(state).add(newMonth));
         setIsLoading(true);
 
-        const currentMonth = newDate
-          .toLocaleDateString("en", { month: "2-digit", year: "numeric" })
-          .replaceAll("/", "-");
+        const currentMonth = formatDate(newDate, "YYYY-MM");
 
         const { data: cashFlow, error } =
           await fetchResource<ICashFlowResponse>({
@@ -123,19 +122,19 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
             if (cashFlow.dailyCashFlow[key].transactions) {
               cashFlow.dailyCashFlow[key].transactions.forEach(
                 (transaction, index) => {
-                  const start = String(transaction.start);
+                  const start = String(transaction.start).split(" ")[0];
                   const [startYear, startMonth, startDay] = start
                     .split("-")
                     .map(Number);
                   cashFlow.dailyCashFlow[key].transactions[index].start =
-                    new Date(startYear, startMonth - 1, startDay, 3, 0, 0);
+                    new Date(startYear, startMonth - 1, startDay);
 
-                  const end = String(transaction.end);
+                  const end = String(transaction.end).split(" ")[0];
                   const [endYear, endMonth, endDay] = end
                     .split("-")
                     .map(Number);
                   cashFlow.dailyCashFlow[key].transactions[index].end =
-                    new Date(endYear, endMonth - 1, endDay, 3, 0, 0);
+                    new Date(endYear, endMonth - 1, endDay);
                 }
               );
             }
@@ -161,7 +160,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
             const noDuplicatedEvents = [...state];
 
             for (const event of monthEvents) {
-              if (!state.some((e) => e.id === event.id)) {
+              if (!state.some((e) => e.entityId === event.entityId)) {
                 noDuplicatedEvents.push(event);
               }
             }
@@ -325,7 +324,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                         {selectedEvent!.type === CalendarEventType.INCOME
                           ? "+"
                           : "-"}{" "}
-                        {Number(selectedEvent!.value).toLocaleString(locale, {
+                        {Number(selectedEvent!.price).toLocaleString(locale, {
                           style: "currency",
                           currency: locale === "pt" ? "BRL" : "USD",
                         })}
@@ -373,7 +372,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                           {selectedEvent!.type === CalendarEventType.INCOME
                             ? "+"
                             : "-"}{" "}
-                          {Number(selectedEvent!.value).toLocaleString(locale, {
+                          {Number(selectedEvent!.price).toLocaleString(locale, {
                             style: "currency",
                             currency: locale === "pt" ? "BRL" : "USD",
                           })}

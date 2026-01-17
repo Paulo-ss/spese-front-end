@@ -12,9 +12,9 @@ export interface ICashFlowDaily {
 }
 
 export interface ICashFlowTransaction extends Event {
-  id: number;
+  entityId: number;
   type: CalendarEventType;
-  value: number;
+  price: number;
   title: string;
   start: Date;
   end: Date;

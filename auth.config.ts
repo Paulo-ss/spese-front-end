@@ -34,4 +34,5 @@ export const authConfig = {
   secret: process.env.NEXTAUTH_SECRET,
   useSecureCookies: process.env.AUTH_URL?.startsWith("https://"),
   providers: [],
+  basePath: "/api/auth",
 } satisfies NextAuthConfig;

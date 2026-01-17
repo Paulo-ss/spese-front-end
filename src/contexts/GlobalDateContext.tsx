@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  getFirstDayOfMonth,
+  getLastDayOfMonth,
+  getToday,
+} from "@/utils/dates/dateUtils";
 import { ReactNode, createContext, useState } from "react";
 
 interface IContextProps {
@@ -13,13 +18,9 @@ interface IContextProps {
   updateIsLoading: (isLoading: boolean) => void;
 }
 
-const today = new Date();
-const firstDayOfTheMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-const lastDayOfTheMonth = new Date(
-  today.getFullYear(),
-  today.getMonth() + 1,
-  0
-);
+const today = getToday();
+const firstDayOfTheMonth = getFirstDayOfMonth(today);
+const lastDayOfTheMonth = getLastDayOfMonth(today);
 
 export const GlobalDateContext = createContext({} as IContextProps);
 
@@ -28,11 +29,13 @@ export const GlobalDateContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [date, setDate] = useState<Date>(today);
+  const [date, setDate] = useState<Date>(today.toDate());
   const [fromDate, setFromDate] = useState<Date | undefined>(
-    firstDayOfTheMonth
+    firstDayOfTheMonth.toDate()
   );
-  const [toDate, setToDate] = useState<Date | undefined>(lastDayOfTheMonth);
+  const [toDate, setToDate] = useState<Date | undefined>(
+    lastDayOfTheMonth.toDate()
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const updateDate = (date: Date) => {
