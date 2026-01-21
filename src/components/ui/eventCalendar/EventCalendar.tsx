@@ -39,10 +39,12 @@ import useViewport from "@/hooks/useViewport";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../drawer";
 import DayHeader from "./dayHeader/DayHeader";
 import { formatDate } from "@/utils/dates/dateUtils";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   initialDailyCashFlow: TDailyCashFlow;
-  locale: string;
+  locale: Locale;
 }
 
 const localizer = momentLocalizer(moment);
@@ -71,7 +73,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
 
       return events;
     },
-    [] as ICashFlowTransaction[]
+    [] as ICashFlowTransaction[],
   );
 
   const [view, setView] = useState<View>(Views.MONTH);
@@ -90,7 +92,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
   const monthEvents = events.filter(
     (event) =>
       event.start.getMonth() === date.getMonth() &&
-      event.start.getFullYear() === date.getFullYear()
+      event.start.getFullYear() === date.getFullYear(),
   );
 
   const handleNavigate = async (newDate: Date) => {
@@ -113,7 +115,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
           throw new Error(
             Array.isArray(error.errorMessage)
               ? error.errorMessage[0]
-              : error.errorMessage
+              : error.errorMessage,
           );
         }
 
@@ -135,7 +137,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                     .map(Number);
                   cashFlow.dailyCashFlow[key].transactions[index].end =
                     new Date(endYear, endMonth - 1, endDay);
-                }
+                },
               );
             }
           }
@@ -149,7 +151,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
 
               return events;
             },
-            [] as ICashFlowTransaction[]
+            [] as ICashFlowTransaction[],
           );
 
           setDailyCashFlow((state) => ({
@@ -225,7 +227,7 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                       day: "2-digit",
                       month: "2-digit",
                       year: "2-digit",
-                    })
+                    }),
                 )}
                 groupRefs={mobileEventsGroupsRefs}
                 dailyCashFlow={dailyCashFlow}
@@ -324,9 +326,9 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                         {selectedEvent!.type === CalendarEventType.INCOME
                           ? "+"
                           : "-"}{" "}
-                        {Number(selectedEvent!.price).toLocaleString(locale, {
-                          style: "currency",
-                          currency: locale === "pt" ? "BRL" : "USD",
+                        {formatCurrencyForLocale({
+                          number: Number(selectedEvent!.price),
+                          locale,
                         })}
                       </p>
                     </div>
@@ -372,9 +374,9 @@ const EventCalendar: FC<IProps> = ({ initialDailyCashFlow, locale }) => {
                           {selectedEvent!.type === CalendarEventType.INCOME
                             ? "+"
                             : "-"}{" "}
-                          {Number(selectedEvent!.price).toLocaleString(locale, {
-                            style: "currency",
-                            currency: locale === "pt" ? "BRL" : "USD",
+                          {formatCurrencyForLocale({
+                            number: Number(selectedEvent!.price),
+                            locale,
                           })}
                         </p>
                       </div>

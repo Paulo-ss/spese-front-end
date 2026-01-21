@@ -18,11 +18,13 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 import { FC, Fragment } from "react";
 import InvoiceBar from "../../invoices/InvoiceBar";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   creditCards?: ICreditCardSummary[];
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
@@ -93,13 +95,12 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
                             </p>
 
                             <p className="text-base md:text-lg font-bold">
-                              {(
-                                creditCard.closedTotal +
-                                creditCard.currentMonthInvoiceTotal +
-                                creditCard.otherMonthsTotal
-                              ).toLocaleString(locale, {
-                                style: "currency",
-                                currency: locale === "pt" ? "BRL" : "USD",
+                              {formatCurrencyForLocale({
+                                number:
+                                  creditCard.closedTotal +
+                                  creditCard.currentMonthInvoiceTotal +
+                                  creditCard.otherMonthsTotal,
+                                locale,
                               })}
                             </p>
                           </div>
@@ -111,9 +112,9 @@ const CreditCardsSummary: FC<IProps> = ({ creditCards, error, locale }) => {
                           </p>
 
                           <p className="text-base md:text-lg font-bold">
-                            {Number(creditCard.limit).toLocaleString(locale, {
-                              style: "currency",
-                              currency: locale === "pt" ? "BRL" : "USD",
+                            {formatCurrencyForLocale({
+                              number: Number(creditCard.limit),
+                              locale,
                             })}
                           </p>
                         </div>

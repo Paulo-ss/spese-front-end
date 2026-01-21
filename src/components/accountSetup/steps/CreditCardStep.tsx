@@ -24,7 +24,7 @@ import { IBankAccount } from "@/interfaces/bank-account.interface";
 import { ICreditCardsForm } from "@/interfaces/credit-card.interface";
 import { fetchResource } from "@/services/fetchService";
 import { banksSelectOptions } from "@/utils/bankAccounts/bankAccountsSelectOptions";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconChevronRight,
   IconCreditCard,
@@ -85,7 +85,7 @@ const CreditCardStep = () => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -396,7 +396,7 @@ const CreditCardStep = () => {
                                   onClick={() =>
                                     setValue(
                                       `creditCards.${index}.bankAccountId`,
-                                      null
+                                      null,
                                     )
                                   }
                                 >

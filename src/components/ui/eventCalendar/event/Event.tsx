@@ -5,11 +5,13 @@ import useViewport from "@/hooks/useViewport";
 import { ICashFlowTransaction } from "@/interfaces/cash-flow.interface";
 import { FC } from "react";
 import { EventProps, View } from "react-big-calendar";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps extends EventProps {
   event: ICashFlowTransaction;
   view: View;
-  locale: string;
+  locale: Locale;
   forceDisplay?: boolean;
   onClick?: (event: ICashFlowTransaction) => void;
 }
@@ -57,9 +59,9 @@ const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
             }`}
           >
             {event.type === CalendarEventType.INCOME ? "+" : "-"}{" "}
-            {Number(event.price).toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRL" : "USD",
+            {formatCurrencyForLocale({
+              number: Number(event.price),
+              locale,
             })}
           </p>
         </div>
@@ -78,9 +80,9 @@ const Event: FC<IProps> = ({ event, view, locale, forceDisplay, onClick }) => {
       </p>
 
       <p className="hidden md:block">
-        {Number(event.price).toLocaleString(locale, {
-          style: "currency",
-          currency: locale === "pt" ? "BRL" : "USD",
+        {formatCurrencyForLocale({
+          number: Number(event.price),
+          locale,
         })}
       </p>
     </div>

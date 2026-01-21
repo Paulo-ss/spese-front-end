@@ -2,14 +2,16 @@
 
 import useViewport from "@/hooks/useViewport";
 import { TDailyCashFlow } from "@/interfaces/cash-flow.interface";
-import { formatInClientTimezone } from "@/utils/dates/dateUtils";
+import { formatDate } from "@/utils/dates/dateUtils";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 import { FC, Fragment, MutableRefObject, SetStateAction } from "react";
 import { DateHeaderProps, View, Views } from "react-big-calendar";
 
 interface IProps extends DateHeaderProps {
   setDate: (date: Date) => void;
   handleViewChange: (newView: SetStateAction<View>) => void;
-  locale: string;
+  locale: Locale;
   areThereEventsForThisDate: boolean;
   groupRefs: MutableRefObject<Set<HTMLDivElement>>;
   dailyCashFlow: TDailyCashFlow;
@@ -30,7 +32,7 @@ const DateHeader: FC<IProps> = ({
   const { isMobile } = useViewport();
 
   const getDateBalance = () => {
-    const dateInTimezone = formatInClientTimezone({ date });
+    const dateInTimezone = formatDate(date, "YYYY-MM-DD");
 
     return isNaN(Number(dailyCashFlow[dateInTimezone]?.closingBalance))
       ? undefined
@@ -75,10 +77,11 @@ const DateHeader: FC<IProps> = ({
               Number(getDateBalance()) < 0 && "text-red-500"
             }`}
           >
-            {getDateBalance()?.toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRl" : "USD",
-            })}
+            {getDateBalance() !== undefined &&
+              formatCurrencyForLocale({
+                number: getDateBalance()!,
+                locale,
+              })}
           </p>
 
           <p className="p-1 rounded-full text-sm bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer">

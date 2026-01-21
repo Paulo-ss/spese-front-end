@@ -21,7 +21,7 @@ import {
   IBankAccountFieldsArray,
 } from "@/interfaces/bank-account.interface";
 import { banksSelectOptions } from "@/utils/bankAccounts/bankAccountsSelectOptions";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconChevronLeft,
   IconEdit,

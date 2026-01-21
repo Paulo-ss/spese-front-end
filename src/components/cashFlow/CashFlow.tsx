@@ -6,11 +6,13 @@ import { ICashFlowResponse } from "@/interfaces/cash-flow.interface";
 import { IAPIError } from "@/interfaces/api-error.interface";
 import { useTranslations } from "next-intl";
 import ErrorDisplay from "../ui/errorDisplay/ErrorDisplay";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   cashFlow?: ICashFlowResponse;
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const CashFlow: FC<IProps> = ({ cashFlow, error, locale }) => {
@@ -54,9 +56,9 @@ const CashFlow: FC<IProps> = ({ cashFlow, error, locale }) => {
                 "text-red-500 dark:text-red-700"
               }`}
             >
-              {cashFlow!.currentAccountsBalance.toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
+              {formatCurrencyForLocale({
+                number: cashFlow!.currentAccountsBalance,
+                locale,
               })}
             </h3>
           </div>

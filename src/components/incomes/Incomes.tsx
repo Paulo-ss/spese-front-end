@@ -26,11 +26,13 @@ import { GlobalDateContext } from "@/contexts/GlobalDateContext";
 import { fetchResource } from "@/services/fetchService";
 import CardLoading from "../ui/loading/CardLoading";
 import ListItemLoading from "../ui/loading/ListItemLoading";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   initialIncomes?: IIncome[];
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
@@ -38,7 +40,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
 
   const [incomes, setIncomes] = useState(initialIncomes);
   const [errorMessage, setErrorMessage] = useState(
-    error ? error.errorMessage : undefined
+    error ? error.errorMessage : undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,7 +87,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
             income.incomeMonth = new Date(
               year,
               month - 1,
-              day
+              day,
             ).toLocaleDateString(locale, {
               weekday: "short",
               day: "2-digit",
@@ -98,7 +100,7 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
           throw new Error(
             Array.isArray(error.errorMessage)
               ? error.errorMessage[0]
-              : error.errorMessage
+              : error.errorMessage,
           );
         }
 
@@ -136,12 +138,13 @@ const Incomes: FC<IProps> = ({ initialIncomes, error, locale }) => {
     <Card
       title={`${t("incomes.yourIncomes")} ${incomes ? "-" : ""} ${
         incomes
-          ? incomes!
-              .reduce((total, income) => total + Number(income.value), 0)
-              .toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
-              })
+          ? formatCurrencyForLocale({
+              number: incomes!.reduce(
+                (total, income) => total + Number(income.value),
+                0,
+              ),
+              locale,
+            })
           : ""
       }`}
       translateTitle={false}

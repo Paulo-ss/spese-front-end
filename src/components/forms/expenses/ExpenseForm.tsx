@@ -31,7 +31,7 @@ import {
   IExpenseForm,
 } from "@/interfaces/expenses.interface";
 import { fetchResource } from "@/services/fetchService";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconChevronLeft,
   IconPlus,
@@ -48,7 +48,7 @@ import { Locale } from "@/types/locale.type";
 import { categories } from "@/utils/category/categoriesLangIcon";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
   expense?: IExpense;
   error?: IAPIError;
   updateIsEditing?: (isEditing: boolean) => void;
@@ -159,7 +159,7 @@ const ExpenseForm: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -187,7 +187,7 @@ const ExpenseForm: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -213,7 +213,7 @@ const ExpenseForm: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -245,7 +245,7 @@ const ExpenseForm: FC<IProps> = ({
           ? expense.customCategory
             ? null
             : ExpenseCategory[englishCategory! as CategoryKey]
-          : ExpenseCategory.NA
+          : ExpenseCategory.NA,
       );
       setValue("customCategory", expense.customCategory?.id);
     }
@@ -915,9 +915,7 @@ const ExpenseForm: FC<IProps> = ({
                                       : ""
                                   } transition-colors`}
                                 >
-                                  {category.lang[
-                                    locale as Locale
-                                  ].toLowerCase()}
+                                  {category.lang[locale].toLowerCase()}
 
                                   {category.icon}
                                 </label>

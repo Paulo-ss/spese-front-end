@@ -13,7 +13,7 @@ import { Banks } from "@/enums/banks.enum";
 import { useToast } from "@/hooks/use-toast";
 import { IBankAccountFieldsArray } from "@/interfaces/bank-account.interface";
 import { banksSelectOptions } from "@/utils/bankAccounts/bankAccountsSelectOptions";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import { IconChevronRight, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";

@@ -1,4 +1,3 @@
-import ConfirmEmail from "@/components/auth/confirmEmail/ConfirmEmail";
 import ResetPassword from "@/components/auth/reset-password/ResetPassword";
 import PageContainer from "@/components/pageContainer/PageContainer";
 import { redirect } from "next/navigation";

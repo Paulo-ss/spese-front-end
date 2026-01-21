@@ -18,6 +18,8 @@ import Invoices from "./invoices/Invoices";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { createCreditCardSummary } from "@/utils/creditCards/createCreditCardSummary";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 import InvoiceBar from "./invoices/InvoiceBar";
 import Divider from "../ui/divider/Divider";
 import Subscriptions from "../subscriptions/Subscriptions";
@@ -26,7 +28,7 @@ import CreditCard from "./CreditCard";
 interface IProps {
   creditCard?: ICreditCard;
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
@@ -144,9 +146,9 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                     </p>
 
                     <p>
-                      {Number(creditCard?.limit).toLocaleString(locale, {
-                        style: "currency",
-                        currency: locale === "pt" ? "BRL" : "USD",
+                      {formatCurrencyForLocale({
+                        number: Number(creditCard?.limit),
+                        locale,
                       })}
                     </p>
                   </div>
@@ -190,13 +192,10 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                             </p>
 
                             <p className="text-red-500">
-                              {creditCardSummary.closedTotal.toLocaleString(
+                              {formatCurrencyForLocale({
+                                number: creditCardSummary.closedTotal,
                                 locale,
-                                {
-                                  style: "currency",
-                                  currency: locale === "pt" ? "BRL" : "USD",
-                                }
-                              )}
+                              })}
                             </p>
                           </div>
                         )}
@@ -207,13 +206,10 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                         </p>
 
                         <p className="text-sky-500">
-                          {creditCardSummary!.currentMonthInvoiceTotal.toLocaleString(
+                          {formatCurrencyForLocale({
+                            number: creditCardSummary!.currentMonthInvoiceTotal,
                             locale,
-                            {
-                              style: "currency",
-                              currency: locale === "pt" ? "BRL" : "USD",
-                            }
-                          )}
+                          })}
                         </p>
                       </div>
 
@@ -223,13 +219,10 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                         </p>
 
                         <p className="text-amber-500">
-                          {creditCardSummary!.otherMonthsTotal.toLocaleString(
+                          {formatCurrencyForLocale({
+                            number: creditCardSummary!.otherMonthsTotal,
                             locale,
-                            {
-                              style: "currency",
-                              currency: locale === "pt" ? "BRL" : "USD",
-                            }
-                          )}
+                          })}
                         </p>
                       </div>
 
@@ -239,9 +232,9 @@ const CreditCardDetails: FC<IProps> = ({ creditCard, error, locale }) => {
                         </p>
 
                         <p>
-                          {availableLimit!.toLocaleString(locale, {
-                            style: "currency",
-                            currency: locale === "pt" ? "BRL" : "USD",
+                          {formatCurrencyForLocale({
+                            number: availableLimit!,
+                            locale,
                           })}
                         </p>
                       </div>

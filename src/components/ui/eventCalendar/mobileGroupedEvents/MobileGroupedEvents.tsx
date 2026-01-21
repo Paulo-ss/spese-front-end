@@ -8,10 +8,12 @@ import { FC, Fragment, MutableRefObject } from "react";
 import Event from "../event/Event";
 import { DateLocalizer, View } from "react-big-calendar";
 import { useTranslations } from "next-intl";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   groupedEvents: TDailyCashFlow;
-  locale: string;
+  locale: Locale;
   localizer: DateLocalizer;
   view: View;
   groupRefs: MutableRefObject<Set<HTMLDivElement>>;
@@ -74,13 +76,10 @@ const MobileGroupedEvents: FC<IProps> = ({
                       Number(dailyCashFlow.closingBalance) < 0 && "text-red-500"
                     }`}
                   >
-                    {Number(dailyCashFlow.closingBalance).toLocaleString(
+                    {formatCurrencyForLocale({
+                      number: Number(dailyCashFlow.closingBalance),
                       locale,
-                      {
-                        style: "currency",
-                        currency: locale === "pt" ? "BRL" : "USD",
-                      }
-                    )}
+                    })}
                   </p>
                 </div>
               )}

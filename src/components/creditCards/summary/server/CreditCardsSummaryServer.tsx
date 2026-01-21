@@ -1,9 +1,10 @@
 import { fetchResource } from "@/services/fetchService";
 import CreditCardsSummary from "../client/CreditCardsSummary";
 import { ICreditCardSummary } from "@/interfaces/credit-card.interface";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
 }
 
 export default async function CreditCardsSummaryServer({ locale }: IProps) {
@@ -19,7 +20,7 @@ export default async function CreditCardsSummaryServer({ locale }: IProps) {
   if (data) {
     for (const creditCard of data) {
       creditCard.closingDate = new Date(
-        creditCard.closingDate
+        creditCard.closingDate,
       ).toLocaleDateString(locale, { day: "2-digit", month: "2-digit" });
     }
   }

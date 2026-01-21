@@ -3,5 +3,4 @@ export interface ISignUp {
   email: string;
   password: string;
   passwordConfirmation: string;
-  timezone: string;
 }

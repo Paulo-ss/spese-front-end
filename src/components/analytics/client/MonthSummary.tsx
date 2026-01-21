@@ -24,11 +24,13 @@ import {
 import { theme } from "@/lib/theme/theme";
 import { Fade } from "react-awesome-reveal";
 import { formatDate } from "@/utils/dates/dateUtils";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   initialMonthSummary?: IMonthSummary;
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
@@ -37,7 +39,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
 
   const [monthSummary, setMonthSummary] = useState(initialMonthSummary);
   const [errorMessage, setErrorMessage] = useState(
-    error ? error.errorMessage : undefined
+    error ? error.errorMessage : undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,7 +66,7 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -111,10 +113,11 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 </p>
 
                 <p className="text-base md:text-lg font-bold">
-                  {monthSummary?.budget.toLocaleString(locale, {
-                    style: "currency",
-                    currency: locale === "pt" ? "BRL" : "USD",
-                  })}
+                  {monthSummary &&
+                    formatCurrencyForLocale({
+                      number: monthSummary.budget,
+                      locale,
+                    })}
                 </p>
               </div>
             </div>
@@ -130,10 +133,11 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 </p>
 
                 <p className="text-base md:text-lg font-bold">
-                  {monthSummary?.expensesTotal.toLocaleString(locale, {
-                    style: "currency",
-                    currency: locale === "pt" ? "BRL" : "USD",
-                  })}
+                  {monthSummary &&
+                    formatCurrencyForLocale({
+                      number: monthSummary.expensesTotal,
+                      locale,
+                    })}
                 </p>
               </div>
             </div>
@@ -149,10 +153,11 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 </p>
 
                 <p className="text-base md:text-lg font-bold">
-                  {monthSummary?.paidTotal.toLocaleString(locale, {
-                    style: "currency",
-                    currency: locale === "pt" ? "BRL" : "USD",
-                  })}
+                  {monthSummary &&
+                    formatCurrencyForLocale({
+                      number: monthSummary.paidTotal,
+                      locale,
+                    })}
                 </p>
               </div>
             </div>
@@ -168,10 +173,11 @@ const MonthSummary: FC<IProps> = ({ initialMonthSummary, error, locale }) => {
                 </p>
 
                 <p className="text-base md:text-lg font-bold">
-                  {monthSummary?.monthBalance.toLocaleString(locale, {
-                    style: "currency",
-                    currency: locale === "pt" ? "BRL" : "USD",
-                  })}
+                  {monthSummary &&
+                    formatCurrencyForLocale({
+                      number: monthSummary.monthBalance,
+                      locale,
+                    })}
                 </p>
               </div>
             </div>

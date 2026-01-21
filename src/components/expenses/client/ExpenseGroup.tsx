@@ -8,11 +8,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   expenses: IExpense[];
   groupName: string;
-  locale: string;
+  locale: Locale;
   index: number;
 }
 
@@ -23,12 +25,13 @@ const ExpenseGroup: FC<IProps> = ({ expenses, groupName, locale, index }) => {
         <AccordionTrigger className="flex items-center gap-2">
           <p className="text-base flex text-right">
             {groupName} -{" "}
-            {expenses
-              .reduce((total, { price }) => total + Number(price), 0)
-              .toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
-              })}
+            {formatCurrencyForLocale({
+              number: expenses.reduce(
+                (total, { price }) => total + Number(price),
+                0,
+              ),
+              locale,
+            })}
           </p>
         </AccordionTrigger>
 

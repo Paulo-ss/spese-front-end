@@ -6,10 +6,10 @@ import { IconWorld } from "@tabler/icons-react";
 import Dropdown from "@/components/ui/dropdown/Dropdown";
 import Image from "next/image";
 import { setLanguage } from "@/app/actions/cookies/setLanguage";
+import { Locale } from "@/types/locale.type";
 
 const Languages = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const openDropdown = async (e: MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -19,7 +19,7 @@ const Languages = () => {
     setAnchorEl(null);
   };
 
-  const changeLanguage = async (lang: "pt" | "en") => {
+  const changeLanguage = async (lang: Locale) => {
     await setLanguage(lang);
   };
 

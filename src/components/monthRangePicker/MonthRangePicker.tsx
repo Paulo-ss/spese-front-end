@@ -7,9 +7,10 @@ import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { IconCalendar, IconTrash } from "@tabler/icons-react";
 import { Calendar } from "../ui/calendar";
 import { useTranslations } from "next-intl";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
 }
 
 const MonthRangePicker: FC<IProps> = ({ locale }) => {

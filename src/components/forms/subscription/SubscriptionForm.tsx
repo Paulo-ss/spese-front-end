@@ -6,7 +6,7 @@ import ErrorDisplay from "@/components/ui/errorDisplay/ErrorDisplay";
 import Input from "@/components/ui/input/Input";
 import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconAlertTriangle,
   IconCheckbox,
@@ -123,7 +123,7 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -145,8 +145,8 @@ const SubscriptionForm: FC<IProps> = ({ subscription, error }) => {
       setValue(
         "price",
         Number(
-          formatDecimalNumber({ value: subscription.price, returnValue: true })
-        )
+          formatDecimalNumber({ value: subscription.price, returnValue: true }),
+        ),
       );
       setValue("creditCardId", subscription.creditCard.id);
       setValue("billingDay", Number(subscription.billingDay));

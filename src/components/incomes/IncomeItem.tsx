@@ -20,10 +20,12 @@ import { useTranslations } from "next-intl";
 import { useToast } from "@/hooks/use-toast";
 import deleteIncome from "@/app/actions/incomes/deleteIncome";
 import { theme } from "@/lib/theme/theme";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   income: IIncome;
-  locale: string;
+  locale: Locale;
   fetchIncomes: () => Promise<void>;
 }
 
@@ -88,9 +90,9 @@ const IncomeItem: FC<IProps> = ({ locale, income, fetchIncomes }) => {
         <p className="text-base">{income.name}</p>
 
         <p className="text-base md:text-2xl font-bold">
-          {Number(income.value).toLocaleString(locale, {
-            style: "currency",
-            currency: locale === "pt" ? "BRL" : "USD",
+          {formatCurrencyForLocale({
+            number: Number(income.value),
+            locale,
           })}
         </p>
 

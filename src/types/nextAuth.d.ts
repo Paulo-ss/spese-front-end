@@ -1,5 +1,4 @@
 import { IUser } from "@/interfaces/user-data.interface";
-import NextAuth from "next-auth";
 
 declare module "next-auth" {
   interface Session {

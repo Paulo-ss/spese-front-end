@@ -12,7 +12,6 @@ export default async function signUp(data: ISignUp) {
         options: {
           method: "POST",
           body: JSON.stringify({ ...data }),
-          headers: { "X-Timezone": data.timezone },
         },
       },
     });

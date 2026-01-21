@@ -14,9 +14,11 @@ import SubscriptionItem from "./SubscriptionItem";
 import { ISubscription } from "@/interfaces/subscription.interface";
 import SubscriptionsFilters from "./SubscriptionsFilters";
 import { fetchResource } from "@/services/fetchService";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
   initialSubscriptions?: ISubscription[];
   error?: IAPIError;
   displayFilters?: boolean;
@@ -30,7 +32,7 @@ const Subscriptions: FC<IProps> = ({
 }) => {
   const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
   const [errorMessage, setErrorMessage] = useState(
-    error ? error.errorMessage : undefined
+    error ? error.errorMessage : undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,7 +57,7 @@ const Subscriptions: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -83,15 +85,13 @@ const Subscriptions: FC<IProps> = ({
         subscriptions ? "-" : ""
       } ${
         subscriptions
-          ? subscriptions!
-              .reduce(
+          ? formatCurrencyForLocale({
+              number: subscriptions!.reduce(
                 (total, subscription) => total + Number(subscription.price),
-                0
-              )
-              .toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
-              })
+                0,
+              ),
+              locale,
+            })
           : ""
       }`}
       translateTitle={false}

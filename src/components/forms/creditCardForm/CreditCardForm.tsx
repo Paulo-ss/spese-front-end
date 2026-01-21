@@ -32,7 +32,7 @@ import {
 } from "@/interfaces/credit-card.interface";
 import { fetchResource } from "@/services/fetchService";
 import { banksSelectOptions } from "@/utils/bankAccounts/bankAccountsSelectOptions";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconChevronLeft,
   IconCreditCard,
@@ -62,7 +62,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
   const shouldDisableClosingAndDueDay =
     creditCard && creditCard.invoices && creditCard.invoices?.length > 0
       ? !creditCard.invoices!.some(
-          ({ status }) => status === InvoiceStatus.OPENED_FUTURE
+          ({ status }) => status === InvoiceStatus.OPENED_FUTURE,
         )
       : true;
 
@@ -107,7 +107,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -294,7 +294,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                           validate: (value) => {
                             if (value <= 0) {
                               return t(
-                                "commonValidations.mustBeGreaterThanZero"
+                                "commonValidations.mustBeGreaterThanZero",
                               );
                             }
                           },
@@ -457,7 +457,7 @@ const CreditCardForm: FC<IProps> = ({ updateIsEditing, creditCard, error }) => {
                                       onClick={() =>
                                         setValue(
                                           `creditCards.${index}.bankAccountId`,
-                                          null
+                                          null,
                                         )
                                       }
                                     >

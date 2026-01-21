@@ -17,10 +17,12 @@ import BankAccountItem from "./BankAccountItem";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 
+import { Locale } from "@/types/locale.type";
+
 interface IProps {
   bankAccounts?: IBankAccount[];
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const BankAccounts: FC<IProps> = ({ bankAccounts, error, locale }) => {

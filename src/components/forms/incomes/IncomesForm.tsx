@@ -7,7 +7,7 @@ import Input from "@/components/ui/input/Input";
 
 import { useToast } from "@/hooks/use-toast";
 import { IAPIError } from "@/interfaces/api-error.interface";
-import { formatDecimalNumber } from "@/utils/formatDecimalNumber";
+import { formatDecimalNumber } from "@/utils/numbers/formatDecimalNumber";
 import {
   IconCheckbox,
   IconChevronLeft,
@@ -38,10 +38,12 @@ import {
 } from "@/components/ui/select/Select";
 import Image from "next/image";
 
+import { Locale } from "@/types/locale.type";
+
 interface IProps {
   income?: IIncome;
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
@@ -70,7 +72,7 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -141,7 +143,7 @@ const IncomesForm: FC<IProps> = ({ income, error, locale }) => {
       setValue("name", income.name);
       setValue(
         "value",
-        Number(formatDecimalNumber({ value: income.value, returnValue: true }))
+        Number(formatDecimalNumber({ value: income.value, returnValue: true })),
       );
       setValue("date", new Date(year, month - 1, day));
       setValue("bankAccountId", income.bankAccount?.id);

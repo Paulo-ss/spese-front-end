@@ -1,15 +1,16 @@
 "use server";
 
+import { Locale } from "@/types/locale.type";
 import { cookies } from "next/headers";
 
-export async function getLanguage() {
+export async function getLanguage(): Promise<Locale> {
   const cookieStore = cookies();
 
   const cookie = cookieStore.get("current-lang");
   if (cookie) {
-    const theme = cookie.value;
+    const language: Locale = cookie.value as Locale;
 
-    return theme;
+    return language;
   }
 
   return "pt";

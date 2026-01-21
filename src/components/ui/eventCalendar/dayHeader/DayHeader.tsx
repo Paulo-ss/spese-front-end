@@ -1,21 +1,23 @@
 "use client";
 
 import { TDailyCashFlow } from "@/interfaces/cash-flow.interface";
-import { formatInClientTimezone } from "@/utils/dates/dateUtils";
+import { formatDate, formatForLocale } from "@/utils/dates/dateUtils";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import { HeaderProps } from "react-big-calendar";
 
 interface IProps extends HeaderProps {
   dailyCashFlow: TDailyCashFlow;
-  locale: string;
+  locale: Locale;
 }
 
 const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
   const t = useTranslations();
 
   const getDateCashFlow = () => {
-    const dateCashFlow = dailyCashFlow[formatInClientTimezone({ date })];
+    const dateCashFlow = dailyCashFlow[formatDate(date, "YYYY-MM-DD")];
 
     return dateCashFlow?.closingBalance ? dateCashFlow : undefined;
   };
@@ -25,10 +27,10 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
   return (
     <div className="flex items-center justify-between w-full p-4">
       <p>
-        {date.toLocaleDateString(locale, {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
+        {formatForLocale({
+          date,
+          locale,
+          options: { day: "2-digit", month: "long", year: "numeric" },
         })}
       </p>
 
@@ -41,9 +43,9 @@ const DayHeader: FC<IProps> = ({ dailyCashFlow, locale, date }) => {
               Number(dateCashFlow.closingBalance) < 0 && "text-red-500"
             }`}
           >
-            {Number(dateCashFlow.closingBalance).toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRL" : "USD",
+            {formatCurrencyForLocale({
+              number: Number(dateCashFlow.closingBalance),
+              locale,
             })}
           </p>
         </div>

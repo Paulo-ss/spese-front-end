@@ -42,13 +42,14 @@ import { ExpenseCategory, ExpenseStatus } from "@/enums/expenses.enum";
 import { CategoryKey, ICategory } from "@/interfaces/category.interface";
 import { categories } from "@/utils/category/categoriesLangIcon";
 import { Locale } from "@/types/locale.type";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
 
 interface IProps {
   isLoading: boolean;
   updateLoading: (isLoading: boolean) => void;
   updateExpenses: (expenses: IExpense[] | undefined) => void;
   updateErrorMessage: (errorMessage: string) => void;
-  locale: string;
+  locale: Locale;
   isExpensesPage: boolean;
 }
 
@@ -130,7 +131,7 @@ const ExpensesFilters: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -141,7 +142,7 @@ const ExpensesFilters: FC<IProps> = ({
           expense.expenseDate = new Date(
             year,
             month - 1,
-            day
+            day,
           ).toLocaleDateString(locale, {
             weekday: "short",
             day: "2-digit",
@@ -172,7 +173,7 @@ const ExpensesFilters: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -202,7 +203,7 @@ const ExpensesFilters: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -285,16 +286,16 @@ const ExpensesFilters: FC<IProps> = ({
             defaultValue={[1, 2000]}
             render={({ field: { value, onChange, name } }) => {
               const formatValueToCurrency = (value: number) => {
-                return value.toLocaleString(locale, {
-                  style: "currency",
-                  currency: locale === "pt" ? "BRL" : "USD",
+                return formatCurrencyForLocale({
+                  number: value,
+                  locale,
                 });
               };
 
               const label = `${t(
-                "expenses.priceRange"
+                "expenses.priceRange",
               )} - ${formatValueToCurrency(
-                value![0]
+                value![0],
               )} / ${formatValueToCurrency(value![1])}`;
 
               return (
@@ -431,7 +432,7 @@ const ExpensesFilters: FC<IProps> = ({
                                   : ""
                               } transition-colors`}
                             >
-                              {category.lang[locale as Locale].toLowerCase()}
+                              {category.lang[locale].toLowerCase()}
 
                               {category.icon}
                             </label>

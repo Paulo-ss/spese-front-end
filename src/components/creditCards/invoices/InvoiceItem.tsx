@@ -17,9 +17,11 @@ import { fetchResource } from "@/services/fetchService";
 import { IconCheck, IconCheckbox, IconXboxX } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
   invoice: IInvoice;
   index: number;
   currentSlide: number;
@@ -48,7 +50,7 @@ const InvoiceItem: FC<IProps> = ({ locale, invoice, index, currentSlide }) => {
   const formattedDueDate = new Date(
     dueYear,
     dueMonth - 1,
-    dueDay
+    dueDay,
   ).toLocaleDateString(locale, {
     day: "2-digit",
     month: "short",
@@ -61,20 +63,20 @@ const InvoiceItem: FC<IProps> = ({ locale, invoice, index, currentSlide }) => {
   const formattedClosingDate = new Date(
     closingYear,
     closingMonth - 1,
-    closingDay
+    closingDay,
   ).toLocaleDateString(locale, {
     day: "2-digit",
     month: "short",
     year: closingYear !== today.getFullYear() ? "2-digit" : undefined,
   });
 
-  const formattedPrice = Number(
-    invoice.status === InvoiceStatus.PAID
-      ? invoice.totalPrice
-      : invoice.currentPrice
-  ).toLocaleString(locale, {
-    style: "currency",
-    currency: locale === "pt" ? "BRL" : "USD",
+  const formattedPrice = formatCurrencyForLocale({
+    number: Number(
+      invoice.status === InvoiceStatus.PAID
+        ? invoice.totalPrice
+        : invoice.currentPrice,
+    ),
+    locale,
   });
 
   const areTherePendingExpenses =
@@ -99,7 +101,7 @@ const InvoiceItem: FC<IProps> = ({ locale, invoice, index, currentSlide }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -128,7 +130,7 @@ const InvoiceItem: FC<IProps> = ({ locale, invoice, index, currentSlide }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 

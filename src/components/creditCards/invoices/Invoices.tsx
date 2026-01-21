@@ -11,9 +11,11 @@ import { EmblaCarouselType } from "embla-carousel";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import InvoiceItem from "./InvoiceItem";
 
+import { Locale } from "@/types/locale.type";
+
 interface IProps {
   invoices: IInvoice[];
-  locale: string;
+  locale: Locale;
   error?: IAPIError;
 }
 
@@ -42,7 +44,7 @@ const findFirstInvoiceSlide = (invoices: IInvoice[]) => {
 const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
   const [carousel, setCarousel] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(
-    findFirstInvoiceSlide(invoices)
+    findFirstInvoiceSlide(invoices),
   );
 
   const isFirstRender = useRef(true);
@@ -113,7 +115,7 @@ const Invoices: FC<IProps> = ({ invoices, error, locale }) => {
               const formattedDueDate = new Date(
                 year,
                 month - 1,
-                day
+                day,
               ).toLocaleDateString(locale, {
                 month: "short",
                 year: year !== today.getFullYear() ? "2-digit" : undefined,

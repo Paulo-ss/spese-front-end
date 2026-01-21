@@ -16,9 +16,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ICashFlowTransaction } from "@/interfaces/cash-flow.interface";
+import { Locale } from "@/types/locale.type";
 
 interface IProps extends ToolbarProps<ICashFlowTransaction> {
-  locale: string;
+  locale: Locale;
 }
 
 const today = new Date();

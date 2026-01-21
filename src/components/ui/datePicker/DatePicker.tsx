@@ -10,10 +10,12 @@ import { pt } from "date-fns/locale/pt";
 import { Calendar } from "../calendar";
 import { SelectSingleEventHandler } from "react-day-picker";
 
+import { Locale } from "@/types/locale.type";
+
 interface IProps {
   value: Date;
   onChange: SelectSingleEventHandler | undefined;
-  locale: string;
+  locale: Locale;
   label: string;
   error?: boolean;
   helperText?: string;

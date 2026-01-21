@@ -32,7 +32,7 @@ export default async function ExpensesServer({
 
   const selectedMonth = formatDate(
     selectedDate,
-    isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM"
+    isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM",
   );
   const selectedToMonth = isExpensesPage
     ? formatDate(lastDayOfTheMonth, "YYYY-MM-DD")
@@ -56,7 +56,10 @@ export default async function ExpensesServer({
 
   if (expenses) {
     for (const expense of expenses) {
-      expense.expenseDate = formatForLocale(expense.expenseDate, locale);
+      expense.expenseDate = formatForLocale({
+        date: expense.expenseDate,
+        locale,
+      });
     }
   }
 

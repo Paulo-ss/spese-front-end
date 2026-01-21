@@ -1,4 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
+import { Locale } from "@/types/locale.type";
 import { formatInTimeZone } from "date-fns-tz";
 import { getUserSession } from "../session/getUserSession";
 
@@ -50,7 +51,7 @@ export const formatInClientTimezone = ({
 
 export const getDatesBetween = (
   startDate: DateTypes,
-  endDate: DateTypes
+  endDate: DateTypes,
 ): Date[] => {
   const dates: Date[] = [];
   let currentDate = dayjs(startDate);
@@ -64,35 +65,27 @@ export const getDatesBetween = (
 };
 
 export const getMonthCalendarDates = (date: Date) => {
-  const firstDayOfTheMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-  const lastDayOfTheMonth = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0
-  );
+  const firstDayOfTheMonth = getFirstDayOfMonth(date);
+  const lastDayOfTheMonth = getLastDayOfMonth(date);
 
   const calendarDates: Date[] = [];
 
-  const previousDay = new Date(firstDayOfTheMonth);
-  previousDay.setDate(previousDay.getDate() - 1);
+  let previousDay = firstDayOfTheMonth.subtract(1, "day");
 
-  while (
-    previousDay.toLocaleDateString("en-us", { weekday: "long" }) !== "Saturday"
-  ) {
-    calendarDates.unshift(new Date(previousDay));
-    previousDay.setDate(previousDay.getDate() - 1);
+  // 6 is Saturday
+  while (previousDay.day() !== 6) {
+    calendarDates.unshift(previousDay.toDate());
+    previousDay = previousDay.subtract(1, "day");
   }
 
   calendarDates.push(...getDatesBetween(firstDayOfTheMonth, lastDayOfTheMonth));
 
-  const nextDay = new Date(lastDayOfTheMonth);
-  nextDay.setDate(nextDay.getDate() + 1);
+  let nextDay = lastDayOfTheMonth.add(1, "day");
 
-  while (
-    nextDay.toLocaleDateString("en-us", { weekday: "long" }) !== "Sunday"
-  ) {
-    calendarDates.push(new Date(nextDay));
-    nextDay.setDate(nextDay.getDate() + 1);
+  // 0 is Sunday
+  while (nextDay.day() !== 0) {
+    calendarDates.push(nextDay.toDate());
+    nextDay = nextDay.add(1, "day");
   }
 
   return calendarDates;
@@ -102,10 +95,18 @@ export const getToday = (): Dayjs => {
   return dayjs();
 };
 
-export const formatForLocale = (date: DateTypes, locale: string): string => {
-  return dayjs(date).toDate().toLocaleDateString(locale, {
+export const formatForLocale = ({
+  date,
+  locale,
+  options = {
     weekday: "short",
     day: "2-digit",
     month: "short",
-  });
+  },
+}: {
+  date: DateTypes;
+  locale: Locale;
+  options?: Intl.DateTimeFormatOptions;
+}): string => {
+  return dayjs(date).toDate().toLocaleDateString(locale, options);
 };

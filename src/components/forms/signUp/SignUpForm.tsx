@@ -37,7 +37,6 @@ const SignUpForm = () => {
 
     const { responseData, error } = await signUp({
       ...data,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     });
 
     if (error?.errorMessage) {

@@ -10,10 +10,12 @@ import { Calendar } from "../ui/calendar";
 import { DateRange } from "react-day-picker";
 import { endOfMonth, startOfMonth } from "date-fns";
 
+import { Locale } from "@/types/locale.type";
+
 const today = new Date();
 
 interface IProps {
-  locale: string;
+  locale: Locale;
 }
 
 const MonthPicker: FC<IProps> = ({ locale }) => {

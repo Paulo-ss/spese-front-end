@@ -12,10 +12,12 @@ import {
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { FC, Fragment, useState } from "react";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   expense: IExpense;
-  locale: string;
+  locale: Locale;
   index: number;
 }
 
@@ -30,7 +32,7 @@ const ExpenseSummarizedItem: FC<IProps> = ({ expense, locale, index }) => {
   const formattedExpenseDate = new Date(
     year,
     month - 1,
-    day
+    day,
   ).toLocaleDateString(locale, {
     day: "2-digit",
     month: "short",
@@ -46,7 +48,7 @@ const ExpenseSummarizedItem: FC<IProps> = ({ expense, locale, index }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -87,9 +89,9 @@ const ExpenseSummarizedItem: FC<IProps> = ({ expense, locale, index }) => {
       </p>
 
       <p>
-        {Number(expense.price).toLocaleString(locale, {
-          style: "currency",
-          currency: locale === "pt" ? "BRL" : "USD",
+        {formatCurrencyForLocale({
+          number: Number(expense.price),
+          locale,
         })}
       </p>
 

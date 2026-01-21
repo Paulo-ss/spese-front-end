@@ -47,11 +47,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Button from "@/components/ui/button/Button";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   expense?: IExpense;
   error?: IAPIError;
-  locale: string;
+  locale: Locale;
 }
 
 const categories = {
@@ -119,7 +121,7 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
@@ -200,9 +202,9 @@ const ExpenseDetails: FC<IProps> = ({ expense, error, locale }) => {
 
               <div className="absolute bottom-4 left-2 md:left-4 flex flex-col gap-1">
                 <p className="font-bold text-base md:text-lg">
-                  {Number(expense?.price).toLocaleString(locale, {
-                    style: "currency",
-                    currency: locale === "pt" ? "BRL" : "USD",
+                  {formatCurrencyForLocale({
+                    number: Number(expense?.price),
+                    locale,
                   })}
                 </p>
                 <p className="italic text-sm">

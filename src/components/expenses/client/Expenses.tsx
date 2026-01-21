@@ -39,9 +39,11 @@ import { Accordion } from "@/components/ui/accordion";
 import getFormState from "@/utils/getFormState";
 import { ExpenseCategory } from "@/enums/expenses.enum";
 import { formatDate, formatForLocale } from "@/utils/dates/dateUtils";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
   initialExpenses?: ExpenseGroupType;
   error?: IAPIError;
   limit?: number;
@@ -71,10 +73,10 @@ const Expenses: FC<IProps> = ({
             groupExpenses: true,
           })
         : initialExpenses
-      : undefined
+      : undefined,
   );
   const [errorMessage, setErrorMessage] = useState(
-    error ? error.errorMessage : undefined
+    error ? error.errorMessage : undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -101,7 +103,7 @@ const Expenses: FC<IProps> = ({
 
       const selectedMonth = formatDate(
         selectedDate,
-        isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM"
+        isExpensesPage ? "YYYY-MM-DD" : "YYYY-MM",
       );
       const selectedToMonth = isExpensesPage
         ? formatDate(toDate!, "YYYY-MM-DD")
@@ -138,13 +140,16 @@ const Expenses: FC<IProps> = ({
         throw new Error(
           Array.isArray(error.errorMessage)
             ? error.errorMessage[0]
-            : error.errorMessage
+            : error.errorMessage,
         );
       }
 
       if (expenses) {
         for (const expense of expenses) {
-          expense.expenseDate = formatForLocale(expense.expenseDate, locale);
+          expense.expenseDate = formatForLocale({
+            date: expense.expenseDate,
+            locale,
+          });
         }
       }
 
@@ -181,12 +186,13 @@ const Expenses: FC<IProps> = ({
     <Card
       title={`${t("expenses.DEFAULT")} ${ungroupedExpenses ? "-" : ""} ${
         ungroupedExpenses
-          ? ungroupedExpenses
-              .reduce((total, expense) => total + Number(expense.price), 0)
-              .toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
-              })
+          ? formatCurrencyForLocale({
+              number: ungroupedExpenses.reduce(
+                (total, expense) => total + Number(expense.price),
+                0,
+              ),
+              locale,
+            })
           : ""
       }`}
       translateTitle={false}
@@ -202,7 +208,7 @@ const Expenses: FC<IProps> = ({
               }
               updateExpenses={(expenses) =>
                 setExpenses(
-                  expenses ? groupExpensesByCategory(expenses) : undefined
+                  expenses ? groupExpensesByCategory(expenses) : undefined,
                 )
               }
               locale={locale}

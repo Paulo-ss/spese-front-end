@@ -20,10 +20,12 @@ import {
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FC } from "react";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   expense: IExpense;
-  locale: string;
+  locale: Locale;
 }
 
 const categories = {
@@ -109,9 +111,9 @@ const ExpenseItem: FC<IProps> = ({ expense, locale }) => {
           </div>
 
           <p className="text-base md:text-lg font-bold">
-            {Number(expense.price).toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRL" : "USD",
+            {formatCurrencyForLocale({
+              number: Number(expense.price),
+              locale,
             })}
           </p>
 

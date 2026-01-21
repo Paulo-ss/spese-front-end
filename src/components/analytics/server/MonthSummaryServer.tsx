@@ -2,9 +2,10 @@ import { fetchResource } from "@/services/fetchService";
 import MonthSummary from "../client/MonthSummary";
 import { IMonthSummary } from "@/interfaces/analytics.interface";
 import { formatDate } from "@/utils/dates/dateUtils";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
-  locale: string;
+  locale: Locale;
 }
 
 export default async function MonthSummaryServer({ locale }: IProps) {

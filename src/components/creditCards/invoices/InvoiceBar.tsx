@@ -8,10 +8,12 @@ import {
 import { ICreditCardSummary } from "@/interfaces/credit-card.interface";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   creditCard: ICreditCardSummary;
-  locale: string;
+  locale: Locale;
 }
 
 const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
@@ -37,9 +39,9 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
           <PopoverContent>
             <p>
               {t("creditCard.closedInvoice")} -{" "}
-              {creditCard.closedTotal.toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
+              {formatCurrencyForLocale({
+                number: creditCard.closedTotal,
+                locale,
               })}
             </p>
           </PopoverContent>
@@ -59,9 +61,9 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
           <PopoverContent>
             <p>
               {t("creditCard.currentInvoice")} -{" "}
-              {creditCard.currentMonthInvoiceTotal.toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
+              {formatCurrencyForLocale({
+                number: creditCard.currentMonthInvoiceTotal,
+                locale,
               })}
             </p>
           </PopoverContent>
@@ -81,9 +83,9 @@ const InvoiceBar: FC<IProps> = ({ creditCard, locale }) => {
           <PopoverContent>
             <p>
               {t("creditCard.nextMonths")} -{" "}
-              {creditCard.otherMonthsTotal.toLocaleString(locale, {
-                style: "currency",
-                currency: locale === "pt" ? "BRL" : "USD",
+              {formatCurrencyForLocale({
+                number: creditCard.otherMonthsTotal,
+                locale,
               })}
             </p>
           </PopoverContent>

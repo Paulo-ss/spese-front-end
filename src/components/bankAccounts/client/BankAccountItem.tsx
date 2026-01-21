@@ -6,10 +6,12 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   bankAccount: IBankAccount;
-  locale: string;
+  locale: Locale;
 }
 
 const BankAccountItem: FC<IProps> = ({ bankAccount, locale }) => {
@@ -44,9 +46,9 @@ const BankAccountItem: FC<IProps> = ({ bankAccount, locale }) => {
               "text-red-500"
             }`}
           >
-            {Number(bankAccount.currentBalance).toLocaleString(locale, {
-              style: "currency",
-              currency: locale === "pt" ? "BRL" : "USD",
+            {formatCurrencyForLocale({
+              number: Number(bankAccount.currentBalance),
+              locale,
             })}
           </p>
         </div>

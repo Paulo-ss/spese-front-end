@@ -145,7 +145,7 @@ const CategoryStep = () => {
             type="button"
             icon={<IconPlus />}
             color="primary"
-            onClick={() => append({ name: "" })}
+            onClick={() => append({ name: "", color: "" })}
           />
         </div>
 

@@ -21,10 +21,12 @@ import { theme } from "@/lib/theme/theme";
 import { ISubscription } from "@/interfaces/subscription.interface";
 import deleteSubscription from "@/app/actions/subscriptions/deleteSubscription";
 import Image from "next/image";
+import { formatCurrencyForLocale } from "@/utils/numbers/formatCurrencyForLocale";
+import { Locale } from "@/types/locale.type";
 
 interface IProps {
   subscription: ISubscription;
-  locale: string;
+  locale: Locale;
   fetchSubscriptions: () => Promise<void>;
 }
 
@@ -97,9 +99,9 @@ const SubscriptionItem: FC<IProps> = ({
         <p className="text-base">{subscription.name}</p>
 
         <p className="text-base md:text-2xl font-bold">
-          {Number(subscription.price).toLocaleString(locale, {
-            style: "currency",
-            currency: locale === "pt" ? "BRL" : "USD",
+          {formatCurrencyForLocale({
+            number: Number(subscription.price),
+            locale,
           })}
         </p>
       </div>
